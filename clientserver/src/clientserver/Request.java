@@ -3,8 +3,12 @@ package clientserver;
 import java.io.Serializable;
 
 public class Request implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String transactionType;
-	Object params;
+	Parameter params;
 
 	public String getTransactionType() {
 		return transactionType;
@@ -14,11 +18,11 @@ public class Request implements Serializable {
 		this.transactionType = transactionType;
 	}
 
-	public Object getParams() {
+	public Parameter getParams() {
 		return params;
 	}
 
-	public void setParams(Object params) {
+	public void setParams(Parameter params) {
 		this.params = params;
 	}
 

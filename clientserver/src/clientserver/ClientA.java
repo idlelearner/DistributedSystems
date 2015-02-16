@@ -1,15 +1,12 @@
 package clientserver;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -22,7 +19,7 @@ public class ClientA {
 	protected DataOutputStream out;
 
 	public static void main(String[] args) throws UnknownHostException,
-			IOException {
+			IOException, ClassNotFoundException, InterruptedException {
 		InetAddress server = null;
 		Socket sock = null;
 		String host = args[0];
@@ -40,25 +37,43 @@ public class ClientA {
 		OutputStream rawOut = socket.getOutputStream();
 		InputStream rawIn = socket.getInputStream();
 		ObjectOutputStream out = new ObjectOutputStream(rawOut);
+		ObjectInputStream in = new ObjectInputStream(rawIn);
 		// Write the object
 		Request r = new Request();
-		r.transactionType = "DepositTest";
-
+		r.transactionType = "createAcct";
+		r.params = new Parameter();
 		out.writeObject(r);
+		r = new Request();
+		r.transactionType = "createAcct";
+		r.params = new Parameter();
+		out.writeObject(r);
+		Request deposit1 = new Request();
+		deposit1.transactionType = "deposit";
+		deposit1.params = new Parameter();
+		out.writeObject(deposit1);
+		Request r1 = new Request();
+		r1.transactionType = "exit";
+		r1.params = new Parameter();
+		out.writeObject(r1);
+		Request r2 = new Request();
+		r1.transactionType = "exit";
+		r1.params = new Parameter();
+		out.writeObject(r1);
+		Request r3 = new Request();
+		r1.transactionType = "exit";
+		r1.params = new Parameter();
+		out.writeObject(r1);
+		while (true) {
+			System.out.println("reading");
+			String s = (String) in.readObject();
+			System.out.println(s);
+			if (s.equals("exit")) {
+				in.close();
+				socket.close();
+				break;
+			}
+		}
 
-		// BufferedReader buffreader = new BufferedReader(new InputStreamReader(
-		// rawIn));
-		// PrintWriter printer = new PrintWriter(new
-		// OutputStreamWriter(rawOut));
-		//
-		// BufferedReader keyboard = new BufferedReader(new InputStreamReader(
-		// System.in));
-
-		String line = "Hello!!";
-		// printer.println(line);
-		// printer.flush();
-
-		System.out.println(r.transactionType);
 	}
 
 }
