@@ -104,7 +104,7 @@ public class Server extends Thread {
 		case "getBalance":
 			status.append(bankOperations.getBalance(param.getAcctID()));
 			break;
-		case "transferAmount":
+		case "transfer":
 			status.append(bankOperations.transfer(param.getSrcAcctID(),
 					param.getDestAcctID(), param.getAmt()));
 			break;

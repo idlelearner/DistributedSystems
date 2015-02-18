@@ -37,7 +37,7 @@ public class Parameter implements Serializable {
 	public Parameter(int srcAcctID, int destAcctID, double amt){
 		this.srcAcctID = srcAcctID;
 		this.destAcctID =  destAcctID;
-		
+		this.amt = amt;
 	}
 	
 	public int getAcctID() {
