@@ -7,17 +7,18 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Hashtable;
 
 public class Server extends Thread {
 
 	protected Socket s;
 	protected BankOperations bankOperations;
+	protected Logger log;
 
 	public Server(Socket s, BankOperations bankOperations) {
 		System.out.println("New client.");
 		this.s = s;
 		this.bankOperations = bankOperations;
+		log = Logger.getInstance();
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -47,12 +48,11 @@ public class Server extends Thread {
 			ObjectInputStream in = new ObjectInputStream(istream);
 			ObjectOutputStream out = new ObjectOutputStream(ostream);
 			try {
-				StringBuilder response = new StringBuilder();
 				while (true) {
 					Request r = (Request) in.readObject();
-					System.out.println("Server Transaction type : "
-							+ r.getTransactionType());
-					if (r.getTransactionType().equals("exit"))
+					log.write("Transaction type : " + r.getTransactionType());
+					log.write("Parameter received : " + r.params);
+					if (r.getTransactionType().contains("exit"))
 						break;
 					// response.append(performOperation(r) + "\n");
 					out.writeObject(performOperation(r));
@@ -60,18 +60,12 @@ public class Server extends Thread {
 				// out.writeObject(response.toString());
 				out.writeObject("exit");
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				// Can exit for other transactions as well
 				e.printStackTrace();
 			}
 			in.close();
-			// while ((read = istream.read(buffer)) >= 0) {
-			// ostream.write(buffer, 0, read);
-			// System.out.write(buffer, 0, read);
-			// // System.out.flush();
-			// }
 
 			out.close();
+			log.write("Client exit.");
 			System.out.println("Client exit.");
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -84,6 +78,12 @@ public class Server extends Thread {
 		}
 	}
 
+	/**
+	 * Calls the respective method to perform some operation
+	 * 
+	 * @param request
+	 * @return
+	 */
 	public String performOperation(Request request) {
 		StringBuilder status = new StringBuilder();
 		Parameter param = request.getParams();
@@ -112,6 +112,7 @@ public class Server extends Thread {
 			status.append("Operation not supported!");
 			break;
 		}
+		log.write("Server Response :" + status.toString());
 		return status.toString();
 	}
 }

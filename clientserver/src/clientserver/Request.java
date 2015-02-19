@@ -2,6 +2,12 @@ package clientserver;
 
 import java.io.Serializable;
 
+/**
+ * Request object send from the client
+ * 
+ * @author dhass
+ *
+ */
 public class Request implements Serializable {
 	/**
 	 * 

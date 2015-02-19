@@ -1,0 +1,99 @@
+package clientserver;
+
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.util.concurrent.ArrayBlockingQueue;
+
+/**
+ * Looger to log to serverLogfile
+ * 
+ * @author dhass
+ *
+ */
+public class Logger {
+	static private Logger logger = new Logger();
+	private String filename;
+	public Writer writer;
+	ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<String>(10000);
+
+	private Logger() {
+		filename = "serverLogFile.txt";
+		try {
+			FileWriter fw = new FileWriter(filename, queue);
+			fw.start();
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+			}
+		}
+	}
+
+	public static Logger getInstance() {
+		return logger;
+	}
+
+	public synchronized void write(String s) {
+		queue.add(s);
+	}
+
+}
+
+/**
+ * Filewriter is a asynchronous file writer which reads for the blocking queue
+ * and writes to the server log file in disk.
+ * 
+ * @author dhass
+ *
+ */
+class FileWriter extends Thread {
+	ArrayBlockingQueue<String> queue;
+	Writer writer;
+
+	public FileWriter(String filename, ArrayBlockingQueue<String> q) {
+		queue = q;
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(filename), "utf-8"));
+			writer.write("Logging started\n");
+			// writer.close();
+		} catch (UnsupportedEncodingException | FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void run() {
+		while (true) {
+			String s;
+			try {
+				s = queue.take();
+				if (s.contains("final client exit")) {
+					System.out.println("Exiting!! from logger");
+					writer.write(s);
+					writer.write("\nExit encountered!");
+					writer.flush();
+					writer.close();
+					break;
+				}
+				writer.write(s + "\n");
+				// System.out.println("Logged : " + s);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+}

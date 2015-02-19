@@ -2,16 +2,22 @@ package clientserver;
 
 import java.io.Serializable;
 
+/**
+ * Model object for acct
+ * 
+ * @author dhass
+ *
+ */
 public class Account implements Serializable {
 
 	private int acctID;
 	private String firstname;
 	private String lastname;
 	private String address;
-	private double balance;
+	private int balance;
 
 	public Account(int acctID, String firstname, String lastname,
-			String address, double balance) {
+			String address, int balance) {
 		super();
 		this.acctID = acctID;
 		this.firstname = firstname;
@@ -52,11 +58,11 @@ public class Account implements Serializable {
 		this.address = address;
 	}
 
-	public double getBalance() {
+	public int getBalance() {
 		return balance;
 	}
 
-	public void setBalance(double balance) {
+	public void setBalance(int balance) {
 		this.balance = balance;
 	}
 

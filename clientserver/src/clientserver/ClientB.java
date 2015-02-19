@@ -25,8 +25,9 @@ public class ClientB {
 		Socket sock = null;
 		String host = args[0];
 		int port = Integer.parseInt(args[1]);
-
-		if (args.length != 2) {
+		int iterationCount = Integer.parseInt(args[2]);
+		int threadCount = Integer.parseInt(args[3]);
+		if (args.length < 4) {
 			throw new RuntimeException("hostname and port number as arguments");
 		}
 		ClientB clt = new ClientB();
@@ -43,10 +44,10 @@ public class ClientB {
 		int noOfAccts = 100;
 		List<Integer> accts = clt.createAccts(noOfAccts, out, in);
 		clt.deposit(accts, 100, out, in);
-		System.out.println(clt.getTotalBalance(accts, out, in));
+		System.out.println("Balance before transferring accts : "
+				+ clt.getTotalBalance(accts, out, in));
 
-		int iterationCount = 5;
-		int threadCount = 6;
+		// Create threads to transfer amount
 		List<TransferClient> tcList = new ArrayList<TransferClient>();
 		for (int i = 0; i < threadCount; i++) {
 			TransferClient tc = new TransferClient(host, port, iterationCount,
@@ -59,10 +60,11 @@ public class ClientB {
 		for (int i = 0; i < threadCount; i++)
 			tcList.get(i).join();
 
-		System.out.println(clt.getTotalBalance(accts, out, in));
+		System.out.println("Balance after transferring accts : "
+				+ clt.getTotalBalance(accts, out, in));
 
 		Request exit = new Request();
-		exit.transactionType = "exit";
+		exit.transactionType = "final client exit";
 		exit.params = new Parameter();
 		out.writeObject(exit);
 		in.close();
@@ -70,6 +72,16 @@ public class ClientB {
 
 	}
 
+	/**
+	 * Function create accts
+	 * 
+	 * @param noOfAccts
+	 * @param out
+	 * @param in
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public List<Integer> createAccts(int noOfAccts, ObjectOutputStream out,
 			ObjectInputStream in) throws IOException, ClassNotFoundException {
 		int i = 1;
@@ -87,9 +99,18 @@ public class ClientB {
 		return accts;
 	}
 
-	public void deposit(List<Integer> accts, double amt,
-			ObjectOutputStream out, ObjectInputStream in) throws IOException,
-			ClassNotFoundException {
+	/**
+	 * Deposit amount
+	 * 
+	 * @param accts
+	 * @param amt
+	 * @param out
+	 * @param in
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void deposit(List<Integer> accts, int amt, ObjectOutputStream out,
+			ObjectInputStream in) throws IOException, ClassNotFoundException {
 		for (int acct : accts) {
 			Request deposit = new Request();
 			deposit.transactionType = "deposit";
@@ -100,16 +121,26 @@ public class ClientB {
 		}
 	}
 
-	public double getTotalBalance(List<Integer> accts, ObjectOutputStream out,
+	/**
+	 * Get balance for acct
+	 * 
+	 * @param accts
+	 * @param out
+	 * @param in
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public int getTotalBalance(List<Integer> accts, ObjectOutputStream out,
 			ObjectInputStream in) throws IOException, ClassNotFoundException {
-		Double total = 0.0;
+		int total = 0;
 		for (int acct : accts) {
 			Request getBalance = new Request();
 			getBalance.transactionType = "getBalance";
 			getBalance.params = new Parameter(acct);
 			out.writeObject(getBalance);
 			String s = (String) in.readObject();
-			total = total + Double.parseDouble(s);
+			total = total + Integer.parseInt(s);
 		}
 		return total;
 	}

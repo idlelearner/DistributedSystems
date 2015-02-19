@@ -48,9 +48,9 @@ public class ClientA {
 		int acctID1 = accts.get(0);
 		int acctID2 = accts.get(1);
 
-		Double amt = 100.0;
+		int amt = 100;
 		// Deposit
-		clt.deposit(accts, 100.0, out, in);
+		clt.deposit(accts, 100, out, in);
 
 		// Get balance
 		clt.getBalance(accts, out, in);
@@ -71,25 +71,24 @@ public class ClientA {
 		clt.getBalance(accts, out, in);
 
 		Request exit = new Request();
-		exit.transactionType = "exit";
+		exit.transactionType = "final client exit";
 		exit.params = new Parameter();
 		out.writeObject(exit);
 		in.close();
 		socket.close();
 
-		// while (true) {
-		// System.out.println("reading");
-		// String s = (String) in.readObject();
-		// System.out.println(s);
-		// if (s.equals("exit")) {
-		// in.close();
-		// socket.close();
-		// break;
-		// }
-		// }
-
 	}
 
+	/**
+	 * Client function to create acct
+	 * 
+	 * @param noOfAccts
+	 * @param out
+	 * @param in
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public List<Integer> createAccts(int noOfAccts, ObjectOutputStream out,
 			ObjectInputStream in) throws IOException, ClassNotFoundException {
 		int i = 1;
@@ -107,6 +106,15 @@ public class ClientA {
 		return accts;
 	}
 
+	/**
+	 * Client function to get balance for an acct
+	 * 
+	 * @param accts
+	 * @param out
+	 * @param in
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void getBalance(List<Integer> accts, ObjectOutputStream out,
 			ObjectInputStream in) throws IOException, ClassNotFoundException {
 		for (int acct : accts) {
@@ -119,9 +127,18 @@ public class ClientA {
 		}
 	}
 
-	public void deposit(List<Integer> accts, double amt,
-			ObjectOutputStream out, ObjectInputStream in) throws IOException,
-			ClassNotFoundException {
+	/**
+	 * client function to deposit amount to an acct.
+	 * 
+	 * @param accts
+	 * @param amt
+	 * @param out
+	 * @param in
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void deposit(List<Integer> accts, int amt, ObjectOutputStream out,
+			ObjectInputStream in) throws IOException, ClassNotFoundException {
 		for (int acct : accts) {
 			Request deposit = new Request();
 			deposit.transactionType = "deposit";
@@ -132,9 +149,18 @@ public class ClientA {
 		}
 	}
 
-	public void withdraw(List<Integer> accts, double amt,
-			ObjectOutputStream out, ObjectInputStream in) throws IOException,
-			ClassNotFoundException {
+	/**
+	 * Client function to withdraw amount from acct.
+	 * 
+	 * @param accts
+	 * @param amt
+	 * @param out
+	 * @param in
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void withdraw(List<Integer> accts, int amt, ObjectOutputStream out,
+			ObjectInputStream in) throws IOException, ClassNotFoundException {
 		for (int acct : accts) {
 			Request withdraw = new Request();
 			withdraw.transactionType = "withdraw";
@@ -145,12 +171,23 @@ public class ClientA {
 		}
 	}
 
-	public void transfer(int acctID1, int acctID2, double amt,
+	/**
+	 * Client Function to transfer amt from source to destination acct
+	 * 
+	 * @param acctID1
+	 * @param acctID2
+	 * @param amt
+	 * @param out
+	 * @param in
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void transfer(int acctID1, int acctID2, int amt,
 			ObjectOutputStream out, ObjectInputStream in) throws IOException,
 			ClassNotFoundException {
 		Request transfer = new Request();
 		transfer.transactionType = "transfer";
-		transfer.params = new Parameter(acctID1, acctID2, 100.0);
+		transfer.params = new Parameter(acctID1, acctID2, 100);
 		out.writeObject(transfer);
 		String status = (String) in.readObject();
 		System.out.println(status);

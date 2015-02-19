@@ -2,6 +2,12 @@ package clientserver;
 
 import java.io.Serializable;
 
+/**
+ * Paramter object embeded in request object to send parameters to the server
+ * 
+ * @author dhass
+ *
+ */
 public class Parameter implements Serializable {
 	/**
 	 * 
@@ -11,7 +17,7 @@ public class Parameter implements Serializable {
 	String firstname;
 	String lastname;
 	String address;
-	double amt;
+	int amt;
 	int srcAcctID;
 	int destAcctID;
 
@@ -25,21 +31,21 @@ public class Parameter implements Serializable {
 		this.address = address;
 	}
 
-	public Parameter(int acctID, double amt){
+	public Parameter(int acctID, int amt) {
 		this.acctID = acctID;
 		this.amt = amt;
 	}
-	
-	public Parameter(int acctID){
+
+	public Parameter(int acctID) {
 		this.acctID = acctID;
 	}
-	
-	public Parameter(int srcAcctID, int destAcctID, double amt){
+
+	public Parameter(int srcAcctID, int destAcctID, int amt) {
 		this.srcAcctID = srcAcctID;
-		this.destAcctID =  destAcctID;
+		this.destAcctID = destAcctID;
 		this.amt = amt;
 	}
-	
+
 	public int getAcctID() {
 		return acctID;
 	}
@@ -72,11 +78,11 @@ public class Parameter implements Serializable {
 		this.address = address;
 	}
 
-	public double getAmt() {
+	public int getAmt() {
 		return amt;
 	}
 
-	public void setAmt(double amt) {
+	public void setAmt(int amt) {
 		this.amt = amt;
 	}
 
@@ -96,4 +102,10 @@ public class Parameter implements Serializable {
 		this.destAcctID = destAcctID;
 	}
 
+	public String toString() {
+		return "[acctID: " + acctID + "," + "firstname: " + firstname + ","
+				+ "lastname: " + lastname + "," + "address: " + address + ","
+				+ "amt: " + amt + "," + "srcAcctID: " + srcAcctID + ","
+				+ "destAcctID: " + destAcctID;
+	}
 }

@@ -10,6 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This client loops till iteration count and transfers amount between randomly
+ * selected accounts
+ * 
+ * @author dhass
+ *
+ */
 public class TransferClient extends Thread {
 	String host;
 	int port;
@@ -58,16 +65,25 @@ public class TransferClient extends Thread {
 		}
 	}
 
+	/**
+	 * Transfer function calling the server
+	 * 
+	 * @param acctID1
+	 * @param acctID2
+	 * @param amt
+	 * @param out
+	 * @param in
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void transfer(int acctID1, int acctID2, double amt,
 			ObjectOutputStream out, ObjectInputStream in) throws IOException,
 			ClassNotFoundException {
 		Request transfer = new Request();
 		transfer.transactionType = "transfer";
-		transfer.params = new Parameter(acctID1, acctID2, 100.0);
+		transfer.params = new Parameter(acctID1, acctID2, 100);
 		out.writeObject(transfer);
 		String status = (String) in.readObject();
-		System.out.println(status);
-
-		// TODO Log to file
+		// System.out.println(status);
 	}
 }
