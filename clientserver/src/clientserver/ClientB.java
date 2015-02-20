@@ -42,9 +42,11 @@ public class ClientB {
 		ObjectInputStream in = new ObjectInputStream(rawIn);
 
 		int noOfAccts = 100;
+		System.out.println("Creating accts...");
 		List<Integer> accts = clt.createAccts(noOfAccts, out, in);
+		System.out.println("Depositing amt in accts...");
 		clt.deposit(accts, 100, out, in);
-		System.out.println("Balance before transferring accts : "
+		System.out.println("Balance before transferring amt between accts : "
 				+ clt.getTotalBalance(accts, out, in));
 
 		// Create threads to transfer amount
@@ -60,7 +62,7 @@ public class ClientB {
 		for (int i = 0; i < threadCount; i++)
 			tcList.get(i).join();
 
-		System.out.println("Balance after transferring accts : "
+		System.out.println("Balance after transferring amt between accts : "
 				+ clt.getTotalBalance(accts, out, in));
 
 		Request exit = new Request();
