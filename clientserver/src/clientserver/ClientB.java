@@ -26,8 +26,8 @@ public class ClientB {
 		Socket sock = null;
 		String host = args[0];
 		int port = Integer.parseInt(args[1]);
-		int iterationCount = Integer.parseInt(args[2]);
-		int threadCount = Integer.parseInt(args[3]);
+		int threadCount = Integer.parseInt(args[2]);
+		int iterationCount = Integer.parseInt(args[3]);
 		if (args.length < 4) {
 			throw new RuntimeException("hostname and port number as arguments");
 		}
@@ -66,7 +66,7 @@ public class ClientB {
 		Request exit = new Request();
 		exit.transactionType = "final client exit";
 		exit.params = new Parameter();
-		clt.log.write("\nfinal client exit");
+		clt.log.write("final client exit");
 		out.writeObject(exit);
 		in.close();
 		socket.close();

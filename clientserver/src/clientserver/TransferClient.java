@@ -54,7 +54,7 @@ public class TransferClient extends Thread {
 						+ " Iteration " + i);
 				int rndacctID1 = rnd.nextInt(accts.size());
 				int rndacctID2 = rnd.nextInt(accts.size());
-				transfer(accts.get(rndacctID1), accts.get(rndacctID2), 100,
+				transfer(accts.get(rndacctID1), accts.get(rndacctID2), 10,
 						out, in);
 				log.write("\nTransfer completed between "
 						+ accts.get(rndacctID1) + " and "
