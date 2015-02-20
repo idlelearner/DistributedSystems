@@ -5,7 +5,7 @@ To run clientA
 >>java Server <portNo>
 >>java clientA <hostname> <portno>
 
-ServerLogFile.txt and clientLogFile.txt will be created in the same directory
+ServerLogFile.txt will be created in the same directory as Server file
 
 Stop the server(This is required because logger has stopped in server)
 Start the server again.

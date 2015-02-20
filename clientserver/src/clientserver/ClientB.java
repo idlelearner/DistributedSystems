@@ -33,10 +33,8 @@ public class ClientB {
 		}
 		ClientB clt = new ClientB();
 		System.out.println("Connecting to " + host + ":" + port + "..");
-		clt.log.write("\nConnecting to " + host + ":" + port + "..");
 		Socket socket = new Socket(host, port);
 		System.out.println("Connected.");
-		clt.log.write("\nConnected.");
 		OutputStream rawOut = socket.getOutputStream();
 		InputStream rawIn = socket.getInputStream();
 		ObjectOutputStream out = new ObjectOutputStream(rawOut);
@@ -44,14 +42,11 @@ public class ClientB {
 
 		int noOfAccts = 100;
 		System.out.println("Creating accts...");
-		clt.log.write("\nCreating accts...");
 		List<Integer> accts = clt.createAccts(noOfAccts, out, in);
 		System.out.println("Depositing amt in accts...");
-		clt.log.write("\nDepositing amt in accts...");
 		clt.deposit(accts, 100, out, in);
 		System.out.println("Balance before transferring amt between accts : "
 				+ clt.getTotalBalance(accts, out, in));
-		clt.log.write("\nDepositing amt in accts...");
 		// Create threads to transfer amount
 		List<TransferClient> tcList = new ArrayList<TransferClient>();
 		for (int i = 0; i < threadCount; i++) {
@@ -96,12 +91,9 @@ public class ClientB {
 			Request createAcct = new Request();
 			createAcct.transactionType = "createAcct";
 			createAcct.params = new Parameter("\nF" + i, "L" + i, "A" + i);
-			log.write("\nclientrequest type " + createAcct.transactionType);
-			log.write("\nclient params " + createAcct.params);
 			out.writeObject(createAcct);
 			String acct = (String) in.readObject();
 			int acctID = Integer.parseInt(acct);
-			log.write("\nServer Response " + acctID);
 			accts.add(acctID);
 			i++;
 		}
@@ -124,11 +116,8 @@ public class ClientB {
 			Request deposit = new Request();
 			deposit.transactionType = "deposit";
 			deposit.params = new Parameter(acct, amt);
-			log.write("\nclientrequest type " + deposit.transactionType);
-			log.write("\nclient params " + deposit.params);
 			out.writeObject(deposit);
 			String status = (String) in.readObject();
-			log.write("\nServer Response " + status);
 		}
 	}
 
@@ -149,11 +138,8 @@ public class ClientB {
 			Request getBalance = new Request();
 			getBalance.transactionType = "getBalance";
 			getBalance.params = new Parameter(acct);
-			log.write("\nclientrequest type " + getBalance.transactionType);
-			log.write("\nclient params " + getBalance.params);
 			out.writeObject(getBalance);
 			String s = (String) in.readObject();
-			log.write("\nServer responce Account Balance :" + s);
 			total = total + Integer.parseInt(s);
 		}
 		return total;

@@ -32,7 +32,6 @@ public class TransferClient extends Thread {
 		this.iterationCount = itCount;
 		this.accts = accts;
 		log = ClientLogger.getInstance();
-		log.write("\nNew thread created :" + Thread.currentThread().getId());
 		try {
 			socket = new Socket(host, port);
 		} catch (IOException e) {
@@ -43,6 +42,7 @@ public class TransferClient extends Thread {
 
 	public void run() {
 		try {
+			log.write("\nNew thread created :" + Thread.currentThread().getId());
 			OutputStream rawOut = socket.getOutputStream();
 			InputStream rawIn = socket.getInputStream();
 			ObjectOutputStream out = new ObjectOutputStream(rawOut);
@@ -50,7 +50,8 @@ public class TransferClient extends Thread {
 			Random rnd = new Random();
 			for (int i = 0; i < iterationCount; i++) {
 				// Get random accts and perform transfer.
-				log.write("\nThread ID :" + Thread.currentThread().getId() + " Iteration " + i);
+				log.write("\nThread ID :" + Thread.currentThread().getId()
+						+ " Iteration " + i);
 				int rndacctID1 = rnd.nextInt(accts.size());
 				int rndacctID2 = rnd.nextInt(accts.size());
 				transfer(accts.get(rndacctID1), accts.get(rndacctID2), 100,
