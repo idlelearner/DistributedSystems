@@ -54,8 +54,8 @@ public class TransferClient extends Thread {
 						+ " Iteration " + i);
 				int rndacctID1 = rnd.nextInt(accts.size());
 				int rndacctID2 = rnd.nextInt(accts.size());
-				transfer(accts.get(rndacctID1), accts.get(rndacctID2), 10,
-						out, in);
+				transfer(accts.get(rndacctID1), accts.get(rndacctID2), 10, out,
+						in);
 				log.write("\nTransfer completed between "
 						+ accts.get(rndacctID1) + " and "
 						+ accts.get(rndacctID2));
@@ -84,12 +84,12 @@ public class TransferClient extends Thread {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public void transfer(int acctID1, int acctID2, double amt,
+	public void transfer(int acctID1, int acctID2, int amt,
 			ObjectOutputStream out, ObjectInputStream in) throws IOException,
 			ClassNotFoundException {
 		Request transfer = new Request();
 		transfer.transactionType = "transfer";
-		transfer.params = new Parameter(acctID1, acctID2, 100);
+		transfer.params = new Parameter(acctID1, acctID2, amt);
 		log.write("\nclientrequest type" + transfer.transactionType);
 		log.write("\nclient params" + transfer.params);
 		out.writeObject(transfer);
