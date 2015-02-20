@@ -12,13 +12,13 @@ public class Server extends Thread {
 
 	protected Socket s;
 	protected BankOperations bankOperations;
-	protected Logger log;
+	protected ServerLogger log;
 
 	public Server(Socket s, BankOperations bankOperations) {
 		System.out.println("New client.");
 		this.s = s;
 		this.bankOperations = bankOperations;
-		log = Logger.getInstance();
+		log = ServerLogger.getInstance();
 	}
 
 	public static void main(String[] args) throws IOException {

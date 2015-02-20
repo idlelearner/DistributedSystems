@@ -21,6 +21,7 @@ public class ClientA {
 	protected int port;
 	protected DataInputStream in;
 	protected DataOutputStream out;
+	protected ClientLogger log = ClientLogger.getInstance();
 
 	public static void main(String[] args) throws UnknownHostException,
 			IOException, ClassNotFoundException, InterruptedException {
@@ -34,10 +35,10 @@ public class ClientA {
 		}
 		ClientA clt = new ClientA();
 		System.out.println("Connecting to " + host + ":" + port + "..");
-
+		clt.log.write("Connecting to " + host + ":" + port + "..");
 		Socket socket = new Socket(host, port);
 		System.out.println("Connected.");
-
+		clt.log.write("Connected.");
 		OutputStream rawOut = socket.getOutputStream();
 		InputStream rawIn = socket.getInputStream();
 		ObjectOutputStream out = new ObjectOutputStream(rawOut);
@@ -74,6 +75,7 @@ public class ClientA {
 		exit.transactionType = "final client exit";
 		exit.params = new Parameter();
 		out.writeObject(exit);
+		clt.log.write("final client exit");
 		in.close();
 		socket.close();
 
@@ -97,9 +99,12 @@ public class ClientA {
 			Request createAcct = new Request();
 			createAcct.transactionType = "createAcct";
 			createAcct.params = new Parameter("F" + i, "L" + i, "A" + i);
+			log.write("clientrequest type " + createAcct.transactionType);
+			log.write("client params " + createAcct.params);
 			out.writeObject(createAcct);
 			String acct = (String) in.readObject();
 			int acctID = Integer.parseInt(acct);
+			log.write("Server response AcctID created" + acctID);
 			accts.add(acctID);
 			i++;
 		}
@@ -121,9 +126,13 @@ public class ClientA {
 			Request getBalance = new Request();
 			getBalance.transactionType = "getBalance";
 			getBalance.params = new Parameter(acct);
+			log.write("clientrequest type " + getBalance.transactionType);
+			log.write("client params " + getBalance.params);
 			out.writeObject(getBalance);
 			String status = (String) in.readObject();
 			System.out.println(status);
+			log.write("Server response Balance of AcctID :" + acct + " : "
+					+ status);
 		}
 	}
 
@@ -143,9 +152,12 @@ public class ClientA {
 			Request deposit = new Request();
 			deposit.transactionType = "deposit";
 			deposit.params = new Parameter(acct, amt);
+			log.write("clientrequest type " + deposit.transactionType);
+			log.write("client params " + deposit.params);
 			out.writeObject(deposit);
 			String status = (String) in.readObject();
 			System.out.println(status);
+			log.write("Server response : " + status);
 		}
 	}
 
@@ -165,9 +177,12 @@ public class ClientA {
 			Request withdraw = new Request();
 			withdraw.transactionType = "withdraw";
 			withdraw.params = new Parameter(acct, amt);
+			log.write("clientrequest type " + withdraw.transactionType);
+			log.write("client params " + withdraw.params);
 			out.writeObject(withdraw);
 			String status = (String) in.readObject();
 			System.out.println(status);
+			log.write("Server response : " + status);
 		}
 	}
 
@@ -188,9 +203,12 @@ public class ClientA {
 		Request transfer = new Request();
 		transfer.transactionType = "transfer";
 		transfer.params = new Parameter(acctID1, acctID2, 100);
+		log.write("clientrequest type " + transfer.transactionType);
+		log.write("client params " + transfer.params);
 		out.writeObject(transfer);
 		String status = (String) in.readObject();
 		System.out.println(status);
+		log.write("Server response : " + status);
 	}
 
 }

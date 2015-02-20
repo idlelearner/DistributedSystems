@@ -11,12 +11,12 @@ import java.util.Hashtable;
 public class BankOperations {
 	Hashtable<Integer, Account> accountMap;
 	volatile int maxAcctID;
-	Logger log;
+	ServerLogger log;
 
 	public BankOperations() {
 		maxAcctID = 1;
 		accountMap = new Hashtable<Integer, Account>();
-		log = Logger.getInstance();
+		log = ServerLogger.getInstance();
 	}
 
 	public synchronized int createAccount(String firstname, String lastname,

@@ -10,48 +10,13 @@ import java.io.Writer;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
- * Looger to log to serverLogfile
- * 
- * @author dhass
- *
- */
-public class Logger {
-	static private Logger logger = new Logger();
-	private String filename;
-	public Writer writer;
-	ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<String>(10000);
-
-	private Logger() {
-		filename = "serverLogFile.txt";
-		try {
-			FileWriter fw = new FileWriter(filename, queue);
-			fw.start();
-		} finally {
-			try {
-				writer.close();
-			} catch (Exception ex) {
-			}
-		}
-	}
-
-	public static Logger getInstance() {
-		return logger;
-	}
-
-	public synchronized void write(String s) {
-		queue.add(s);
-	}
-
-}
-
-/**
  * Filewriter is a asynchronous file writer which reads for the blocking queue
  * and writes to the server log file in disk.
  * 
  * @author dhass
  *
  */
-class FileWriter extends Thread {
+public class FileWriter extends Thread {
 	ArrayBlockingQueue<String> queue;
 	Writer writer;
 

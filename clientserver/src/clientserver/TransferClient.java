@@ -23,6 +23,7 @@ public class TransferClient extends Thread {
 	Socket socket;
 	int iterationCount;
 	List<Integer> accts = new ArrayList<Integer>();
+	ClientLogger log;
 
 	public TransferClient(String host, int port, int itCount,
 			List<Integer> accts) {
@@ -30,6 +31,8 @@ public class TransferClient extends Thread {
 		this.port = port;
 		this.iterationCount = itCount;
 		this.accts = accts;
+		log = ClientLogger.getInstance();
+		log.write("\nNew thread created :" + Thread.currentThread().getId());
 		try {
 			socket = new Socket(host, port);
 		} catch (IOException e) {
@@ -47,10 +50,14 @@ public class TransferClient extends Thread {
 			Random rnd = new Random();
 			for (int i = 0; i < iterationCount; i++) {
 				// Get random accts and perform transfer.
+				log.write("\nThread ID :" + Thread.currentThread().getId() + " Iteration " + i);
 				int rndacctID1 = rnd.nextInt(accts.size());
 				int rndacctID2 = rnd.nextInt(accts.size());
 				transfer(accts.get(rndacctID1), accts.get(rndacctID2), 100,
 						out, in);
+				log.write("\nTransfer completed between "
+						+ accts.get(rndacctID1) + " and "
+						+ accts.get(rndacctID2));
 			}
 			Request exit = new Request();
 			exit.transactionType = "exit";
@@ -82,8 +89,10 @@ public class TransferClient extends Thread {
 		Request transfer = new Request();
 		transfer.transactionType = "transfer";
 		transfer.params = new Parameter(acctID1, acctID2, 100);
+		log.write("\nclientrequest type" + transfer.transactionType);
+		log.write("\nclient params" + transfer.params);
 		out.writeObject(transfer);
 		String status = (String) in.readObject();
-		// System.out.println(status);
+		log.write("\nServer Response" + status);
 	}
 }
