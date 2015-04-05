@@ -69,11 +69,17 @@ public class Server extends Thread {
 		BankOperations bankOperations = new BankOperations();
 		ServerManager serverManager = new ServerManager(curServer.getID(),
 				bankOperations, peerServerList);
-		ServerSocket server = new ServerSocket(curServer.getClientport());
+		ServerSocket serverForClientConnections = new ServerSocket(
+				curServer.getClientport());
+		ServerSocket serverForPeerConnections = new ServerSocket(
+				curServer.getPeerServerPort());
+
+		PeerServerConnectionHandler peerConnections = new PeerServerConnectionHandler(
+				serverForPeerConnections, serverManager);
 
 		while (true) {
 			System.out.println("Waiting for a client request");
-			Socket client = server.accept();
+			Socket client = serverForClientConnections.accept();
 			System.out.println("Received request from "
 					+ client.getInetAddress());
 			Server s = new Server(client, serverManager, bankOperations);

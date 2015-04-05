@@ -13,8 +13,6 @@ public class ReplicationManager {
 
 		// Establish Connection between peer servers.
 
-		// Wait for connections.
-
 	}
 
 	// public void startConnectionWithPeerServers()
