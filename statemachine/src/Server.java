@@ -67,7 +67,8 @@ public class Server extends Thread {
 		}
 
 		BankOperations bankOperations = new BankOperations();
-		ServerManager serverManager = new ServerManager(bankOperations,peerServerList);
+		ServerManager serverManager = new ServerManager(curServer.getID(),
+				bankOperations, peerServerList);
 		ServerSocket server = new ServerSocket(curServer.getClientport());
 
 		while (true) {

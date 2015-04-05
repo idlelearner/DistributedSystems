@@ -13,6 +13,7 @@ public class Request implements Serializable {
 	private static final long serialVersionUID = 1L;
 	String transactionType;
 	Parameter params;
+	Double lamportClock;
 
 	public String getTransactionType() {
 		return transactionType;
@@ -28,6 +29,14 @@ public class Request implements Serializable {
 
 	public void setParams(Parameter params) {
 		this.params = params;
+	}
+
+	public Double getLamportClock() {
+		return lamportClock;
+	}
+
+	public void setLamportClock(Double lamportClock) {
+		this.lamportClock = lamportClock;
 	}
 
 }

@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * class to maintain the lamport clocks and apply updates.
@@ -12,18 +13,38 @@ public class ServerManager {
 	protected ServerLogger log;
 	ReplicationManager repManager;
 	protected Double lamportClockCounter;
+	PriorityQueue<Request> reqQueue;
 
-	public ServerManager(BankOperations bankOperations,
+	public ServerManager(int serverID, BankOperations bankOperations,
 			List<ServerDetails> peerServerList) {
 		this.bankOperations = bankOperations;
+		//TODO : Write loaders to load the bank account.
 		repManager = new ReplicationManager();
 		log = ServerLogger.getInstance();
 		lamportClockCounter = 0.0;
+		reqQueue = new PriorityQueue<Request>();
 	}
 
-	
+	/**
+	 * Increment the lamport clock
+	 */
 	public void incrementClock() {
+		lamportClockCounter++;
+	}
 
+	public double getLamportClockCounter() {
+		return lamportClockCounter;
+	}
+
+	/**
+	 * Add the request to the queue
+	 * 
+	 * @param req
+	 */
+	public void addToRequestQueue(Request req) {
+		incrementClock();
+		req.setLamportClock(getLamportClockCounter());
+		reqQueue.add(req);
 	}
 
 	/**
