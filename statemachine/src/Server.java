@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -5,38 +9,79 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server extends Thread {
 
 	protected Socket s;
 	protected BankOperations bankOperations;
+	protected ServerManager serverManager;
 	protected ServerLogger log;
 
-	public Server(Socket s, BankOperations bankOperations) {
+	public Server(Socket s, ServerManager serverManager,
+			BankOperations bankOperations) {
 		System.out.println("New client.");
 		this.s = s;
+		this.serverManager = serverManager;
 		this.bankOperations = bankOperations;
 		log = ServerLogger.getInstance();
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws FileNotFoundException,
+			IOException {
+		// TODO : Pass the config to the program
+		// Read and form the object and start.
 
-		if (args.length != 1)
-			throw new RuntimeException("Syntax: EchoServer port-number");
+		String configFile = args[0];
+		int serverID = Integer.parseInt(args[1]);
 
-		System.out.println("Starting on port " + args[0]);
-		ServerSocket server = new ServerSocket(Integer.parseInt(args[0]));
+		// TODO : create the List of Server start files.
+
+		ArrayList<ServerDetails> serverConfigList = new ArrayList<ServerDetails>();
+		File file = new File(configFile);
+		BufferedReader in = new BufferedReader(new FileReader(file));
+		String line;
+		while ((line = in.readLine()) != null) {
+			if (line.length() > 0) {
+				// Process line of input Here
+				String params[] = line.split(" ");
+				String hostname = params[0];
+				int id = Integer.parseInt(params[1]);
+				int clientPortID = Integer.parseInt(params[2]);
+				int peerServerPortID = Integer.parseInt(params[3]);
+				ServerDetails serverDetails = new ServerDetails(hostname, id,
+						clientPortID, peerServerPortID);
+				System.out.println(serverDetails);
+				serverConfigList.add(serverDetails);
+			}
+		}
+
+		// TODO : Get the peer server details.
+		ArrayList<ServerDetails> peerServerList = new ArrayList<ServerDetails>();
+		ServerDetails curServer = null;
+		for (ServerDetails server : serverConfigList) {
+			if (server.getID() != serverID) {
+				peerServerList.add(server);
+			} else
+				curServer = server;
+		}
+
 		BankOperations bankOperations = new BankOperations();
+		ServerManager serverManager = new ServerManager(bankOperations,peerServerList);
+		ServerSocket server = new ServerSocket(curServer.getClientport());
+
 		while (true) {
 			System.out.println("Waiting for a client request");
 			Socket client = server.accept();
 			System.out.println("Received request from "
 					+ client.getInetAddress());
-			Server s = new Server(client, bankOperations);
+			Server s = new Server(client, serverManager, bankOperations);
 			s.start();
 		}
+
 	}
 
+	// Start this server.
 	public void run() {
 		try {
 			InputStream istream = s.getInputStream();
@@ -53,7 +98,8 @@ public class Server extends Thread {
 					if (r.getTransactionType().contains("exit"))
 						break;
 					// response.append(performOperation(r) + "\n");
-					out.writeObject(performOperation(r));
+					// out.writeObject(performOperation(r));
+					out.writeObject("return response to client after performing operation");
 				}
 				// out.writeObject(response.toString());
 				out.writeObject("exit");
@@ -76,41 +122,4 @@ public class Server extends Thread {
 		}
 	}
 
-	/**
-	 * Calls the respective method to perform some operation
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public String performOperation(Request request) {
-		StringBuilder status = new StringBuilder();
-		Parameter param = request.getParams();
-		switch (request.getTransactionType()) {
-		case "createAcct":
-			status.append(bankOperations.createAccount(param.getFirstname(),
-					param.getLastname(), param.getAddress()));
-			break;
-		case "deposit":
-			status.append(bankOperations.deposit(param.getAcctID(),
-					param.getAmt()));
-			break;
-		case "withdraw":
-			status.append(bankOperations.withdraw(param.getAcctID(),
-					param.getAmt()));
-			break;
-
-		case "getBalance":
-			status.append(bankOperations.getBalance(param.getAcctID()));
-			break;
-		case "transfer":
-			status.append(bankOperations.transfer(param.getSrcAcctID(),
-					param.getDestAcctID(), param.getAmt()));
-			break;
-		default:
-			status.append("Operation not supported!");
-			break;
-		}
-		log.write("Server Response :" + status.toString());
-		return status.toString();
-	}
 }
