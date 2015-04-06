@@ -23,6 +23,9 @@ public class ReplicationManager {
 		startConnectionWithPeerServers();
 	}
 
+	/**
+	 * Establish connections with the peer servers to maintain
+	 */
 	public void startConnectionWithPeerServers() {
 		for (ServerDetails peerServer : peerServerDetails) {
 			Socket socket;

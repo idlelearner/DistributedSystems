@@ -25,21 +25,27 @@ public class ServerManager {
 		lamportClockCounter = 0.0;
 		reqQueue = new PriorityQueue<Request>();
 		this.serverID = serverID;
+
 	}
 
 	/**
-	 * Increment the lamport clock
+	 * Increment the lamport clock value
 	 */
 	public void incrementClock() {
 		lamportClockCounter++;
 	}
 
+	/**
+	 * Gets the lamport clock value.
+	 * 
+	 * @return
+	 */
 	public double getLamportClockCounter() {
 		return lamportClockCounter;
 	}
 
 	/**
-	 * Add the request to the queue
+	 * Add the request to the current server
 	 * 
 	 * @param req
 	 */
@@ -53,7 +59,8 @@ public class ServerManager {
 	}
 
 	/**
-	 * Calls the respective method to perform some operation
+	 * Calls the respective method to perform operations on the data store -
+	 * Bank operations
 	 * 
 	 * @param request
 	 * @return
@@ -89,4 +96,23 @@ public class ServerManager {
 		log.write("Server Response :" + status.toString());
 		return status.toString();
 	}
+
+	class ServerOperationExecuter implements Runnable {
+		ReplicationManager repManager;
+		BankOperations bankOperations;
+		public ServerOperationExecuter(ReplicationManager repManager,
+				BankOperations bankOperations) {
+			this.repManager = repManager;
+			this.bankOperations = bankOperations;
+		}
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			while (true) {
+				
+			}
+		}
+	}
+
 }
