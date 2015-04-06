@@ -14,15 +14,17 @@ public class ServerManager {
 	ReplicationManager repManager;
 	protected Double lamportClockCounter;
 	PriorityQueue<Request> reqQueue;
+	protected int serverID;
 
 	public ServerManager(int serverID, BankOperations bankOperations,
 			List<ServerDetails> peerServerList) {
 		this.bankOperations = bankOperations;
-		//TODO : Write loaders to load the bank account.
+		// TODO : Write loaders to load the bank account.
 		repManager = new ReplicationManager();
 		log = ServerLogger.getInstance();
 		lamportClockCounter = 0.0;
 		reqQueue = new PriorityQueue<Request>();
+		this.serverID = serverID;
 	}
 
 	/**
@@ -44,7 +46,10 @@ public class ServerManager {
 	public void addToRequestQueue(Request req) {
 		incrementClock();
 		req.setLamportClock(getLamportClockCounter());
+		req.setAckCount(1);
+		req.setSourceServerID(serverID);
 		reqQueue.add(req);
+		repManager.multiCastMessage(req);
 	}
 
 	/**

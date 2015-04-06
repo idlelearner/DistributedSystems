@@ -14,6 +14,8 @@ public class Request implements Serializable {
 	String transactionType;
 	Parameter params;
 	Double lamportClock;
+	int sourceServerID;
+	int ackCount;
 
 	public String getTransactionType() {
 		return transactionType;
@@ -37,6 +39,22 @@ public class Request implements Serializable {
 
 	public void setLamportClock(Double lamportClock) {
 		this.lamportClock = lamportClock;
+	}
+
+	public int getSourceServerID() {
+		return sourceServerID;
+	}
+
+	public void setSourceServerID(int sourceServerID) {
+		this.sourceServerID = sourceServerID;
+	}
+
+	public int getAckCount() {
+		return ackCount;
+	}
+
+	public void setAckCount(int ackCount) {
+		this.ackCount = ackCount;
 	}
 
 }
