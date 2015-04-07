@@ -122,22 +122,22 @@ public class ServerManager {
 		System.out.println(serverID + " received client request : " + req
 				+ "\n");
 		incrementClock();
+
 		Request request = new Request();
 		request.setClientRequest(req);
 		request.setSourceServerID(serverID);
 		request.setSourceServerClock(getLamportClockCounter());
-		
-		incrementClock();
-		
-		request.setSenderServerID(serverID);
-		request.setSenderServerClock(getLamportClockCounter());
-		
-		// Set the acknowledgement for the current server.
-		request.getAckList().add(serverID);
-		reqQueue.add(request);
 		requestMap.put(getLamportClockCounter(), request);
 		// Store the output stream to a map for sending back the response
 		requestOuputStreamMap.put(getLamportClockCounter(), out);
+		incrementClock();
+		request.setSenderServerID(serverID);
+		request.setSenderServerClock(getLamportClockCounter());
+
+		// Set the acknowledgement for the current server.
+		request.getAckList().add(serverID);
+		reqQueue.add(request);
+
 		// multicast the request to all other servers.
 		repManager.multiCastMessage(request);
 	}
@@ -153,15 +153,19 @@ public class ServerManager {
 		// If yes, multicast ack.
 		System.out.println(serverID + " received server request : " + req
 				+ "\n");
-		
-		//record the time when the request has been received
-		reqReceiveTimeMap.put(req.getSourceServerClock(), new Long(new java.util.Date().getTime()));
-		
+
+		// record the time when the request has been received
+		reqReceiveTimeMap.put(req.getSourceServerClock(), new Long(
+				new java.util.Date().getTime()));
+
 		// Update the current server lamport clock if needed
 		if (req.getSenderServerClock() > getLamportClockCounter()) {
 			setLamportClockCounter(req.getSenderServerClock());
 		}
 
+		// record the time when the request has been received
+		reqReceiveTimeMap.put(req.getSourceServerClock(), new Long(
+				new java.util.Date().getTime()));
 		if (req.getReqType().equals("New")) {
 			req.setSenderServerID(serverID);
 			// If the current request is lesser than the server's clock - should
@@ -176,7 +180,7 @@ public class ServerManager {
 				setLamportClockCounter(req.getSourceServerClock());
 			}
 			requestMap.put(req.getSourceServerClock(), req);
-			
+
 			incrementClock();
 			req.setSenderServerID(serverID);
 			req.setSenderServerClock(getLamportClockCounter());
@@ -184,7 +188,8 @@ public class ServerManager {
 			// If there are received acknowledgements for this new request
 			// Append them.
 			if (tempAckMap.containsKey(req.getSourceServerClock())) {
-				for (int ackServerID : tempAckMap.get(req.getSourceServerClock())) {
+				for (int ackServerID : tempAckMap.get(req
+						.getSourceServerClock())) {
 					if (!req.getAckList().contains(ackServerID)) {
 						req.getAckList().add(ackServerID);
 						System.out.println("Adding acknowledged server "
@@ -197,7 +202,7 @@ public class ServerManager {
 			reqQueue.add(req);
 
 		} else {
-			
+
 			// If the received request is ack, update the request obj.
 			// Remote process has acknowledged.
 			incrementClock();
@@ -256,7 +261,7 @@ public class ServerManager {
 			status.append(bankOperations.transfer(param.getSrcAcctID(),
 					param.getDestAcctID(), param.getAmt()));
 			break;
-		case "HALT" :
+		case "HALT":
 			status.append(haltServer());
 			break;
 		default:
@@ -269,10 +274,10 @@ public class ServerManager {
 
 	public void executeOperation(Request req) {
 		String response = performOperation(req.getClientRequest());
-		//record the time when the request has been serviced into the map
-		reqServicedTimeMap.put(req.getSourceServerClock(), 
-								new Long(new java.util.Date().getTime()));
-	
+		// record the time when the request has been serviced into the map
+		reqServicedTimeMap.put(req.getSourceServerClock(), new Long(
+				new java.util.Date().getTime()));
+
 		System.out.println(serverID + " executed req : " + req);
 
 		// If the request was from this server, output has to be send back to
@@ -286,24 +291,25 @@ public class ServerManager {
 			}
 		}
 	}
-	
+
 	/**
 	 * performs the halt operations and sends back the response string
+	 * 
 	 * @return
 	 */
 	public String haltServer() {
-		//print final stats
+		// print final stats
 		printFinalStats();
-		
-		//close the logger
+
+		// close the logger
 		closeServerLogger();
-		
+
 		return "HALT Successful";
 	}
-	
+
 	public void closeServerLogger() {
-		//close server loggers since now we do not need them anymore
-		
+		// close server loggers since now we do not need them anymore
+
 	}
 
 	/**
@@ -316,19 +322,21 @@ public class ServerManager {
 		Iterator it = reqReceiveTimeMap.entrySet().iterator();
 		int count = 0;
 		long totalResponseTime = 0;
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			Map.Entry<Double, Long> pair = (Map.Entry) it.next();
-			//see if there is an entry in the response map
-			if(reqServicedTimeMap.containsKey(pair.getKey())) {
-				totalResponseTime += ((Long)reqServicedTimeMap.get(pair.getKey())).longValue()
-						- ((Long)pair.getValue()).longValue();
+			// see if there is an entry in the response map
+			if (reqServicedTimeMap.containsKey(pair.getKey())) {
+				totalResponseTime += ((Long) reqServicedTimeMap.get(pair
+						.getKey())).longValue()
+						- ((Long) pair.getValue()).longValue();
 				count++;
 			}
 		}
-		
-		//print out the average response time
-		System.out.println("Average response time = " + totalResponseTime/count);
-		
+
+		// print out the average response time
+		System.out.println("Average response time = " + totalResponseTime
+				/ count);
+
 	}
 
 	/**

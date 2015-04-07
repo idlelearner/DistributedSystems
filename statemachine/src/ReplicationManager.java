@@ -33,7 +33,7 @@ public class ReplicationManager {
 	/**
 	 * Establish connections with the peer servers to maintain connections
 	 */
-	public void startConnectionWithPeerServers() {
+	public synchronized void startConnectionWithPeerServers() {
 		try {
 			System.out.println("Replication manager init : starting");
 			Thread.sleep(5000);
@@ -67,7 +67,7 @@ public class ReplicationManager {
 	 * 
 	 * @param req
 	 */
-	public void multiCastMessage(Request req) {
+	public synchronized void multiCastMessage(Request req) {
 		req.setReqType("New");
 		for (int peerServerID : peerServerSocketMap.keySet()) {
 			Socket s = peerServerSocketMap.get(peerServerID);
@@ -81,7 +81,7 @@ public class ReplicationManager {
 	 * 
 	 * @param req
 	 */
-	public void multicastAcknowledgements(Request req) {
+	public synchronized void multicastAcknowledgements(Request req) {
 		// Specify that the request is acknowledgement
 		req.setReqType("Ack");
 		for (int peerServerID : peerServerSocketMap.keySet()) {
@@ -115,7 +115,7 @@ public class ReplicationManager {
 	// }
 	// }
 
-	public void sendMessage(int peerServerID, Request req) {
+	public synchronized void sendMessage(int peerServerID, Request req) {
 		try {
 			peerServerOuputStreamMap.get(peerServerID).writeObject(req);
 			// String status = (String) in.readObject();

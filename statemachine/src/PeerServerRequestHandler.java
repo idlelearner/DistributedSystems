@@ -30,11 +30,11 @@ public class PeerServerRequestHandler extends Thread {
 			ObjectOutputStream out = new ObjectOutputStream(ostream);
 			try {
 				while (true) {
-					// Get the request the from the server and perform some
-					// operation like give acknowledgement.
-					Request r = (Request) in.readObject();
-					// serverManager.
-					serverManager.receiveRequest(r);
+					// Get the request the from the peer servers
+//					synchronized (in) {
+						Request r = (Request) in.readObject();
+						serverManager.receiveRequest(r);
+//					}
 					// in.reset();
 				}
 			} catch (Exception e) {
