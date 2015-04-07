@@ -11,6 +11,7 @@ import java.util.List;
 public class Request implements Serializable {
 
 	// To mention whether the request is propagation or acknowledgement.
+	// It can be new or Ack.
 	String reqType;
 
 	int sourceServerID;
@@ -18,6 +19,8 @@ public class Request implements Serializable {
 
 	int senderServerID;
 	double senderServerClock;
+
+	// List of server IDs which acknowledged this request.
 	List<Integer> ackList = new ArrayList<>();
 	// Request from the client holding the operation.
 	ClientRequest clientRequest;

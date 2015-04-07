@@ -71,11 +71,21 @@ public class ServerManager {
 	}
 
 	/**
+	 * Set the server's lamport clock with the given clock and update the clock
+	 * with server ID as decimal Eg : for server 2 => n.2
+	 * 
+	 * @param clock
+	 */
+	public void setLamportClockCounter(double clock) {
+		lamportClockCounter = (double) ((int) clock) + serverID / 10;
+	}
+
+	/**
 	 * Add the request to the current server
 	 * 
 	 * @param req
 	 */
-	public void addToRequestQueue(ClientRequest req) {
+	public synchronized void addToRequestQueue(ClientRequest req) {
 		// On receiving the request from client increment the lamport clock
 		// Increment lamport clock
 		incrementClock();
@@ -85,6 +95,7 @@ public class ServerManager {
 		request.setSourceServerClock(getLamportClockCounter());
 		request.getAckList().add(serverID);
 		reqQueue.add(request);
+		requestMap.put(getLamportClockCounter(), request);
 		// multicast the request to all other servers.
 		repManager.multiCastMessage(request);
 	}
@@ -96,16 +107,34 @@ public class ServerManager {
 	 * @param req
 	 */
 	public void receiveRequest(Request req) {
-		// TODO : check if the received request has smaller lamport value.
+		// check if the received request has smaller lamport value.
 		// If yes, multicast ack.
+		if (req.getReqType().equals("New")) {
+			if (req.getSourceServerClock() < getLamportClockCounter()) {
+				req.getAckList().add(serverID);
+				req.setReqType("Ack");
+				repManager.multicastAcknowledgements(req);
+			} else {
+				setLamportClockCounter(req.getSourceServerClock());
+			}
+			requestMap.put(getLamportClockCounter(), req);
+			incrementClock();
+			req.setSenderServerID(serverID);
+			req.setSenderServerClock(getLamportClockCounter());
+			reqQueue.add(req);
 
-		// If the received request is ack, update the request obj.
-		// Need to work on.
-		incrementClock();
-		req.setSenderServerID(serverID);
-		req.setSenderServerClock(getLamportClockCounter());
+		} else {
+			// Update the current server lamport clock.
+			if (req.getSourceServerClock() > getLamportClockCounter()) {
+				setLamportClockCounter(req.getSenderServerClock());
+			}
+			// If the received request is ack, update the request obj.
+			// Remote process has acknowledged.
+			incrementClock();
+			requestMap.get(req.getSourceServerClock()).getAckList()
+					.add(req.getSenderServerID());
+		}
 
-		reqQueue.add(req);
 	}
 
 	/**
@@ -152,7 +181,7 @@ public class ServerManager {
 	 * server.
 	 */
 	public void printFinalStats() {
-		// When the client calls halt
+		// TODO : When the client calls halt
 		// print the avg response and balance in all the accts.
 	}
 
@@ -183,8 +212,9 @@ public class ServerManager {
 					// current have not acknowledged it, then acknowledge.
 					if (!reqQueue.peek().getAckList().contains(serverID)) {
 						reqQueue.peek().getAckList().add(serverID);
-						// TODO : Do we need to increment the lamport clock
+						// Increment the lamport clock
 						// before sending the acknowledgements
+						incrementClock();
 						reqQueue.peek().setSenderServerClock(
 								getLamportClockCounter());
 						repManager.multicastAcknowledgements(reqQueue.peek());

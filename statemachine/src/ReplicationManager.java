@@ -50,7 +50,7 @@ public class ReplicationManager {
 	}
 
 	/**
-	 * Multicast acknowledgements to the peerservers.
+	 * Multicast acknowledgements to the peer servers.
 	 * 
 	 * @param req
 	 */
