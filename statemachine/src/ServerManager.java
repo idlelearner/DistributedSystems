@@ -107,7 +107,7 @@ public class ServerManager {
 	 * @param clock
 	 */
 	public void setLamportClockCounter(double clock) {
-		lamportClockCounter = (double) ((int) clock) + serverID / 10;
+		lamportClockCounter = (double) ((double)(int) clock) + (serverID / 10.0);
 	}
 
 	/**
