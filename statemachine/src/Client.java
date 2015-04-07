@@ -63,39 +63,40 @@ public class Client {
 		// Wait till all other threads finish
 		for (int i = 0; i < serverConfigList.size(); i++)
 			tcList.get(i).join();
-		
-		//Send a request to the main server (0) to HALT
+
+		// Send a request to the main server (0) to HALT
 		sendHALTRequest(serverConfigList);
-		
+
 	}
-	
+
 	/**
 	 * Called by the main thread to send a HALT request to server with id 1
+	 * 
 	 * @param serverConfigList
 	 */
 	public static void sendHALTRequest(ArrayList<ServerDetails> serverConfigList) {
 		Socket socket;
 		try {
-			socket = new Socket(serverConfigList.get(1).getServerHostName(), 
-								serverConfigList.get(1).getClientport());
+			socket = new Socket(serverConfigList.get(1).getServerHostName(),
+					serverConfigList.get(1).getClientport());
 			OutputStream rawOut = socket.getOutputStream();
 			InputStream rawIn = socket.getInputStream();
 			ObjectOutputStream out = new ObjectOutputStream(rawOut);
 			ObjectInputStream in = new ObjectInputStream(rawIn);
-			
+
 			ClientRequest halt = new ClientRequest();
 			halt.transactionType = "HALT";
 			halt.params = new Parameter();
-			
+
 			out.writeObject(halt);
 
 			in.close();
-			
+
 			socket.close();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 }

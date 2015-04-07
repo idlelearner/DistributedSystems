@@ -39,7 +39,7 @@ public class TransferClient extends Thread {
 
 	public void run() {
 		try {
-			System.out.println("\nNew thread created :"
+			System.out.print("\nNew thread created :"
 					+ Thread.currentThread().getId());
 			OutputStream rawOut = socket.getOutputStream();
 			InputStream rawIn = socket.getInputStream();
@@ -48,17 +48,17 @@ public class TransferClient extends Thread {
 			Random rnd = new Random();
 			for (int i = 0; i < iterationCount; i++) {
 				// Get random accts and perform transfer.
-				System.out.println("\nThread ID :"
+				System.out.print("\nThread ID :"
 						+ Thread.currentThread().getId() + " Iteration " + i);
 				int rndacctID1 = rnd.nextInt(accts.size());
 				int rndacctID2 = rnd.nextInt(accts.size());
 				transfer(accts.get(rndacctID1), accts.get(rndacctID2), 10, out,
 						in);
-				System.out.println("\nTransfer completed between "
+				System.out.print("\nTransfer completed between "
 						+ accts.get(rndacctID1) + " and "
 						+ accts.get(rndacctID2));
 			}
-			
+
 			out.close();
 			in.close();
 			socket.close();
@@ -85,10 +85,10 @@ public class TransferClient extends Thread {
 		ClientRequest transfer = new ClientRequest();
 		transfer.transactionType = "transfer";
 		transfer.params = new Parameter(acctID1, acctID2, amt);
-		System.out.println("\nclientrequest type" + transfer.transactionType);
-		System.out.println("\nclient params" + transfer.params);
+		System.out.print("\nclientrequest type" + transfer.transactionType);
+		System.out.print("\nclient params" + transfer.params);
 		out.writeObject(transfer);
 		String status = (String) in.readObject();
-		System.out.println("\nServer Response" + status);
+		System.out.print("\nServer Response : " + status);
 	}
 }

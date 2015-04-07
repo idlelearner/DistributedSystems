@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,6 +26,8 @@ public class ServerManager {
 	Map<Double, ObjectOutputStream> requestOuputStreamMap;
 	Map<Double, Long> reqReceiveTimeMap;
 	Map<Double, Long> reqServicedTimeMap;
+	Map<Double, ArrayList<Integer>> tempAckMap;
+	ServerOperationExecutor executor;
 
 	public ServerManager(int serverID, List<ServerDetails> peerServerList) {
 		log = ServerLogger.getInstance();
@@ -43,16 +46,22 @@ public class ServerManager {
 		// Map for easy updation of the request objects.
 		requestMap = new HashMap<>();
 		requestOuputStreamMap = new HashMap<>();
+		tempAckMap = new HashMap<>();
+
 		this.serverID = serverID;
 		// Clockvalue starts as 0.1 for server1, 0.2 - server2.
 		System.out.println("Server ID : " + serverID);
-		lamportClockCounter = (double) ((serverID)/10.0);
+		lamportClockCounter = (double) ((serverID) / 10.0);
 		System.out.println("Init Lamport clock value : " + lamportClockCounter);
 		// Loaders to create accounts with balance.
 		initCreateAccounts();
 		System.out.println("Server : user accounts created");
 		System.out.println("Ready to accept requests");
 		repManager = new ReplicationManager(peerServerList);
+
+		// Start the executor thread.
+		executor = new ServerOperationExecutor(repManager, bankOperations);
+		executor.start();
 	}
 
 	/**
@@ -60,7 +69,7 @@ public class ServerManager {
 	 */
 	public void initCreateAccounts() {
 		int amount = 1000;
-		for (int i = 1; i < 10; i++) {
+		for (int i = 1; i <= 10; i++) {
 			// Create accounts and deposit $1000
 			int acctID = bankOperations.createAccount("first-" + i, "last" + i,
 					"address" + i);
@@ -143,17 +152,36 @@ public class ServerManager {
 		reqReceiveTimeMap.put(req.getSourceServerClock(), new Long(new java.util.Date().getTime()));
 
 		if (req.getReqType().equals("New")) {
-			if (req.getSourceServerClock() < getLamportClockCounter()) {
+			req.setSenderServerID(serverID);
+			// If the current request is lesser than the server's clock - should
+			// be taken from the head of the queue??
+			// Acknowledge the reqs Eg: 1.1 < 1.2
+			if (req.getSourceServerClock() < reqQueue.peek()
+					.getSourceServerClock()) {
 				req.getAckList().add(serverID);
 				req.setReqType("Ack");
 				repManager.multicastAcknowledgements(req);
 			} else {
 				setLamportClockCounter(req.getSourceServerClock());
 			}
-			requestMap.put(getLamportClockCounter(), req);
+			requestMap.put(req.getSourceServerClock(), req);
 			incrementClock();
 			req.setSenderServerID(serverID);
 			req.setSenderServerClock(getLamportClockCounter());
+
+			// If there are received acknowledgements for this new request
+			// Append them.
+			if (tempAckMap.containsKey(req.getSourceServerClock())) {
+				for (int ackServerID : tempAckMap.get(req.getSourceServerClock())) {
+					if (!req.getAckList().contains(ackServerID)) {
+						req.getAckList().add(ackServerID);
+						System.out.println("Adding acknowledged server "
+								+ ackServerID + " to new "
+								+ req.getSourceServerClock());
+					}
+				}
+				tempAckMap.remove(req.getSourceServerClock());
+			}
 			reqQueue.add(req);
 
 		} else {
@@ -164,10 +192,28 @@ public class ServerManager {
 			// If the received request is ack, update the request obj.
 			// Remote process has acknowledged.
 			incrementClock();
-			requestMap.get(req.getSourceServerClock()).getAckList()
-					.add(req.getSenderServerID());
-		}
 
+			// If the received request is ack and the new request has not
+			// yet arrived,then add it to a temporary map
+			if (!requestMap.containsKey(req.getSourceServerClock())) {
+				if (!tempAckMap.containsKey(req.getSourceServerClock())) {
+					tempAckMap.put(req.getSourceServerClock(),
+							new ArrayList<Integer>());
+				}
+				if (!tempAckMap.get(req.getSourceServerClock()).contains(
+						req.getSourceServerClock())) {
+					System.out.println("Adding " + req.getSourceServerClock()
+							+ " to tmpMap with Server"
+							+ req.getSenderServerID());
+					tempAckMap.get(req.getSourceServerClock()).add(
+							req.getSenderServerID());
+				}
+			} else {
+				requestMap.get(req.getSourceServerClock()).getAckList()
+						.add(req.getSenderServerID());
+			}
+		}
+		// System.out.println("Head of the queue : " + reqQueue.peek());
 	}
 
 	/**
@@ -217,7 +263,9 @@ public class ServerManager {
 		//record the time when the request has been serviced into the map
 		reqServicedTimeMap.put(req.getSourceServerClock(), 
 								new Long(new java.util.Date().getTime()));
-		
+	
+		System.out.println(serverID + " executed req : " + req);
+
 		// If the request was from this server, output has to be send back to
 		// the client.
 		if (req.getSourceServerID() == serverID) {
@@ -280,7 +328,7 @@ public class ServerManager {
 	 * @author thirunavukarasu
 	 *
 	 */
-	class ServerOperationExecutor implements Runnable {
+	class ServerOperationExecutor extends Thread {
 		ReplicationManager repManager;
 		BankOperations bankOperations;
 
@@ -293,23 +341,34 @@ public class ServerManager {
 		@Override
 		public void run() {
 			while (true) {
-				// if the request got
-				if (reqQueue.peek().getAckList().size() >= 3) {
-					executeOperation(reqQueue.poll());
-				} else {
-					// If the request is at the head of the queue and the
-					// current have not acknowledged it, then acknowledge.
-					if (!reqQueue.peek().getAckList().contains(serverID)) {
-						reqQueue.peek().getAckList().add(serverID);
-						// Increment the lamport clock
-						// before sending the acknowledgements
-						incrementClock();
-						reqQueue.peek().setSenderServerClock(
-								getLamportClockCounter());
-						repManager.multicastAcknowledgements(reqQueue.peek());
+				if (!reqQueue.isEmpty()) {
+					// If the request got all acknowledgement then execute the
+					// operation
+					if (reqQueue.peek().getAckList().size() >= 3) {
+						executeOperation(reqQueue.poll());
+					} else {
+						// If the request is at the head of the queue and the
+						// current have not acknowledged it, then acknowledge.
+						if (!reqQueue.peek().getAckList().contains(serverID)) {
+							reqQueue.peek().getAckList().add(serverID);
+							// Increment the lamport clock
+							// before sending the acknowledgements
+							incrementClock();
+							reqQueue.peek().setSenderServerClock(
+									getLamportClockCounter());
+							repManager.multicastAcknowledgements(reqQueue
+									.peek());
+						}
 					}
-				}
+				} else
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
+
 		}
 	}
 

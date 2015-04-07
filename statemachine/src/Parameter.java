@@ -12,9 +12,9 @@ public class Parameter implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	int acctID;
-	String firstname;
-	String lastname;
-	String address;
+	String firstname = "";
+	String lastname = "";
+	String address = "";
 	int amt;
 	int srcAcctID;
 	int destAcctID;
