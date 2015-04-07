@@ -18,7 +18,8 @@ import java.util.Map;
  */
 public class ReplicationManager {
 	List<ServerDetails> peerServerDetails;
-	Map<Integer, Socket> peerServerSocketMap = new HashMap<Integer, Socket>();;
+	Map<Integer, Socket> peerServerSocketMap = new HashMap<Integer, Socket>();
+	Map<Integer, ObjectOutputStream> peerServerOuputStreamMap = new HashMap<>();
 
 	public ReplicationManager() {
 		peerServerDetails = new ArrayList<ServerDetails>();
@@ -46,7 +47,12 @@ public class ReplicationManager {
 						+ peerServer.getPeerServerPort());
 				Socket socket = new Socket(peerServer.getServerHostName(),
 						peerServer.getPeerServerPort());
+
 				peerServerSocketMap.put(peerServer.getID(), socket);
+				OutputStream rawOut = socket.getOutputStream();
+				ObjectOutputStream out = new ObjectOutputStream(rawOut);
+				peerServerOuputStreamMap.put(peerServer.getID(), out);
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -65,7 +71,8 @@ public class ReplicationManager {
 		req.setReqType("New");
 		for (int peerServerID : peerServerSocketMap.keySet()) {
 			Socket s = peerServerSocketMap.get(peerServerID);
-			sendMessage(s, req);
+			// sendMessage(s, req);
+			sendMessage(peerServerID, req);
 		}
 	}
 
@@ -79,7 +86,8 @@ public class ReplicationManager {
 		req.setReqType("Ack");
 		for (int peerServerID : peerServerSocketMap.keySet()) {
 			Socket s = peerServerSocketMap.get(peerServerID);
-			sendMessage(s, req);
+			// sendMessage(s, req);
+			sendMessage(peerServerID, req);
 		}
 	}
 
@@ -89,15 +97,27 @@ public class ReplicationManager {
 	 * @param socket
 	 * @param req
 	 */
-	public void sendMessage(Socket socket, Request req) {
+	// public void sendMessage(Socket socket, Request req) {
+	//
+	// try {
+	// OutputStream rawOut = socket.getOutputStream();
+	// InputStream rawIn = socket.getInputStream();
+	// ObjectOutputStream out = new ObjectOutputStream(rawOut);
+	// ObjectInputStream in = new ObjectInputStream(rawIn);
+	//
+	// out.writeObject(req);
+	// // String status = (String) in.readObject();
+	// // System.out.println(status);
+	//
+	// } catch (IOException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
 
+	public void sendMessage(int peerServerID, Request req) {
 		try {
-			OutputStream rawOut = socket.getOutputStream();
-			InputStream rawIn = socket.getInputStream();
-			ObjectOutputStream out = new ObjectOutputStream(rawOut);
-			ObjectInputStream in = new ObjectInputStream(rawIn);
-
-			out.writeObject(req);
+			peerServerOuputStreamMap.get(peerServerID).writeObject(req);
 			// String status = (String) in.readObject();
 			// System.out.println(status);
 
@@ -106,6 +126,7 @@ public class ReplicationManager {
 			e.printStackTrace();
 		}
 	}
+
 	// public void receiveMessages();
 
 }

@@ -38,7 +38,7 @@ public class PeerServerRequestHandler extends Thread {
 					serverManager.receiveRequest(r);
 					// if (r.getTransactionType().contains("exit"))
 					// break;
-					out.writeObject("return response to client after performing operation");
+//					out.writeObject("return response to client after performing operation");
 				}
 				// out.writeObject(response.toString());
 				// out.writeObject("exit");

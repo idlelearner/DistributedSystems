@@ -40,7 +40,9 @@ public class ServerManager {
 		requestOuputStreamMap = new HashMap<>();
 		this.serverID = serverID;
 		// Clockvalue starts as 0.1 for server1, 0.2 - server2.
-		lamportClockCounter = 0.0 + serverID / 10;
+		System.out.println("Server ID : " + serverID);
+		lamportClockCounter = (double) ((serverID)/10.0);
+		System.out.println("Init Lamport clock value : " + lamportClockCounter);
 		// Loaders to create accounts with balance.
 		initCreateAccounts();
 		System.out.println("Server : user accounts created");
@@ -103,7 +105,8 @@ public class ServerManager {
 			ObjectOutputStream out) {
 		// On receiving the request from client increment the lamport clock
 		// Increment lamport clock
-		System.out.println(serverID + " received client request : " + req);
+		System.out.println(serverID + " received client request : " + req
+				+ "\n");
 		incrementClock();
 		Request request = new Request();
 		request.setClientRequest(req);
@@ -128,7 +131,8 @@ public class ServerManager {
 	public void receiveRequest(Request req) {
 		// check if the received request has smaller lamport value.
 		// If yes, multicast ack.
-		System.out.println(serverID + " received server request : " + req);
+		System.out.println(serverID + " received server request : " + req
+				+ "\n");
 
 		if (req.getReqType().equals("New")) {
 			if (req.getSourceServerClock() < getLamportClockCounter()) {
@@ -226,11 +230,11 @@ public class ServerManager {
 	 * @author thirunavukarasu
 	 *
 	 */
-	class ServerOperationExecuter implements Runnable {
+	class ServerOperationExecutor implements Runnable {
 		ReplicationManager repManager;
 		BankOperations bankOperations;
 
-		public ServerOperationExecuter(ReplicationManager repManager,
+		public ServerOperationExecutor(ReplicationManager repManager,
 				BankOperations bankOperations) {
 			this.repManager = repManager;
 			this.bankOperations = bankOperations;

@@ -104,10 +104,10 @@ public class Request implements Serializable {
 	}
 
 	public String toString() {
-		return "ReqType : " + reqType + ": sourceServerID : " + sourceServerID
-				+ "sourceServerClock : " + sourceServerClock
+		return "ReqType : " + reqType + " : sourceServerID : " + sourceServerID
+				+ " sourceServerClock : " + sourceServerClock
 				+ " : senderServerID : " + senderServerID
-				+ "senderServerClock : " + senderServerClock + " : ackList"
+				+ " senderServerClock : " + senderServerClock + " : ackList"
 				+ ackList + " : clientRequest : " + clientRequest;
 	}
 }
