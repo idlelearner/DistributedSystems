@@ -193,6 +193,9 @@ public class ServerManager {
 			status.append(bankOperations.transfer(param.getSrcAcctID(),
 					param.getDestAcctID(), param.getAmt()));
 			break;
+		case "HALT" :
+			status.append(haltServer());
+			break;
 		default:
 			status.append("Operation not supported!");
 			break;
@@ -213,6 +216,25 @@ public class ServerManager {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	/**
+	 * performs the halt operations and sends back the response string
+	 * @return
+	 */
+	public String haltServer() {
+		//print final stats
+		printFinalStats();
+		
+		//close the logger
+		closeServerLogger();
+		
+		return "HALT Successful";
+	}
+	
+	public void closeServerLogger() {
+		//close server loggers since now we do not need them anymore
+		
 	}
 
 	/**
