@@ -8,6 +8,10 @@ import java.io.Serializable;
  */
 public class Account implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int acctID;
 	private String firstname;
 	private String lastname;

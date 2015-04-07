@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -16,16 +17,37 @@ public class ServerManager {
 	PriorityQueue<Request> reqQueue;
 	protected int serverID;
 
-	public ServerManager(int serverID, BankOperations bankOperations,
-			List<ServerDetails> peerServerList) {
-		this.bankOperations = bankOperations;
-		// TODO : Write loaders to load the bank account.
+	public ServerManager(int serverID, List<ServerDetails> peerServerList) {
 		repManager = new ReplicationManager();
 		log = ServerLogger.getInstance();
 		lamportClockCounter = 0.0;
-		reqQueue = new PriorityQueue<Request>();
-		this.serverID = serverID;
+		bankOperations = new BankOperations();
+		reqQueue = new PriorityQueue<Request>(10000, new Comparator<Request>() {
+			@Override
+			public int compare(Request r1, Request r2) {
+				return Double.compare(r1.getLamportClock(),
+						r2.getLamportClock());
+			}
+		});
 
+		// TODO : Need to add a map for easy updation of the request objects.
+		// <CLock, Request>
+
+		this.serverID = serverID;
+		// Loaders to create accounts with balance.
+		initCreateAccounts();
+		log.write("Server : user accounts created");
+		log.write("Ready to accept requests");
+	}
+
+	public void initCreateAccounts() {
+		int amount = 1000;
+		for (int i = 1; i < 10; i++) {
+			// Create accounts and deposit $1000
+			int acctID = bankOperations.createAccount("first-" + i, "last" + i,
+					"address" + i);
+			bankOperations.deposit(acctID, amount);
+		}
 	}
 
 	/**
@@ -50,12 +72,23 @@ public class ServerManager {
 	 * @param req
 	 */
 	public void addToRequestQueue(Request req) {
+		// On receiving the request from client increment the lamport clock
 		incrementClock();
 		req.setLamportClock(getLamportClockCounter());
 		req.setAckCount(1);
 		req.setSourceServerID(serverID);
 		reqQueue.add(req);
 		repManager.multiCastMessage(req);
+	}
+
+	/**
+	 * When a request from different server is received. Add the request to the
+	 * queue.
+	 * 
+	 * @param req
+	 */
+	public void receiveRequest(Request req) {
+		reqQueue.add(req);
 	}
 
 	/**
@@ -97,9 +130,16 @@ public class ServerManager {
 		return status.toString();
 	}
 
+	/**
+	 * Thread to check the queue and execute the operation.
+	 * 
+	 * @author thirunavukarasu
+	 *
+	 */
 	class ServerOperationExecuter implements Runnable {
 		ReplicationManager repManager;
 		BankOperations bankOperations;
+
 		public ServerOperationExecuter(ReplicationManager repManager,
 				BankOperations bankOperations) {
 			this.repManager = repManager;
@@ -108,9 +148,18 @@ public class ServerManager {
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
 			while (true) {
-				
+				// if the request got
+				if (reqQueue.peek().sourceServerID == serverID) {
+					if (reqQueue.peek().getAckCount() >= 3) {
+						performOperation(reqQueue.poll());
+					}
+				} else {
+					// check for the other case where the request has arrived
+					// from different server.
+					// When to execute??
+
+				}
 			}
 		}
 	}

@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This client loops till iteration count and transfers amount between randomly
- * selected accounts
+ * This thread connects to one of the server and performs transfer operations
  * 
  * @author dhass
  *
@@ -23,17 +22,17 @@ public class TransferClient extends Thread {
 	List<Integer> accts = new ArrayList<Integer>();
 	ClientLogger log;
 
-	public TransferClient(String host, int port, int itCount,
-			List<Integer> accts) {
+	public TransferClient(String host, int port) {
 		this.host = host;
 		this.port = port;
-		this.iterationCount = itCount;
-		this.accts = accts;
+		this.iterationCount = 100;
+		// Initialize acct IDs.
+		for (int i = 1; i <= 10; i++)
+			accts.add(i);
 		log = ClientLogger.getInstance();
 		try {
 			socket = new Socket(host, port);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -58,6 +57,8 @@ public class TransferClient extends Thread {
 						+ accts.get(rndacctID1) + " and "
 						+ accts.get(rndacctID2));
 			}
+
+			// Send a halt message and to shutdown the server.
 			Request exit = new Request();
 			exit.transactionType = "exit";
 			exit.params = new Parameter();

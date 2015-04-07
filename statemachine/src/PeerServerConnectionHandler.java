@@ -30,7 +30,6 @@ public class PeerServerConnectionHandler extends Thread {
 			Socket peerServer;
 			try {
 				peerServer = serverForPeerConnections.accept();
-
 				System.out.println("Received request from "
 						+ peerServer.getInetAddress());
 				PeerServerRequestHandler s = new PeerServerRequestHandler(

@@ -26,8 +26,6 @@ public class PeerServerRequestHandler extends Thread {
 		try {
 			InputStream istream = s.getInputStream();
 			OutputStream ostream = s.getOutputStream();
-			// new PrintStream (ostream).println
-			// ("Welcome to the multithreaded echo server.");
 			ObjectInputStream in = new ObjectInputStream(istream);
 			ObjectOutputStream out = new ObjectOutputStream(ostream);
 			try {
@@ -36,13 +34,10 @@ public class PeerServerRequestHandler extends Thread {
 					// operation like give acknowledgement.
 					// TODO : get request and reply acknowledgement.
 					Request r = (Request) in.readObject();
-					// log.write("Transaction type : " +
-					// r.getTransactionType());
-					// log.write("Parameter received : " + r.params);
+					// serverManager.
+
 					if (r.getTransactionType().contains("exit"))
 						break;
-					// response.append(performOperation(r) + "\n");
-					// out.writeObject(performOperation(r));
 					out.writeObject("return response to client after performing operation");
 				}
 				// out.writeObject(response.toString());
@@ -53,8 +48,8 @@ public class PeerServerRequestHandler extends Thread {
 			in.close();
 
 			out.close();
-//			log.write("Server connection exitting.");
-//			System.out.println("Server exitting.");
+			// log.write("Server connection exitting.");
+			// System.out.println("Server exitting.");
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {

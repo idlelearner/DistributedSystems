@@ -1,5 +1,8 @@
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -11,7 +14,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientB {
+public class Client {
 	protected String host, file;
 	protected int port;
 	protected DataInputStream in;
@@ -20,54 +23,45 @@ public class ClientB {
 
 	public static void main(String[] args) throws UnknownHostException,
 			IOException, ClassNotFoundException, InterruptedException {
-		InetAddress server = null;
-		Socket sock = null;
-		String host = args[0];
-		int port = Integer.parseInt(args[1]);
-		int threadCount = Integer.parseInt(args[2]);
-		int iterationCount = Integer.parseInt(args[3]);
-		if (args.length < 4) {
-			throw new RuntimeException("hostname and port number as arguments");
-		}
-		ClientB clt = new ClientB();
-		System.out.println("Connecting to " + host + ":" + port + "..");
-		Socket socket = new Socket(host, port);
-		System.out.println("Connected.");
-		OutputStream rawOut = socket.getOutputStream();
-		InputStream rawIn = socket.getInputStream();
-		ObjectOutputStream out = new ObjectOutputStream(rawOut);
-		ObjectInputStream in = new ObjectInputStream(rawIn);
 
-		int noOfAccts = 100;
-		System.out.println("Creating accts...");
-		List<Integer> accts = clt.createAccts(noOfAccts, out, in);
-		System.out.println("Depositing amt in accts...");
-		clt.deposit(accts, 100, out, in);
-		System.out.println("Balance before transferring amt between accts : "
-				+ clt.getTotalBalance(accts, out, in));
+		if (args.length < 1) {
+			throw new RuntimeException(
+					"Config file has to be mentioned as argument");
+		}
+
+		String configFile = args[0];
+		ArrayList<ServerDetails> serverConfigList = new ArrayList<ServerDetails>();
+		File file = new File(configFile);
+		BufferedReader in = new BufferedReader(new FileReader(file));
+		String line;
+		while ((line = in.readLine()) != null) {
+			if (line.length() > 0) {
+				// Process line of input Here
+				String params[] = line.split(" ");
+				String hostname = params[0];
+				int id = Integer.parseInt(params[1]);
+				int clientPortID = Integer.parseInt(params[2]);
+				int peerServerPortID = Integer.parseInt(params[3]);
+				ServerDetails serverDetails = new ServerDetails(hostname, id,
+						clientPortID, peerServerPortID);
+				System.out.println(serverDetails);
+				serverConfigList.add(serverDetails);
+			}
+		}
+
 		// Create threads to transfer amount
 		List<TransferClient> tcList = new ArrayList<TransferClient>();
-		for (int i = 0; i < threadCount; i++) {
-			TransferClient tc = new TransferClient(host, port, iterationCount,
-					accts);
+		for (int i = 0; i < serverConfigList.size(); i++) {
+			TransferClient tc = new TransferClient(serverConfigList.get(0)
+					.getServerHostName(), serverConfigList.get(0)
+					.getClientport());
 			tc.start();
 			tcList.add(tc);
 		}
 
 		// Wait till all other threads finish
-		for (int i = 0; i < threadCount; i++)
+		for (int i = 0; i < serverConfigList.size(); i++)
 			tcList.get(i).join();
-
-		System.out.println("Balance after transferring amt between accts : "
-				+ clt.getTotalBalance(accts, out, in));
-
-		Request exit = new Request();
-		exit.transactionType = "final client exit";
-		exit.params = new Parameter();
-		clt.log.write("final client exit");
-		out.writeObject(exit);
-		in.close();
-		socket.close();
 
 	}
 

@@ -18,24 +18,20 @@ public class Server extends Thread {
 	protected ServerManager serverManager;
 	protected ServerLogger log;
 
-	public Server(Socket s, ServerManager serverManager,
-			BankOperations bankOperations) {
+	public Server(Socket s, ServerManager serverManager) {
 		System.out.println("New client.");
 		this.s = s;
 		this.serverManager = serverManager;
-		this.bankOperations = bankOperations;
 		log = ServerLogger.getInstance();
 	}
 
 	public static void main(String[] args) throws FileNotFoundException,
 			IOException {
-		// TODO : Pass the config to the program
-		// Read and form the object and start.
 
+		// Get the config file
 		String configFile = args[0];
+		// Server ID specify the current server ID.
 		int serverID = Integer.parseInt(args[1]);
-
-		// TODO : create the List of Server start files.
 
 		ArrayList<ServerDetails> serverConfigList = new ArrayList<ServerDetails>();
 		File file = new File(configFile);
@@ -56,9 +52,11 @@ public class Server extends Thread {
 			}
 		}
 
-		// TODO : Get the peer server details.
+		// Get the peer server details.
 		ArrayList<ServerDetails> peerServerList = new ArrayList<ServerDetails>();
+		// Current server
 		ServerDetails curServer = null;
+
 		for (ServerDetails server : serverConfigList) {
 			if (server.getID() != serverID) {
 				peerServerList.add(server);
@@ -66,23 +64,26 @@ public class Server extends Thread {
 				curServer = server;
 		}
 
-		BankOperations bankOperations = new BankOperations();
 		ServerManager serverManager = new ServerManager(curServer.getID(),
-				bankOperations, peerServerList);
-		ServerSocket serverForClientConnections = new ServerSocket(
-				curServer.getClientport());
+				peerServerList);
+
+		// Connection handler for the peer servers.
 		ServerSocket serverForPeerConnections = new ServerSocket(
 				curServer.getPeerServerPort());
-
 		PeerServerConnectionHandler peerConnections = new PeerServerConnectionHandler(
 				serverForPeerConnections, serverManager);
+		peerConnections.start();
+
+		// Server socket to accept connections from clients
+		ServerSocket serverForClientConnections = new ServerSocket(
+				curServer.getClientport());
 
 		while (true) {
 			System.out.println("Waiting for a client request");
 			Socket client = serverForClientConnections.accept();
 			System.out.println("Received request from "
 					+ client.getInetAddress());
-			Server s = new Server(client, serverManager, bankOperations);
+			Server s = new Server(client, serverManager);
 			s.start();
 		}
 
@@ -93,8 +94,6 @@ public class Server extends Thread {
 		try {
 			InputStream istream = s.getInputStream();
 			OutputStream ostream = s.getOutputStream();
-			// new PrintStream (ostream).println
-			// ("Welcome to the multithreaded echo server.");
 			ObjectInputStream in = new ObjectInputStream(istream);
 			ObjectOutputStream out = new ObjectOutputStream(ostream);
 			try {
@@ -104,6 +103,9 @@ public class Server extends Thread {
 					log.write("Parameter received : " + r.params);
 					if (r.getTransactionType().contains("exit"))
 						break;
+
+					serverManager.addToRequestQueue(r);
+					// TODO :How to send the response object back to client.
 					// response.append(performOperation(r) + "\n");
 					// out.writeObject(performOperation(r));
 					out.writeObject("return response to client after performing operation");

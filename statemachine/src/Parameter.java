@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 /**
- * Paramter object embeded in request object to send parameters to the server
+ * Parameter object embedded in request object to send parameters to the server
  * 
  * @author dhass
  *
