@@ -101,14 +101,15 @@ public class Server extends Thread {
 					ClientRequest r = (ClientRequest) in.readObject();
 					log.write("Transaction type : " + r.getTransactionType());
 					log.write("Parameter received : " + r.params);
+					// TODO : Add logic for halt.
 					if (r.getTransactionType().contains("exit"))
 						break;
 
-					serverManager.addToRequestQueue(r);
+					serverManager.addToRequestQueue(r, out);
 					// TODO :How to send the response object back to client.
 					// response.append(performOperation(r) + "\n");
 					// out.writeObject(performOperation(r));
-					out.writeObject("return response to client after performing operation");
+					//out.writeObject("return response to client after performing operation");
 				}
 				// out.writeObject(response.toString());
 				out.writeObject("exit");

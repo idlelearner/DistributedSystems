@@ -1,3 +1,4 @@
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +26,25 @@ public class Request implements Serializable {
 	// Request from the client holding the operation.
 	ClientRequest clientRequest;
 
+	// Output stream for the client
+	ObjectOutputStream clientOutputStream;
+
 	public Request() {
 	}
 
 	public Request(String reqType, int sourceServerID,
 			double sourceServerClock, int senderServerID,
 			double senderServerClock, List<Integer> ackList,
-			ClientRequest clientRequest) {
+			ClientRequest clientRequest, ObjectOutputStream clientOutputStream) {
 		super();
 		this.reqType = reqType;
 		this.sourceServerID = sourceServerID;
 		this.sourceServerClock = sourceServerClock;
 		this.senderServerID = senderServerID;
 		this.senderServerClock = senderServerClock;
-		this.clientRequest = clientRequest;
 		this.ackList = ackList;
+		this.clientRequest = clientRequest;
+		this.clientOutputStream = clientOutputStream;
 	}
 
 	public String getReqType() {
@@ -96,6 +101,14 @@ public class Request implements Serializable {
 
 	public void setAckList(List<Integer> ackList) {
 		this.ackList = ackList;
+	}
+
+	public ObjectOutputStream getClientOutputStream() {
+		return clientOutputStream;
+	}
+
+	public void setClientOutputStream(ObjectOutputStream clientOutputStream) {
+		this.clientOutputStream = clientOutputStream;
 	}
 
 }

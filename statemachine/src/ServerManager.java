@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,7 @@ public class ServerManager {
 		repManager = new ReplicationManager();
 		log = ServerLogger.getInstance();
 		bankOperations = new BankOperations();
+		// Queue to order the updates based on the lamport clock
 		reqQueue = new PriorityQueue<Request>(10000, new Comparator<Request>() {
 			@Override
 			public int compare(Request r1, Request r2) {
@@ -32,7 +35,7 @@ public class ServerManager {
 			}
 		});
 
-		// TODO : Need to add a map for easy updation of the request objects.
+		// Map for easy updation of the request objects.
 		requestMap = new HashMap<>();
 
 		this.serverID = serverID;
@@ -44,6 +47,9 @@ public class ServerManager {
 		log.write("Ready to accept requests");
 	}
 
+	/**
+	 * Loader to initialize with 10 accts and deposit $1000
+	 */
 	public void initCreateAccounts() {
 		int amount = 1000;
 		for (int i = 1; i < 10; i++) {
@@ -55,7 +61,7 @@ public class ServerManager {
 	}
 
 	/**
-	 * Increment the lamport clock value
+	 * Increment the lamport clock value by 1.
 	 */
 	public void incrementClock() {
 		lamportClockCounter++;
@@ -85,7 +91,8 @@ public class ServerManager {
 	 * 
 	 * @param req
 	 */
-	public synchronized void addToRequestQueue(ClientRequest req) {
+	public synchronized void addToRequestQueue(ClientRequest req,
+			ObjectOutputStream out) {
 		// On receiving the request from client increment the lamport clock
 		// Increment lamport clock
 		incrementClock();
@@ -93,7 +100,9 @@ public class ServerManager {
 		request.setClientRequest(req);
 		request.setSourceServerID(serverID);
 		request.setSourceServerClock(getLamportClockCounter());
+		// Set the acknowledgement for the current server.
 		request.getAckList().add(serverID);
+		request.setClientOutputStream(out);
 		reqQueue.add(request);
 		requestMap.put(getLamportClockCounter(), request);
 		// multicast the request to all other servers.
@@ -176,6 +185,20 @@ public class ServerManager {
 		return status.toString();
 	}
 
+	public void executeOperation(Request req) {
+		String response = performOperation(req.getClientRequest());
+
+		// if the request was from this server, output has to be send back to
+		// the client.
+		if (req.getSourceServerID() == serverID) {
+			try {
+				req.getClientOutputStream().writeObject(response);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	/**
 	 * Method to print the final stats of the server when HALT is called on the
 	 * server.
@@ -206,7 +229,7 @@ public class ServerManager {
 			while (true) {
 				// if the request got
 				if (reqQueue.peek().getAckList().size() >= 3) {
-					performOperation(reqQueue.poll().getClientRequest());
+					executeOperation(reqQueue.poll());
 				} else {
 					// If the request is at the head of the queue and the
 					// current have not acknowledged it, then acknowledge.

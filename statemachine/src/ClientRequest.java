@@ -1,7 +1,8 @@
 import java.io.Serializable;
 
 /**
- * Request object send from the client
+ * Request object send from the client consisting of parameters and transaction
+ * type.
  * 
  * @author dhass
  *

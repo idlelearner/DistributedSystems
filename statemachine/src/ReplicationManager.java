@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Replication Manager maintains connections with the peer servers and
+ * multicasts the messages and acknowledgements
+ * 
+ * @author dhass
+ *
+ */
 public class ReplicationManager {
 	List<ServerDetails> peerServerDetails;
 	Map<Integer, Socket> peerServerSocketMap;
@@ -24,7 +31,7 @@ public class ReplicationManager {
 	}
 
 	/**
-	 * Establish connections with the peer servers to maintain
+	 * Establish connections with the peer servers to maintain connections
 	 */
 	public void startConnectionWithPeerServers() {
 		for (ServerDetails peerServer : peerServerDetails) {
@@ -41,6 +48,11 @@ public class ReplicationManager {
 		}
 	}
 
+	/**
+	 * Multicast the new requests to all the peer servers.
+	 * 
+	 * @param req
+	 */
 	public void multiCastMessage(Request req) {
 		req.setReqType("New");
 		for (int peerServerID : peerServerSocketMap.keySet()) {
@@ -63,6 +75,12 @@ public class ReplicationManager {
 		}
 	}
 
+	/**
+	 * Sends the request object to the respective socket
+	 * 
+	 * @param socket
+	 * @param req
+	 */
 	public void sendMessage(Socket socket, Request req) {
 
 		try {
