@@ -23,7 +23,6 @@ public class ServerManager {
 	Map<Double, Request> requestMap;
 
 	public ServerManager(int serverID, List<ServerDetails> peerServerList) {
-		repManager = new ReplicationManager();
 		log = ServerLogger.getInstance();
 		bankOperations = new BankOperations();
 		// Queue to order the updates based on the lamport clock
@@ -43,8 +42,9 @@ public class ServerManager {
 		lamportClockCounter = 0.0 + serverID / 10;
 		// Loaders to create accounts with balance.
 		initCreateAccounts();
-		log.write("Server : user accounts created");
-		log.write("Ready to accept requests");
+		System.out.println("Server : user accounts created");
+		System.out.println("Ready to accept requests");
+		repManager = new ReplicationManager(peerServerList);
 	}
 
 	/**
@@ -58,6 +58,13 @@ public class ServerManager {
 					"address" + i);
 			bankOperations.deposit(acctID, amount);
 		}
+	}
+
+	/**
+	 * Start connections with all peer servers.
+	 */
+	public void establishConnectionWithPeers() {
+		repManager.startConnectionWithPeerServers();
 	}
 
 	/**

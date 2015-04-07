@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,34 +18,41 @@ import java.util.Map;
  */
 public class ReplicationManager {
 	List<ServerDetails> peerServerDetails;
-	Map<Integer, Socket> peerServerSocketMap;
+	Map<Integer, Socket> peerServerSocketMap = new HashMap<Integer, Socket>();;
 
 	public ReplicationManager() {
 		peerServerDetails = new ArrayList<ServerDetails>();
-
 	}
 
 	public ReplicationManager(List<ServerDetails> peerServers) {
 		peerServerDetails = peerServers;
 		// Establish Connection between peer servers.
-		startConnectionWithPeerServers();
 	}
 
 	/**
 	 * Establish connections with the peer servers to maintain connections
 	 */
 	public void startConnectionWithPeerServers() {
+		try {
+			System.out.println("Replication manager init : starting");
+			Thread.sleep(5000);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 		for (ServerDetails peerServer : peerServerDetails) {
-			Socket socket;
 			try {
-				socket = new Socket(peerServer.getServerHostName(),
+				System.out.println("Establishing connection with "
+						+ peerServer.getServerHostName() + " : "
+						+ peerServer.getPeerServerPort());
+				Socket socket = new Socket(peerServer.getServerHostName(),
 						peerServer.getPeerServerPort());
 				peerServerSocketMap.put(peerServer.getID(), socket);
-			} catch (IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			System.out
+					.println("Established connections with 2 other peer servers");
 		}
 	}
 

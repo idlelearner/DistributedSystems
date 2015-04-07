@@ -25,13 +25,16 @@ public class PeerServerConnectionHandler extends Thread {
 	}
 
 	public void run() {
+		System.out.println("PeerConnection handler started : "
+				+ serverForPeerConnections.getLocalPort());
 		while (true) {
-			System.out.println("Waiting for a client request");
+			System.out.println("Waiting for a peer server request");
 			Socket peerServer;
 			try {
 				peerServer = serverForPeerConnections.accept();
-				System.out.println("Received request from "
-						+ peerServer.getInetAddress());
+				System.out.println("Received server request from "
+						+ peerServer.getInetAddress() + " : "
+						+ peerServer.getPort());
 				PeerServerRequestHandler s = new PeerServerRequestHandler(
 						peerServer, serverManager);
 				s.start();

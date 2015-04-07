@@ -33,6 +33,11 @@ public class Server extends Thread {
 		// Server ID specify the current server ID.
 		int serverID = Integer.parseInt(args[1]);
 
+		if (args.length < 2) {
+			throw new RuntimeException(
+					"Config file and Server ID has to be mentioned as argument");
+		}
+
 		ArrayList<ServerDetails> serverConfigList = new ArrayList<ServerDetails>();
 		File file = new File(configFile);
 		BufferedReader in = new BufferedReader(new FileReader(file));
@@ -66,13 +71,15 @@ public class Server extends Thread {
 
 		ServerManager serverManager = new ServerManager(curServer.getID(),
 				peerServerList);
-
 		// Connection handler for the peer servers.
 		ServerSocket serverForPeerConnections = new ServerSocket(
 				curServer.getPeerServerPort());
 		PeerServerConnectionHandler peerConnections = new PeerServerConnectionHandler(
 				serverForPeerConnections, serverManager);
 		peerConnections.start();
+
+		// Start connections with the peer servers.
+		serverManager.establishConnectionWithPeers();
 
 		// Server socket to accept connections from clients
 		ServerSocket serverForClientConnections = new ServerSocket(
@@ -109,7 +116,7 @@ public class Server extends Thread {
 					// TODO :How to send the response object back to client.
 					// response.append(performOperation(r) + "\n");
 					// out.writeObject(performOperation(r));
-					//out.writeObject("return response to client after performing operation");
+					// out.writeObject("return response to client after performing operation");
 				}
 				// out.writeObject(response.toString());
 				out.writeObject("exit");
