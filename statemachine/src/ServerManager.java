@@ -126,6 +126,12 @@ public class ServerManager {
 		request.setClientRequest(req);
 		request.setSourceServerID(serverID);
 		request.setSourceServerClock(getLamportClockCounter());
+		
+		incrementClock();
+		
+		request.setSenderServerID(serverID);
+		request.setSenderServerClock(getLamportClockCounter());
+		
 		// Set the acknowledgement for the current server.
 		request.getAckList().add(serverID);
 		reqQueue.add(request);
@@ -150,6 +156,11 @@ public class ServerManager {
 		
 		//record the time when the request has been received
 		reqReceiveTimeMap.put(req.getSourceServerClock(), new Long(new java.util.Date().getTime()));
+		
+		// Update the current server lamport clock if needed
+		if (req.getSenderServerClock() > getLamportClockCounter()) {
+			setLamportClockCounter(req.getSenderServerClock());
+		}
 
 		if (req.getReqType().equals("New")) {
 			req.setSenderServerID(serverID);
@@ -165,6 +176,7 @@ public class ServerManager {
 				setLamportClockCounter(req.getSourceServerClock());
 			}
 			requestMap.put(req.getSourceServerClock(), req);
+			
 			incrementClock();
 			req.setSenderServerID(serverID);
 			req.setSenderServerClock(getLamportClockCounter());
@@ -185,10 +197,7 @@ public class ServerManager {
 			reqQueue.add(req);
 
 		} else {
-			// Update the current server lamport clock.
-			if (req.getSourceServerClock() > getLamportClockCounter()) {
-				setLamportClockCounter(req.getSenderServerClock());
-			}
+			
 			// If the received request is ack, update the request obj.
 			// Remote process has acknowledged.
 			incrementClock();
