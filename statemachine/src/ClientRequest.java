@@ -31,4 +31,7 @@ public class ClientRequest implements Serializable {
 		this.params = params;
 	}
 
+	public String toString() {
+		return "TransactionType : " + transactionType + " : Params : " + params;
+	}
 }

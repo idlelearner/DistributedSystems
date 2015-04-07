@@ -25,7 +25,7 @@ public class TransferClient extends Thread {
 	public TransferClient(String host, int port) {
 		this.host = host;
 		this.port = port;
-		this.iterationCount = 100;
+		this.iterationCount = 1;
 		// Initialize acct IDs.
 		for (int i = 1; i <= 10; i++)
 			accts.add(i);
@@ -39,7 +39,8 @@ public class TransferClient extends Thread {
 
 	public void run() {
 		try {
-			log.write("\nNew thread created :" + Thread.currentThread().getId());
+			System.out.println("\nNew thread created :"
+					+ Thread.currentThread().getId());
 			OutputStream rawOut = socket.getOutputStream();
 			InputStream rawIn = socket.getInputStream();
 			ObjectOutputStream out = new ObjectOutputStream(rawOut);
@@ -47,13 +48,13 @@ public class TransferClient extends Thread {
 			Random rnd = new Random();
 			for (int i = 0; i < iterationCount; i++) {
 				// Get random accts and perform transfer.
-				log.write("\nThread ID :" + Thread.currentThread().getId()
-						+ " Iteration " + i);
+				System.out.println("\nThread ID :"
+						+ Thread.currentThread().getId() + " Iteration " + i);
 				int rndacctID1 = rnd.nextInt(accts.size());
 				int rndacctID2 = rnd.nextInt(accts.size());
 				transfer(accts.get(rndacctID1), accts.get(rndacctID2), 10, out,
 						in);
-				log.write("\nTransfer completed between "
+				System.out.println("\nTransfer completed between "
 						+ accts.get(rndacctID1) + " and "
 						+ accts.get(rndacctID2));
 			}
@@ -89,10 +90,10 @@ public class TransferClient extends Thread {
 		ClientRequest transfer = new ClientRequest();
 		transfer.transactionType = "transfer";
 		transfer.params = new Parameter(acctID1, acctID2, amt);
-		log.write("\nclientrequest type" + transfer.transactionType);
-		log.write("\nclient params" + transfer.params);
+		System.out.println("\nclientrequest type" + transfer.transactionType);
+		System.out.println("\nclient params" + transfer.params);
 		out.writeObject(transfer);
 		String status = (String) in.readObject();
-		log.write("\nServer Response" + status);
+		System.out.println("\nServer Response" + status);
 	}
 }

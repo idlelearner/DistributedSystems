@@ -51,9 +51,9 @@ public class ReplicationManager {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out
-					.println("Established connections with 2 other peer servers");
 		}
+		System.out.println("Established connections with 2 other peer servers");
+
 	}
 
 	/**

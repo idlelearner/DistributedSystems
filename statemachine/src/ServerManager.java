@@ -21,6 +21,7 @@ public class ServerManager {
 	private PriorityQueue<Request> reqQueue;
 	private int serverID;
 	Map<Double, Request> requestMap;
+	Map<Double, ObjectOutputStream> requestOuputStreamMap;
 
 	public ServerManager(int serverID, List<ServerDetails> peerServerList) {
 		log = ServerLogger.getInstance();
@@ -36,7 +37,7 @@ public class ServerManager {
 
 		// Map for easy updation of the request objects.
 		requestMap = new HashMap<>();
-
+		requestOuputStreamMap = new HashMap<>();
 		this.serverID = serverID;
 		// Clockvalue starts as 0.1 for server1, 0.2 - server2.
 		lamportClockCounter = 0.0 + serverID / 10;
@@ -102,6 +103,7 @@ public class ServerManager {
 			ObjectOutputStream out) {
 		// On receiving the request from client increment the lamport clock
 		// Increment lamport clock
+		System.out.println(serverID + " received client request : " + req);
 		incrementClock();
 		Request request = new Request();
 		request.setClientRequest(req);
@@ -109,9 +111,10 @@ public class ServerManager {
 		request.setSourceServerClock(getLamportClockCounter());
 		// Set the acknowledgement for the current server.
 		request.getAckList().add(serverID);
-		request.setClientOutputStream(out);
 		reqQueue.add(request);
 		requestMap.put(getLamportClockCounter(), request);
+		// Store the output stream to a map for sending back the response
+		requestOuputStreamMap.put(getLamportClockCounter(), out);
 		// multicast the request to all other servers.
 		repManager.multiCastMessage(request);
 	}
@@ -125,6 +128,8 @@ public class ServerManager {
 	public void receiveRequest(Request req) {
 		// check if the received request has smaller lamport value.
 		// If yes, multicast ack.
+		System.out.println(serverID + " received server request : " + req);
+
 		if (req.getReqType().equals("New")) {
 			if (req.getSourceServerClock() < getLamportClockCounter()) {
 				req.getAckList().add(serverID);
@@ -194,12 +199,12 @@ public class ServerManager {
 
 	public void executeOperation(Request req) {
 		String response = performOperation(req.getClientRequest());
-
-		// if the request was from this server, output has to be send back to
+		// If the request was from this server, output has to be send back to
 		// the client.
 		if (req.getSourceServerID() == serverID) {
 			try {
-				req.getClientOutputStream().writeObject(response);
+				requestOuputStreamMap.get(req.getSourceServerClock())
+						.writeObject(response);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

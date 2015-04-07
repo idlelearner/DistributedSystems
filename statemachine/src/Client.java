@@ -52,8 +52,10 @@ public class Client {
 		// Create threads to transfer amount
 		List<TransferClient> tcList = new ArrayList<TransferClient>();
 		for (int i = 0; i < serverConfigList.size(); i++) {
-			TransferClient tc = new TransferClient(serverConfigList.get(0)
-					.getServerHostName(), serverConfigList.get(0)
+			System.out.println("Creating clients for "
+					+ serverConfigList.get(i).getClientport());
+			TransferClient tc = new TransferClient(serverConfigList.get(i)
+					.getServerHostName(), serverConfigList.get(i)
 					.getClientport());
 			tc.start();
 			tcList.add(tc);
