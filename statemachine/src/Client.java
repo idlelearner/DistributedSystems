@@ -80,7 +80,7 @@ public class Client {
 		int i = 1;
 		List<Integer> accts = new ArrayList<Integer>();
 		while (i <= noOfAccts) {
-			Request createAcct = new Request();
+			ClientRequest createAcct = new ClientRequest();
 			createAcct.transactionType = "createAcct";
 			createAcct.params = new Parameter("\nF" + i, "L" + i, "A" + i);
 			out.writeObject(createAcct);
@@ -105,7 +105,7 @@ public class Client {
 	public void deposit(List<Integer> accts, int amt, ObjectOutputStream out,
 			ObjectInputStream in) throws IOException, ClassNotFoundException {
 		for (int acct : accts) {
-			Request deposit = new Request();
+			ClientRequest deposit = new ClientRequest();
 			deposit.transactionType = "deposit";
 			deposit.params = new Parameter(acct, amt);
 			out.writeObject(deposit);
@@ -127,7 +127,7 @@ public class Client {
 			ObjectInputStream in) throws IOException, ClassNotFoundException {
 		int total = 0;
 		for (int acct : accts) {
-			Request getBalance = new Request();
+			ClientRequest getBalance = new ClientRequest();
 			getBalance.transactionType = "getBalance";
 			getBalance.params = new Parameter(acct);
 			out.writeObject(getBalance);

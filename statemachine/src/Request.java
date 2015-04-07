@@ -1,44 +1,50 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Request object send from the client
+ * Request object to be passed across server.
  * 
- * @author dhass
+ * @author thirunavukarasu
  *
  */
 public class Request implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	String transactionType;
-	Parameter params;
-	Double lamportClock;
+
+	// To mention whether the request is propagation or acknowledgement.
+	String reqType;
+
 	int sourceServerID;
-	int ackCount;
+	double sourceServerClock;
 
-	public String getTransactionType() {
-		return transactionType;
+	int senderServerID;
+	double senderServerClock;
+	List<Integer> ackList = new ArrayList<>();
+	// Request from the client holding the operation.
+	ClientRequest clientRequest;
+
+	public Request() {
 	}
 
-	public void setTransactionType(String transactionType) {
-		this.transactionType = transactionType;
+	public Request(String reqType, int sourceServerID,
+			double sourceServerClock, int senderServerID,
+			double senderServerClock, List<Integer> ackList,
+			ClientRequest clientRequest) {
+		super();
+		this.reqType = reqType;
+		this.sourceServerID = sourceServerID;
+		this.sourceServerClock = sourceServerClock;
+		this.senderServerID = senderServerID;
+		this.senderServerClock = senderServerClock;
+		this.clientRequest = clientRequest;
+		this.ackList = ackList;
 	}
 
-	public Parameter getParams() {
-		return params;
+	public String getReqType() {
+		return reqType;
 	}
 
-	public void setParams(Parameter params) {
-		this.params = params;
-	}
-
-	public Double getLamportClock() {
-		return lamportClock;
-	}
-
-	public void setLamportClock(Double lamportClock) {
-		this.lamportClock = lamportClock;
+	public void setReqType(String reqType) {
+		this.reqType = reqType;
 	}
 
 	public int getSourceServerID() {
@@ -49,12 +55,44 @@ public class Request implements Serializable {
 		this.sourceServerID = sourceServerID;
 	}
 
-	public int getAckCount() {
-		return ackCount;
+	public double getSourceServerClock() {
+		return sourceServerClock;
 	}
 
-	public void setAckCount(int ackCount) {
-		this.ackCount = ackCount;
+	public void setSourceServerClock(double sourceServerClock) {
+		this.sourceServerClock = sourceServerClock;
+	}
+
+	public int getSenderServerID() {
+		return senderServerID;
+	}
+
+	public void setSenderServerID(int senderServerID) {
+		this.senderServerID = senderServerID;
+	}
+
+	public double getSenderServerClock() {
+		return senderServerClock;
+	}
+
+	public void setSenderServerClock(double senderServerClock) {
+		this.senderServerClock = senderServerClock;
+	}
+
+	public ClientRequest getClientRequest() {
+		return clientRequest;
+	}
+
+	public void setClientRequest(ClientRequest clientRequest) {
+		this.clientRequest = clientRequest;
+	}
+
+	public List<Integer> getAckList() {
+		return ackList;
+	}
+
+	public void setAckList(List<Integer> ackList) {
+		this.ackList = ackList;
 	}
 
 }

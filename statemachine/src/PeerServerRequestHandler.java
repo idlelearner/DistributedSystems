@@ -33,7 +33,7 @@ public class PeerServerRequestHandler extends Thread {
 					// Get the request the from the server and perform some
 					// operation like give acknowledgement.
 					// TODO : get request and reply acknowledgement.
-					Request r = (Request) in.readObject();
+					ClientRequest r = (ClientRequest) in.readObject();
 					// serverManager.
 
 					if (r.getTransactionType().contains("exit"))

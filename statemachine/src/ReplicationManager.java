@@ -42,6 +42,21 @@ public class ReplicationManager {
 	}
 
 	public void multiCastMessage(Request req) {
+		req.setReqType("New");
+		for (int peerServerID : peerServerSocketMap.keySet()) {
+			Socket s = peerServerSocketMap.get(peerServerID);
+			sendMessage(s, req);
+		}
+	}
+
+	/**
+	 * Multicast acknowledgements to the peerservers.
+	 * 
+	 * @param req
+	 */
+	public void multicastAcknowledgements(Request req) {
+		// Specify that the request is acknowledgement
+		req.setReqType("Ack");
 		for (int peerServerID : peerServerSocketMap.keySet()) {
 			Socket s = peerServerSocketMap.get(peerServerID);
 			sendMessage(s, req);

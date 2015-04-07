@@ -1,5 +1,7 @@
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 /**
@@ -10,30 +12,32 @@ import java.util.PriorityQueue;
  */
 public class ServerManager {
 
-	protected BankOperations bankOperations;
-	protected ServerLogger log;
-	ReplicationManager repManager;
-	protected Double lamportClockCounter;
-	PriorityQueue<Request> reqQueue;
-	protected int serverID;
+	private BankOperations bankOperations;
+	private ServerLogger log;
+	private ReplicationManager repManager;
+	private Double lamportClockCounter;
+	private PriorityQueue<Request> reqQueue;
+	private int serverID;
+	Map<Double, Request> requestMap;
 
 	public ServerManager(int serverID, List<ServerDetails> peerServerList) {
 		repManager = new ReplicationManager();
 		log = ServerLogger.getInstance();
-		lamportClockCounter = 0.0;
 		bankOperations = new BankOperations();
 		reqQueue = new PriorityQueue<Request>(10000, new Comparator<Request>() {
 			@Override
 			public int compare(Request r1, Request r2) {
-				return Double.compare(r1.getLamportClock(),
-						r2.getLamportClock());
+				return Double.compare(r1.getSourceServerClock(),
+						r2.getSourceServerClock());
 			}
 		});
 
 		// TODO : Need to add a map for easy updation of the request objects.
-		// <CLock, Request>
+		requestMap = new HashMap<>();
 
 		this.serverID = serverID;
+		// Clockvalue starts as 0.1 for server1, 0.2 - server2.
+		lamportClockCounter = 0.0 + serverID / 10;
 		// Loaders to create accounts with balance.
 		initCreateAccounts();
 		log.write("Server : user accounts created");
@@ -71,14 +75,18 @@ public class ServerManager {
 	 * 
 	 * @param req
 	 */
-	public void addToRequestQueue(Request req) {
+	public void addToRequestQueue(ClientRequest req) {
 		// On receiving the request from client increment the lamport clock
+		// Increment lamport clock
 		incrementClock();
-		req.setLamportClock(getLamportClockCounter());
-		req.setAckCount(1);
-		req.setSourceServerID(serverID);
-		reqQueue.add(req);
-		repManager.multiCastMessage(req);
+		Request request = new Request();
+		request.setClientRequest(req);
+		request.setSourceServerID(serverID);
+		request.setSourceServerClock(getLamportClockCounter());
+		request.getAckList().add(serverID);
+		reqQueue.add(request);
+		// multicast the request to all other servers.
+		repManager.multiCastMessage(request);
 	}
 
 	/**
@@ -88,6 +96,15 @@ public class ServerManager {
 	 * @param req
 	 */
 	public void receiveRequest(Request req) {
+		// TODO : check if the received request has smaller lamport value.
+		// If yes, multicast ack.
+
+		// If the received request is ack, update the request obj.
+		// Need to work on.
+		incrementClock();
+		req.setSenderServerID(serverID);
+		req.setSenderServerClock(getLamportClockCounter());
+
 		reqQueue.add(req);
 	}
 
@@ -98,7 +115,7 @@ public class ServerManager {
 	 * @param request
 	 * @return
 	 */
-	public String performOperation(Request request) {
+	public String performOperation(ClientRequest request) {
 		StringBuilder status = new StringBuilder();
 		Parameter param = request.getParams();
 		switch (request.getTransactionType()) {
@@ -131,6 +148,15 @@ public class ServerManager {
 	}
 
 	/**
+	 * Method to print the final stats of the server when HALT is called on the
+	 * server.
+	 */
+	public void printFinalStats() {
+		// When the client calls halt
+		// print the avg response and balance in all the accts.
+	}
+
+	/**
 	 * Thread to check the queue and execute the operation.
 	 * 
 	 * @author thirunavukarasu
@@ -150,15 +176,19 @@ public class ServerManager {
 		public void run() {
 			while (true) {
 				// if the request got
-				if (reqQueue.peek().sourceServerID == serverID) {
-					if (reqQueue.peek().getAckCount() >= 3) {
-						performOperation(reqQueue.poll());
-					}
+				if (reqQueue.peek().getAckList().size() >= 3) {
+					performOperation(reqQueue.poll().getClientRequest());
 				} else {
-					// check for the other case where the request has arrived
-					// from different server.
-					// When to execute??
-
+					// If the request is at the head of the queue and the
+					// current have not acknowledged it, then acknowledge.
+					if (!reqQueue.peek().getAckList().contains(serverID)) {
+						reqQueue.peek().getAckList().add(serverID);
+						// TODO : Do we need to increment the lamport clock
+						// before sending the acknowledgements
+						reqQueue.peek().setSenderServerClock(
+								getLamportClockCounter());
+						repManager.multicastAcknowledgements(reqQueue.peek());
+					}
 				}
 			}
 		}

@@ -59,7 +59,7 @@ public class TransferClient extends Thread {
 			}
 
 			// Send a halt message and to shutdown the server.
-			Request exit = new Request();
+			ClientRequest exit = new ClientRequest();
 			exit.transactionType = "exit";
 			exit.params = new Parameter();
 			out.writeObject(exit);
@@ -86,7 +86,7 @@ public class TransferClient extends Thread {
 	public void transfer(int acctID1, int acctID2, int amt,
 			ObjectOutputStream out, ObjectInputStream in) throws IOException,
 			ClassNotFoundException {
-		Request transfer = new Request();
+		ClientRequest transfer = new ClientRequest();
 		transfer.transactionType = "transfer";
 		transfer.params = new Parameter(acctID1, acctID2, amt);
 		log.write("\nclientrequest type" + transfer.transactionType);

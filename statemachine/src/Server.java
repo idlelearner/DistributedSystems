@@ -98,7 +98,7 @@ public class Server extends Thread {
 			ObjectOutputStream out = new ObjectOutputStream(ostream);
 			try {
 				while (true) {
-					Request r = (Request) in.readObject();
+					ClientRequest r = (ClientRequest) in.readObject();
 					log.write("Transaction type : " + r.getTransactionType());
 					log.write("Parameter received : " + r.params);
 					if (r.getTransactionType().contains("exit"))
