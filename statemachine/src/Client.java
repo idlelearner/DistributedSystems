@@ -64,78 +64,8 @@ public class Client {
 		// Wait till all other threads finish
 		for (int i = 0; i < serverConfigList.size(); i++)
 			tcList.get(i).join();
+		
+		//All threads have finished, main thread now sends a HALT request to the servers
 
-	}
-
-	/**
-	 * Function create accts
-	 * 
-	 * @param noOfAccts
-	 * @param out
-	 * @param in
-	 * @return
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	public List<Integer> createAccts(int noOfAccts, ObjectOutputStream out,
-			ObjectInputStream in) throws IOException, ClassNotFoundException {
-		int i = 1;
-		List<Integer> accts = new ArrayList<Integer>();
-		while (i <= noOfAccts) {
-			ClientRequest createAcct = new ClientRequest();
-			createAcct.transactionType = "createAcct";
-			createAcct.params = new Parameter("\nF" + i, "L" + i, "A" + i);
-			out.writeObject(createAcct);
-			String acct = (String) in.readObject();
-			int acctID = Integer.parseInt(acct);
-			accts.add(acctID);
-			i++;
-		}
-		return accts;
-	}
-
-	/**
-	 * Deposit amount
-	 * 
-	 * @param accts
-	 * @param amt
-	 * @param out
-	 * @param in
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	public void deposit(List<Integer> accts, int amt, ObjectOutputStream out,
-			ObjectInputStream in) throws IOException, ClassNotFoundException {
-		for (int acct : accts) {
-			ClientRequest deposit = new ClientRequest();
-			deposit.transactionType = "deposit";
-			deposit.params = new Parameter(acct, amt);
-			out.writeObject(deposit);
-			String status = (String) in.readObject();
-		}
-	}
-
-	/**
-	 * Get balance for acct
-	 * 
-	 * @param accts
-	 * @param out
-	 * @param in
-	 * @return
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	public int getTotalBalance(List<Integer> accts, ObjectOutputStream out,
-			ObjectInputStream in) throws IOException, ClassNotFoundException {
-		int total = 0;
-		for (int acct : accts) {
-			ClientRequest getBalance = new ClientRequest();
-			getBalance.transactionType = "getBalance";
-			getBalance.params = new Parameter(acct);
-			out.writeObject(getBalance);
-			String s = (String) in.readObject();
-			total = total + Integer.parseInt(s);
-		}
-		return total;
 	}
 }
