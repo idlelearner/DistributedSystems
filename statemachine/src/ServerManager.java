@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -22,9 +23,13 @@ public class ServerManager {
 	private int serverID;
 	Map<Double, Request> requestMap;
 	Map<Double, ObjectOutputStream> requestOuputStreamMap;
+	Map<Double, Long> reqReceiveTimeMap;
+	Map<Double, Long> reqServicedTimeMap;
 
 	public ServerManager(int serverID, List<ServerDetails> peerServerList) {
 		log = ServerLogger.getInstance();
+		reqReceiveTimeMap = new HashMap<Double, Long>();
+		reqServicedTimeMap = new HashMap<Double, Long>();
 		bankOperations = new BankOperations();
 		// Queue to order the updates based on the lamport clock
 		reqQueue = new PriorityQueue<Request>(10000, new Comparator<Request>() {
@@ -133,6 +138,9 @@ public class ServerManager {
 		// If yes, multicast ack.
 		System.out.println(serverID + " received server request : " + req
 				+ "\n");
+		
+		//record the time when the request has been received
+		reqReceiveTimeMap.put(req.getSourceServerClock(), new Long(new java.util.Date().getTime()));
 
 		if (req.getReqType().equals("New")) {
 			if (req.getSourceServerClock() < getLamportClockCounter()) {
@@ -206,6 +214,10 @@ public class ServerManager {
 
 	public void executeOperation(Request req) {
 		String response = performOperation(req.getClientRequest());
+		//record the time when the request has been serviced into the map
+		reqServicedTimeMap.put(req.getSourceServerClock(), 
+								new Long(new java.util.Date().getTime()));
+		
 		// If the request was from this server, output has to be send back to
 		// the client.
 		if (req.getSourceServerID() == serverID) {
@@ -243,7 +255,23 @@ public class ServerManager {
 	 */
 	public void printFinalStats() {
 		// TODO : When the client calls halt
-		// print the avg response and balance in all the accts.
+		// print the avg response time for requests
+		Iterator it = reqReceiveTimeMap.entrySet().iterator();
+		int count = 0;
+		long totalResponseTime = 0;
+		while(it.hasNext()) {
+			Map.Entry<Double, Long> pair = (Map.Entry) it.next();
+			//see if there is an entry in the response map
+			if(reqServicedTimeMap.containsKey(pair.getKey())) {
+				totalResponseTime += ((Long)reqServicedTimeMap.get(pair.getKey())).longValue()
+						- ((Long)pair.getValue()).longValue();
+				count++;
+			}
+		}
+		
+		//print out the average response time
+		System.out.println("Average response time = " + totalResponseTime/count);
+		
 	}
 
 	/**

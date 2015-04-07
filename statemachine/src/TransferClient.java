@@ -58,13 +58,8 @@ public class TransferClient extends Thread {
 						+ accts.get(rndacctID1) + " and "
 						+ accts.get(rndacctID2));
 			}
-
-			// Send a halt message and to shutdown the server.
-			ClientRequest exit = new ClientRequest();
-			exit.transactionType = "exit";
-			exit.params = new Parameter();
-			out.writeObject(exit);
-
+			
+			out.close();
 			in.close();
 			socket.close();
 
