@@ -32,28 +32,40 @@ public class ReplicationManager {
 	 * Establish connections with the peer servers to maintain connections
 	 */
 	public synchronized void startConnectionWithPeerServers() {
-		try {
-			System.out.println("Replication manager init : starting");
-			Thread.sleep(5000);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
+		// try {
+		// System.out.println("Replication manager init : starting");
+		// Thread.sleep(5000);
+		// } catch (InterruptedException e1) {
+		// e1.printStackTrace();
+		// }
 		for (ServerDetails peerServer : peerServerDetails) {
-			try {
-				System.out.println("Establishing connection with "
-						+ peerServer.getServerHostName() + " : "
-						+ peerServer.getPeerServerPort());
-				Socket socket = new Socket(peerServer.getServerHostName(),
-						peerServer.getPeerServerPort());
+			while (true) {
+				try {
+					System.out.println("Establishing connection with "
+							+ peerServer.getServerHostName() + " : "
+							+ peerServer.getPeerServerPort());
+					Socket socket = new Socket(peerServer.getServerHostName(),
+							peerServer.getPeerServerPort());
 
-				peerServerSocketMap.put(peerServer.getID(), socket);
-				OutputStream rawOut = socket.getOutputStream();
-				ObjectOutputStream out = new ObjectOutputStream(rawOut);
-				peerServerOuputStreamMap.put(peerServer.getID(), out);
+					peerServerSocketMap.put(peerServer.getID(), socket);
+					OutputStream rawOut = socket.getOutputStream();
+					ObjectOutputStream out = new ObjectOutputStream(rawOut);
+					peerServerOuputStreamMap.put(peerServer.getID(), out);
+					System.out.println("Established connection with "
+							+ peerServer.getServerHostName() + " : "
+							+ peerServer.getPeerServerPort());
+					break;
 
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					System.out.println("Retry in 2s..");
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			}
 		}
 		System.out.println("Established connections with 2 other peer servers");
@@ -113,7 +125,8 @@ public class ReplicationManager {
 	// }
 	// }
 
-	public synchronized void sendMessage(final int peerServerID, final Request req) {
+	public synchronized void sendMessage(final int peerServerID,
+			final Request req) {
 		try {
 			peerServerOuputStreamMap.get(peerServerID).writeObject(req);
 			// String status = (String) in.readObject();
@@ -122,7 +135,7 @@ public class ReplicationManager {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-//			resend(peerServerID, req);
+			// resend(peerServerID, req);
 			// Do nothing
 		}
 	}

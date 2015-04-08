@@ -126,8 +126,8 @@ public class ServerManager {
 		// Increment lamport clock
 
 		// TODO : Remove Sys out statements
-		System.out.println(serverID + " received client request : " + req
-				+ "\n");
+//		System.out.println(serverID + " received client request : " + req
+//				+ "\n");
 		incrementClock();
 
 		Request request = new Request();
@@ -153,7 +153,7 @@ public class ServerManager {
 		request.getAckList().add(serverID);
 		reqQueue.add(request);
 
-		System.out.println(serverID + " : addToQueue : " + request);
+//		System.out.println(serverID + " : addToQueue : " + request);
 		// multicast the request to all other servers.
 		repManager.multiCastMessage(request);
 	}
@@ -167,8 +167,8 @@ public class ServerManager {
 	public synchronized void receiveRequest(Request req) {
 		// check if the received request has smaller lamport value.
 		// If yes, multicast ack.
-		System.out.println(serverID + " received server request : " + req
-				+ "\n");
+//		System.out.println(serverID + " received server request : " + req
+//				+ "\n");
 
 		Date curTime = new java.util.Date();
 		// Log the request in the form required to the server log file
@@ -204,8 +204,8 @@ public class ServerManager {
 				setLamportClockCounter(req.getSourceServerClock());
 			}
 			requestMap.put(req.getSourceServerClock(), req);
-			System.out.println("Added " + req.getSourceServerClock()
-					+ " reqMap");
+//			System.out.println("Added " + req.getSourceServerClock()
+//					+ " reqMap");
 			incrementClock();
 			req.setSenderServerID(serverID);
 			req.setSenderServerClock(getLamportClockCounter());
@@ -217,9 +217,9 @@ public class ServerManager {
 						.getSourceServerClock())) {
 					if (!req.getAckList().contains(ackServerID)) {
 						req.getAckList().add(ackServerID);
-						System.out.println("Adding acknowledged server "
-								+ ackServerID + " to new "
-								+ req.getSourceServerClock());
+//						System.out.println("Adding acknowledged server "
+//								+ ackServerID + " to new "
+//								+ req.getSourceServerClock());
 					}
 				}
 				tempAckMap.remove(req.getSourceServerClock());
@@ -243,9 +243,9 @@ public class ServerManager {
 				}
 				if (!tempAckMap.get(req.getSourceServerClock()).contains(
 						req.getSourceServerClock())) {
-					System.out.println("Adding " + req.getSourceServerClock()
-							+ " to tmpMap with Server"
-							+ req.getSenderServerID());
+//					System.out.println("Adding " + req.getSourceServerClock()
+//							+ " to tmpMap with Server"
+//							+ req.getSenderServerID());
 					tempAckMap.get(req.getSourceServerClock()).add(
 							req.getSenderServerID());
 				}
