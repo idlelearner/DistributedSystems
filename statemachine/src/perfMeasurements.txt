@@ -1,3 +1,5 @@
+For Single Host
+
 For 1 server
 ************
 101 milliseconds
@@ -17,3 +19,26 @@ For 5 servers
 31 milliseconds
 30 milliseconds
 With an average of about 33 milleseconds over the 5 servers
+
+
+For Each Process on a Separate Host
+
+For 1 server
+************
+97 milliseconds
+
+For 3 servers
+*************
+92 milliseconds
+96 milliseconds
+96 milliseconds
+With an average of about 53 milleseconds over the 3 servers
+
+For 5 servers
+*************
+65 milliseconds
+66 milliseconds
+75 milliseconds
+65 milliseconds
+68 milliseconds
+With an average of about 68 milleseconds over the 5 servers
