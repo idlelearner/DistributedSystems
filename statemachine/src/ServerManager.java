@@ -5,9 +5,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * class to maintain the lamport clocks and apply updates.
@@ -21,7 +21,7 @@ public class ServerManager {
 	private ServerLogger log;
 	private ReplicationManager repManager;
 	private Double lamportClockCounter;
-	private PriorityQueue<Request> reqQueue;
+	private PriorityBlockingQueue<Request> reqQueue;
 	private int serverID;
 	ConcurrentHashMap<Double, Request> requestMap;
 	Hashtable<Double, ObjectOutputStream> requestOuputStreamMap;
@@ -36,13 +36,14 @@ public class ServerManager {
 		reqServicedTimeMap = new Hashtable<Double, Long>();
 		bankOperations = new BankOperations();
 		// Queue to order the updates based on the lamport clock
-		reqQueue = new PriorityQueue<Request>(10000, new Comparator<Request>() {
-			@Override
-			public int compare(Request r1, Request r2) {
-				return Double.compare(r1.getSourceServerClock(),
-						r2.getSourceServerClock());
-			}
-		});
+		reqQueue = new PriorityBlockingQueue<Request>(10000,
+				new Comparator<Request>() {
+					@Override
+					public int compare(Request r1, Request r2) {
+						return Double.compare(r1.getSourceServerClock(),
+								r2.getSourceServerClock());
+					}
+				});
 
 		// Map for easy updation of the request objects.
 		requestMap = new ConcurrentHashMap<>();
@@ -126,8 +127,8 @@ public class ServerManager {
 		// Increment lamport clock
 
 		// TODO : Remove Sys out statements
-//		System.out.println(serverID + " received client request : " + req
-//				+ "\n");
+		// System.out.println(serverID + " received client request : " + req
+		// + "\n");
 		incrementClock();
 
 		Request request = new Request();
@@ -157,7 +158,7 @@ public class ServerManager {
 		request.getAckList().add(serverID);
 		reqQueue.add(request);
 
-//		System.out.println(serverID + " : addToQueue : " + request);
+		// System.out.println(serverID + " : addToQueue : " + request);
 		// multicast the request to all other servers.
 		repManager.multiCastMessage(request);
 	}
@@ -171,8 +172,8 @@ public class ServerManager {
 	public synchronized void receiveRequest(Request req) {
 		// check if the received request has smaller lamport value.
 		// If yes, multicast ack.
-//		System.out.println(serverID + " received server request : " + req
-//				+ "\n");
+		// System.out.println(serverID + " received server request : " + req
+		// + "\n");
 
 		Date curTime = new java.util.Date();
 		// Log the request in the form required to the server log file
@@ -202,8 +203,8 @@ public class ServerManager {
 				setLamportClockCounter(req.getSourceServerClock());
 			}
 			requestMap.put(req.getSourceServerClock(), req);
-//			System.out.println("Added " + req.getSourceServerClock()
-//					+ " reqMap");
+			// System.out.println("Added " + req.getSourceServerClock()
+			// + " reqMap");
 			incrementClock();
 			req.setSenderServerID(serverID);
 			req.setSenderServerClock(getLamportClockCounter());
@@ -215,9 +216,9 @@ public class ServerManager {
 						.getSourceServerClock())) {
 					if (!req.getAckList().contains(ackServerID)) {
 						req.getAckList().add(ackServerID);
-//						System.out.println("Adding acknowledged server "
-//								+ ackServerID + " to new "
-//								+ req.getSourceServerClock());
+						// System.out.println("Adding acknowledged server "
+						// + ackServerID + " to new "
+						// + req.getSourceServerClock());
 					}
 				}
 				tempAckMap.remove(req.getSourceServerClock());
@@ -241,9 +242,9 @@ public class ServerManager {
 				}
 				if (!tempAckMap.get(req.getSourceServerClock()).contains(
 						req.getSourceServerClock())) {
-//					System.out.println("Adding " + req.getSourceServerClock()
-//							+ " to tmpMap with Server"
-//							+ req.getSenderServerID());
+					// System.out.println("Adding " + req.getSourceServerClock()
+					// + " to tmpMap with Server"
+					// + req.getSenderServerID());
 					tempAckMap.get(req.getSourceServerClock()).add(
 							req.getSenderServerID());
 				}
