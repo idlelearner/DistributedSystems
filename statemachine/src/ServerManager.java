@@ -64,7 +64,7 @@ public class ServerManager {
 		executor = new ServerOperationExecutor(repManager, bankOperations);
 		executor.start();
 	}
-	
+
 	public int getServerId() {
 		return serverID;
 	}
@@ -255,7 +255,7 @@ public class ServerManager {
 							.add(req.getSenderServerID());
 				// If the request has acknowledgement from all the servers set
 				// acknowledged flag.
-				if (req.getAckList().size() >= 3)
+				if (req.getAckList().size() >= 3 || req.isAcknowledged())
 					requestMap.get(req.getSourceServerClock()).setAcknowledged(
 							true);
 			}
@@ -422,6 +422,7 @@ public class ServerManager {
 							incrementClock();
 							reqQueue.peek().setSenderServerClock(
 									getLamportClockCounter());
+							reqQueue.peek().setAcknowledged(true);
 							Request r;
 							try {
 								r = (Request) reqQueue.peek().clone();
