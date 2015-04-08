@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -120,6 +121,8 @@ public class ServerManager {
 			ObjectOutputStream out) {
 		// On receiving the request from client increment the lamport clock
 		// Increment lamport clock
+		
+		//TODO : Remove Sys out statements
 		System.out.println(serverID + " received client request : " + req
 				+ "\n");
 		incrementClock();
@@ -128,6 +131,12 @@ public class ServerManager {
 		request.setClientRequest(req);
 		request.setSourceServerID(serverID);
 		request.setSourceServerClock(getLamportClockCounter());
+		
+		Date curTime = new java.util.Date();
+		//Log the request in the form required to the server log file
+		log.write(serverID + "  CLNT-REQ  "+curTime+"  "+request.getSourceServerClock()
+				+"  "+req.transactionType+"  "+req.params);
+		
 		requestMap.put(getLamportClockCounter(), request);
 		// Store the output stream to a map for sending back the response
 		requestOuputStreamMap.put(getLamportClockCounter(), out);
@@ -154,6 +163,12 @@ public class ServerManager {
 		// If yes, multicast ack.
 		System.out.println(serverID + " received server request : " + req
 				+ "\n");
+		
+		Date curTime = new java.util.Date();
+		//Log the request in the form required to the server log file
+		log.write(serverID + "	SRV-REQ	"+curTime+"		"+req.getSourceServerClock()
+				+"		"+req.getClientRequest().transactionType+"		"+
+				req.getClientRequest().params);
 
 		// record the time when the request has been received
 		reqReceiveTimeMap.put(req.getSourceServerClock(), new Long(
@@ -329,10 +344,19 @@ public class ServerManager {
 				count++;
 			}
 		}
+		
+		//TODO: remove this
+		System.out.println("Total number of requests processed : "+count);
 
 		// print out the average response time
 		System.out.println("Average response time = " + totalResponseTime
 				/ count + " milliseconds");
+		
+		//print the current balance in each account
+		for(int i=1; i<=10; i++) {
+			System.out.println("Current balance in Account (ID = "+i+") = "+
+									bankOperations.getBalance(i));
+		}
 
 	}
 
@@ -359,7 +383,13 @@ public class ServerManager {
 					// If the request got all acknowledgement then execute the
 					// operation
 					if (reqQueue.peek().getAckList().size() >= 3) {
-						executeOperation(reqQueue.poll());
+						Request polledRequest = reqQueue.poll();
+						
+						Date curTime = new java.util.Date();
+						//Log the request in the form required to the server log file
+						log.write(serverID + "  PROCESS  "+curTime+"  "+polledRequest.getSourceServerClock());
+						
+						executeOperation(polledRequest);
 					} else {
 						// If the request is at the head of the queue and the
 						// current have not acknowledged it, then acknowledge.

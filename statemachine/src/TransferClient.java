@@ -25,7 +25,7 @@ public class TransferClient extends Thread {
 	public TransferClient(String host, int port) {
 		this.host = host;
 		this.port = port;
-		this.iterationCount = 10;
+		this.iterationCount = 1;
 		// Initialize acct IDs.
 		for (int i = 1; i <= 10; i++)
 			accts.add(i);
@@ -90,5 +90,8 @@ public class TransferClient extends Thread {
 		out.writeObject(transfer);
 		String status = (String) in.readObject();
 		System.out.print("\nServer Response : " + status);
+		//TODO: Remove sys out comments at the end
+		//Log the request to the client log file
+		log.write("REQUEST : "+transfer.transactionType+"  SERVER:  "+this.host+":"+this.port);
 	}
 }
