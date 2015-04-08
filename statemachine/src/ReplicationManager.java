@@ -119,9 +119,10 @@ public class ReplicationManager {
 			// String status = (String) in.readObject();
 			// System.out.println(status);
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// e.printStackTrace();
+			// Do nothing
 		}
 	}
 
