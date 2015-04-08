@@ -18,7 +18,7 @@ public class Client {
 	protected int port;
 	protected DataInputStream in;
 	protected DataOutputStream out;
-	protected ClientLogger log = ClientLogger.getInstance();
+	protected static ClientLogger log = ClientLogger.getInstance();
 
 	public static void main(String[] args) throws UnknownHostException,
 			IOException, ClassNotFoundException, InterruptedException {
@@ -47,6 +47,8 @@ public class Client {
 				serverConfigList.add(serverDetails);
 			}
 		}
+		
+		in.close();
 
 		// Create threads to transfer amount
 		List<TransferClient> tcList = new ArrayList<TransferClient>();
@@ -66,7 +68,9 @@ public class Client {
 
 		// Send a request to the main server (0) to HALT
 		sendHALTRequest(serverConfigList);
-
+		
+		//cleanup the logger, simply write "HALT" to the writer queue
+		log.write("HALT");
 	}
 
 	/**
