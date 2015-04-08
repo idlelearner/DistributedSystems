@@ -303,15 +303,10 @@ public class ServerManager {
 		// print final stats
 		printFinalStats();
 
-		// close the logger
-		closeServerLogger();
+		//flush server logs and close the logger, simply write "HALT"
+		log.write("HALT");
 
 		return "HALT Successful";
-	}
-
-	public void closeServerLogger() {
-		// close server loggers since now we do not need them anymore
-
 	}
 
 	/**
@@ -337,7 +332,7 @@ public class ServerManager {
 
 		// print out the average response time
 		System.out.println("Average response time = " + totalResponseTime
-				/ count);
+				/ count + " milliseconds");
 
 	}
 
