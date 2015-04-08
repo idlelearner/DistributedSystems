@@ -177,7 +177,7 @@ public class ServerManager {
 
 		Date curTime = new java.util.Date();
 		// Log the request in the form required to the server log file
-		log.write(serverID + "  SRV-REQ  " + curTime + "  "
+		log.write(serverID + "  SRV-REQ (" + req.getReqType() + ") " + curTime + "  "
 				+ req.getSourceServerClock() + "  "
 				+ req.getClientRequest().transactionType + "  "
 				+ req.getClientRequest().params);

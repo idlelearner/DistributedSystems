@@ -1,0 +1,603 @@
+Logging started
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 8
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 6
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 10
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :8 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 7
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :10 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :6 for amt: 10
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :4 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 1
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 5
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :3 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :1 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :5 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 2
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :5 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 8
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 1
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :8 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 7
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :1 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 10
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :10 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 5
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 1
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 1
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :1 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :5 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :1 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 5
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :5 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 9
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 8
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :5 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 3
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 8
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :8 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 1
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :1 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 5
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :3 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 8
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :5 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 9
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 4
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 3
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :4 for amt: 10
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 1
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 9
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :1 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 4
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :4 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :9 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 4
+localhost:5001  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :7 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 10
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :4 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 8
+localhost:5002  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :10 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:08 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :8 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 9
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :4 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :9 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 1
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :5 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 8
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :5 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 9
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :8 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :1 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 4
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 6
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :4 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 8
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :8 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 8
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :4 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 9
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :3 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 4
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :8 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 1
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :6 for amt: 10
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :4 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 6
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :1 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :6 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 10
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :10 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 7
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 9
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :10 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 10
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :9 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :10 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 9
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :6 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 9
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :9 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :6 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 8
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 3
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :10 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 4
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 3
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 1
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :4 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 4
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 9
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :4 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :1 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 5
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :5 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 2
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :10 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 4
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :7 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :4 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 9
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 1
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 5
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :9 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 4
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :5 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 1
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :4 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :1 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 3
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :1 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 10
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :3 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :5 for amt: 10
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :10 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 9
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :9 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 1
+localhost:5002  RSP Wed Apr 08 01:27:09 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :4 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:09 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 4
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :1 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :4 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 7
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :10 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 9
+localhost:5002  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :7 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 1
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :1 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :9 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 7
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 5
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :7 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 9
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 8
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :5 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 2
+localhost:5002  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :2 for amt: 10
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 6
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :3 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :5 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 4
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 3
+localhost:5002  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :4 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 4
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 2
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :3 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 2
+localhost:5002  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :4 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 1
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :2 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 3
+localhost:5002  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :6 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 5
+localhost:5000  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :1 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 8
+localhost:5001  RSP Wed Apr 08 01:27:10 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:10 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 9
+localhost:5002  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :5 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :8 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :9 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :3 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 9
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :4 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 8
+localhost:5002  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :7 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 1
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :9 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 6
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :8 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :1 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 6
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :7 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 9
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 6
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 8
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 1
+localhost:5002  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 7
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 9
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :1 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :7 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 10
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :9 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :5 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :10 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 9
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :10 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 7
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 8
+localhost:5002  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 2
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :8 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :4 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 2
+localhost:5000  RSP Wed Apr 08 01:27:11 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:11 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 8
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :2 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 1
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 1
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :1 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 9
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :1 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 4
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :5 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :9 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :4 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 8
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 1
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 1
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :5 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 8
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :1 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 2
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :8 for amt: 10
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :1 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 9
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 8
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 9
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :9 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :8 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :4 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :3 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 6
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :6 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 2
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 3
+localhost:5002  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:12 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:12 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 1
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 8
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 9
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :1 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 1
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :9 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 9
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 2
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :1 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 10
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :9 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 7
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :10 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 9
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :7 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 8
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :9 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 8
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :4 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 1
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :8 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 2
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :4 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 1
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :1 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :4 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :1 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 2
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :6 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :5 for amt: 10
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :5 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 7
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 7
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :4 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 10
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :7 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 7
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :7 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 8
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 2
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 8
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :5 for amt: 10
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 2
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 9
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :8 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 9
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :2 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 8
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :9 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :9 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 8
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 8
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :8 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :8 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :4 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 5
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 3
+localhost:5001  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 6
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :7 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 2
+localhost:5002  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 10
+localhost:5000  RSP Wed Apr 08 01:27:13 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :2 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:13 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 9
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :6 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 7
+localhost:5002  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :10 for amt: 10
+localhost:5000  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 3
+localhost:5000  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :3 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 10
+localhost:5000  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :6 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :7 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 2
+localhost:5002  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :10 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 10
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :2 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 3
+localhost:5000  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :5 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 1
+localhost:5002  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :10 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 9
+localhost:5000  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :1 for amt: 10
+localhost:5000  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 2,destAcctID: 6
+localhost:5002  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :9 for amt: 10
+localhost:5002  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 9
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :3 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 7,destAcctID: 4
+localhost:5000  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 2 to destination acct acctID :6 for amt: 10
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 7 to destination acct acctID :4 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 4,destAcctID: 4
+localhost:5002  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 5 to destination acct acctID :9 for amt: 10
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 4 to destination acct acctID :4 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 1,destAcctID: 1
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 1 to destination acct acctID :1 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 3,destAcctID: 8
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 3 to destination acct acctID :8 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 10
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 10
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 8,destAcctID: 10
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 8 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 6,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:14 CDT 2015  Transfer Sucessful from source account acctID: 6 to destination acct acctID :5 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 4
+localhost:5001  RSP Wed Apr 08 01:27:15 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :4 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:15 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 10
+localhost:5001  RSP Wed Apr 08 01:27:15 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:15 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 9,destAcctID: 10
+localhost:5001  RSP Wed Apr 08 01:27:15 CDT 2015  Transfer Sucessful from source account acctID: 9 to destination acct acctID :10 for amt: 10
+localhost:5001  REQ Wed Apr 08 01:27:15 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 5
+localhost:5001  RSP Wed Apr 08 01:27:15 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :5 for amt: 10
+HALT
+Exit encountered!
