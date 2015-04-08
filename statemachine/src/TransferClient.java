@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -87,11 +88,20 @@ public class TransferClient extends Thread {
 		transfer.params = new Parameter(acctID1, acctID2, amt);
 		System.out.print("\nclientrequest type" + transfer.transactionType);
 		System.out.print("\nclient params" + transfer.params);
+		
+		Date curPhysicalTime;
+		
+		//TODO: Remove sys out comments at the end
+		//Log the request to the client log file
+		curPhysicalTime = new java.util.Date();
+		log.write(this.host+":"+this.port + "  REQ "+ curPhysicalTime + "  " + transfer.transactionType+ "  " + transfer.params);
+		
 		out.writeObject(transfer);
 		String status = (String) in.readObject();
 		System.out.print("\nServer Response : " + status);
-		//TODO: Remove sys out comments at the end
-		//Log the request to the client log file
-		log.write("REQUEST : "+transfer.transactionType+"  SERVER:  "+this.host+":"+this.port);
+		
+		//log the response received by the client
+		curPhysicalTime = new java.util.Date();
+		log.write(this.host+":"+this.port+"  " + "RSP " + curPhysicalTime + "  " + status.toString());
 	}
 }

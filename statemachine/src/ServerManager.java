@@ -166,8 +166,8 @@ public class ServerManager {
 		
 		Date curTime = new java.util.Date();
 		//Log the request in the form required to the server log file
-		log.write(serverID + "	SRV-REQ	"+curTime+"		"+req.getSourceServerClock()
-				+"		"+req.getClientRequest().transactionType+"		"+
+		log.write(serverID + "  SRV-REQ  "+curTime+"  "+req.getSourceServerClock()
+				+"  "+req.getClientRequest().transactionType+"  "+
 				req.getClientRequest().params);
 
 		// record the time when the request has been received
@@ -285,7 +285,7 @@ public class ServerManager {
 			status.append("Operation not supported!");
 			break;
 		}
-		log.write("Server Response :" + status.toString());
+		
 		return status.toString();
 	}
 
