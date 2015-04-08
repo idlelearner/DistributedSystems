@@ -1,0 +1,19 @@
+For 1 server
+************
+101 milliseconds
+
+For 3 servers
+*************
+55 milliseconds
+53 milliseconds
+52 milliseconds
+With an average of about 53 milleseconds over the 3 servers
+
+For 5 servers
+*************
+27 milliseconds
+49 milliseconds
+30 milliseconds
+31 milliseconds
+30 milliseconds
+With an average of about 33 milleseconds over the 5 servers
