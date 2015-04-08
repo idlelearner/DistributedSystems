@@ -27,6 +27,8 @@ public class TransferClient extends Thread {
 		this.host = host;
 		this.port = port;
 		this.iterationCount = 1;
+		this.iterationCount = 100;
+		this.setName(host + port);
 		// Initialize acct IDs.
 		for (int i = 1; i <= 10; i++)
 			accts.add(i);
@@ -50,14 +52,14 @@ public class TransferClient extends Thread {
 			for (int i = 0; i < iterationCount; i++) {
 				// Get random accts and perform transfer.
 				System.out.print("\nThread ID :"
-						+ Thread.currentThread().getId() + " Iteration " + i);
+						+ Thread.currentThread().getName() + " Iteration " + i);
 				int rndacctID1 = rnd.nextInt(accts.size());
 				int rndacctID2 = rnd.nextInt(accts.size());
 				transfer(accts.get(rndacctID1), accts.get(rndacctID2), 10, out,
 						in);
 				System.out.print("\nTransfer completed between "
 						+ accts.get(rndacctID1) + " and "
-						+ accts.get(rndacctID2));
+						+ accts.get(rndacctID2) + "\n");
 			}
 
 			out.close();
@@ -88,20 +90,22 @@ public class TransferClient extends Thread {
 		transfer.params = new Parameter(acctID1, acctID2, amt);
 		System.out.print("\nclientrequest type" + transfer.transactionType);
 		System.out.print("\nclient params" + transfer.params);
-		
+
 		Date curPhysicalTime;
-		
-		//TODO: Remove sys out comments at the end
-		//Log the request to the client log file
+
+		// TODO: Remove sys out comments at the end
+		// Log the request to the client log file
 		curPhysicalTime = new java.util.Date();
-		log.write(this.host+":"+this.port + "  REQ "+ curPhysicalTime + "  " + transfer.transactionType+ "  " + transfer.params);
-		
+		log.write(this.host + ":" + this.port + "  REQ " + curPhysicalTime
+				+ "  " + transfer.transactionType + "  " + transfer.params);
+
 		out.writeObject(transfer);
 		String status = (String) in.readObject();
 		System.out.print("\nServer Response : " + status);
-		
-		//log the response received by the client
+
+		// log the response received by the client
 		curPhysicalTime = new java.util.Date();
-		log.write(this.host+":"+this.port+"  " + "RSP " + curPhysicalTime + "  " + status.toString());
+		log.write(this.host + ":" + this.port + "  " + "RSP " + curPhysicalTime
+				+ "  " + status.toString());
 	}
 }

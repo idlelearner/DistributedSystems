@@ -1,9 +1,8 @@
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -23,17 +22,17 @@ public class ServerManager {
 	private Double lamportClockCounter;
 	private PriorityQueue<Request> reqQueue;
 	private int serverID;
-	Map<Double, Request> requestMap;
-	Map<Double, ObjectOutputStream> requestOuputStreamMap;
-	Map<Double, Long> reqReceiveTimeMap;
-	Map<Double, Long> reqServicedTimeMap;
-	Map<Double, ArrayList<Integer>> tempAckMap;
+	Hashtable<Double, Request> requestMap;
+	Hashtable<Double, ObjectOutputStream> requestOuputStreamMap;
+	Hashtable<Double, Long> reqReceiveTimeMap;
+	Hashtable<Double, Long> reqServicedTimeMap;
+	Hashtable<Double, ArrayList<Integer>> tempAckMap;
 	ServerOperationExecutor executor;
 
 	public ServerManager(int serverID, List<ServerDetails> peerServerList) {
 		log = ServerLogger.getInstance();
-		reqReceiveTimeMap = new HashMap<Double, Long>();
-		reqServicedTimeMap = new HashMap<Double, Long>();
+		reqReceiveTimeMap = new Hashtable<Double, Long>();
+		reqServicedTimeMap = new Hashtable<Double, Long>();
 		bankOperations = new BankOperations();
 		// Queue to order the updates based on the lamport clock
 		reqQueue = new PriorityQueue<Request>(10000, new Comparator<Request>() {
@@ -45,9 +44,9 @@ public class ServerManager {
 		});
 
 		// Map for easy updation of the request objects.
-		requestMap = new HashMap<>();
-		requestOuputStreamMap = new HashMap<>();
-		tempAckMap = new HashMap<>();
+		requestMap = new Hashtable<>();
+		requestOuputStreamMap = new Hashtable<>();
+		tempAckMap = new Hashtable<>();
 
 		this.serverID = serverID;
 		// Clockvalue starts as 0.1 for server1, 0.2 - server2.
@@ -88,7 +87,7 @@ public class ServerManager {
 	/**
 	 * Increment the lamport clock value by 1.
 	 */
-	public void incrementClock() {
+	public synchronized void incrementClock() {
 		lamportClockCounter++;
 	}
 
@@ -117,8 +116,7 @@ public class ServerManager {
 	 * 
 	 * @param req
 	 */
-	public synchronized void addToRequestQueue(ClientRequest req,
-			ObjectOutputStream out) {
+	public void addToRequestQueue(ClientRequest req, ObjectOutputStream out) {
 		// On receiving the request from client increment the lamport clock
 		// Increment lamport clock
 		
@@ -148,6 +146,7 @@ public class ServerManager {
 		request.getAckList().add(serverID);
 		reqQueue.add(request);
 
+		System.out.println(serverID + " : addToQueue : " + request);
 		// multicast the request to all other servers.
 		repManager.multiCastMessage(request);
 	}
@@ -158,7 +157,7 @@ public class ServerManager {
 	 * 
 	 * @param req
 	 */
-	public void receiveRequest(Request req) {
+	public synchronized void receiveRequest(Request req) {
 		// check if the received request has smaller lamport value.
 		// If yes, multicast ack.
 		System.out.println(serverID + " received server request : " + req
@@ -197,7 +196,8 @@ public class ServerManager {
 				setLamportClockCounter(req.getSourceServerClock());
 			}
 			requestMap.put(req.getSourceServerClock(), req);
-
+			System.out.println("Added " + req.getSourceServerClock()
+					+ " reqMap");
 			incrementClock();
 			req.setSenderServerID(serverID);
 			req.setSenderServerClock(getLamportClockCounter());
@@ -224,9 +224,11 @@ public class ServerManager {
 			// Remote process has acknowledged.
 			incrementClock();
 
-			// If the received request is ack and the new request has not
+			// If the received request is ack for request from other servers and
+			// the new request has not
 			// yet arrived,then add it to a temporary map
-			if (!requestMap.containsKey(req.getSourceServerClock())) {
+			if (req.getSourceServerClock() != serverID
+					&& !requestMap.containsKey(req.getSourceServerClock())) {
 				if (!tempAckMap.containsKey(req.getSourceServerClock())) {
 					tempAckMap.put(req.getSourceServerClock(),
 							new ArrayList<Integer>());
@@ -242,6 +244,11 @@ public class ServerManager {
 			} else {
 				requestMap.get(req.getSourceServerClock()).getAckList()
 						.add(req.getSenderServerID());
+				// If the request has acknowledgement from all the servers set
+				// acknowledged flag.
+				if (req.getAckList().size() >= 3)
+					requestMap.get(req.getSourceServerClock()).setAcknowledged(
+							true);
 			}
 		}
 		// System.out.println("Head of the queue : " + reqQueue.peek());
@@ -296,14 +303,17 @@ public class ServerManager {
 				new java.util.Date().getTime()));
 
 		System.out.println(serverID + " executed req : " + req);
-
+		// Remove the request for request map.
+		requestMap.remove(req.getSourceServerClock());
 		// If the request was from this server, output has to be send back to
 		// the client.
 		if (req.getSourceServerID() == serverID) {
 			try {
 				requestOuputStreamMap.get(req.getSourceServerClock())
 						.writeObject(response);
-			} catch (IOException e) {
+				// after sending the response, remove the outputstream.
+				requestOuputStreamMap.remove(req.getSourceServerClock());
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -382,13 +392,13 @@ public class ServerManager {
 				if (!reqQueue.isEmpty()) {
 					// If the request got all acknowledgement then execute the
 					// operation
-					if (reqQueue.peek().getAckList().size() >= 3) {
+
+					if (reqQueue.peek().getAckList().size() >= 3 || reqQueue.peek().isAcknowledged()) {
 						Request polledRequest = reqQueue.poll();
 						
 						Date curTime = new java.util.Date();
 						//Log the request in the form required to the server log file
-						log.write(serverID + "  PROCESS  "+curTime+"  "+polledRequest.getSourceServerClock());
-						
+						log.write(serverID + "  PROCESS  "+curTime+"  "+polledRequest.getSourceServerClock());				
 						executeOperation(polledRequest);
 					} else {
 						// If the request is at the head of the queue and the
@@ -400,8 +410,14 @@ public class ServerManager {
 							incrementClock();
 							reqQueue.peek().setSenderServerClock(
 									getLamportClockCounter());
-							repManager.multicastAcknowledgements(reqQueue
-									.peek());
+							Request r;
+							try {
+								r = (Request) reqQueue.peek().clone();
+								repManager.multicastAcknowledgements(r);
+							} catch (CloneNotSupportedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
 				} else

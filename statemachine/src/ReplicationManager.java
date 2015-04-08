@@ -113,7 +113,7 @@ public class ReplicationManager {
 	// }
 	// }
 
-	public synchronized void sendMessage(int peerServerID, Request req) {
+	public synchronized void sendMessage(final int peerServerID, final Request req) {
 		try {
 			peerServerOuputStreamMap.get(peerServerID).writeObject(req);
 			// String status = (String) in.readObject();
@@ -121,9 +121,14 @@ public class ReplicationManager {
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			e.printStackTrace();
+//			resend(peerServerID, req);
 			// Do nothing
 		}
+	}
+
+	public synchronized void resend(int peerServerID, Request req) {
+		sendMessage(peerServerID, req);
 	}
 
 	// public void receiveMessages();

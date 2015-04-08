@@ -47,7 +47,7 @@ public class Client {
 				serverConfigList.add(serverDetails);
 			}
 		}
-		
+
 		in.close();
 
 		// Create threads to transfer amount
@@ -67,10 +67,14 @@ public class Client {
 			tcList.get(i).join();
 
 		// Send a request to the main server (0) to HALT
-		sendHALTRequest(serverConfigList);
-		
-		//cleanup the logger, simply write "HALT" to the writer queue
+//		sendHALTRequest(serverConfigList);
+
+		// cleanup the logger, simply write "HALT" to the writer queue
 		log.write("HALT");
+
+		// // Send a request to the main server (0) to HALT
+		// sendHALTRequest(serverConfigList);
+
 	}
 
 	/**

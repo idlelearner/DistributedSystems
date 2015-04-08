@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Request object to be passed across server.
@@ -8,7 +9,7 @@ import java.util.List;
  * @author thirunavukarasu
  *
  */
-public class Request implements Serializable {
+public class Request implements Serializable, Cloneable {
 
 	/**
 	 * 
@@ -26,7 +27,9 @@ public class Request implements Serializable {
 	double senderServerClock;
 
 	// List of server IDs which acknowledged this request.
-	List<Integer> ackList = new ArrayList<>();
+	CopyOnWriteArrayList<Integer> ackList = new CopyOnWriteArrayList<>();
+
+	boolean acknowledged = false;
 	// Request from the client holding the operation.
 	ClientRequest clientRequest;
 
@@ -35,8 +38,8 @@ public class Request implements Serializable {
 
 	public Request(String reqType, int sourceServerID,
 			double sourceServerClock, int senderServerID,
-			double senderServerClock, List<Integer> ackList,
-			ClientRequest clientRequest) {
+			double senderServerClock, CopyOnWriteArrayList<Integer> ackList,
+			boolean acknowledged, ClientRequest clientRequest) {
 		super();
 		this.reqType = reqType;
 		this.sourceServerID = sourceServerID;
@@ -44,6 +47,7 @@ public class Request implements Serializable {
 		this.senderServerID = senderServerID;
 		this.senderServerClock = senderServerClock;
 		this.ackList = ackList;
+		this.acknowledged = acknowledged;
 		this.clientRequest = clientRequest;
 	}
 
@@ -95,12 +99,27 @@ public class Request implements Serializable {
 		this.clientRequest = clientRequest;
 	}
 
-	public List<Integer> getAckList() {
+	public CopyOnWriteArrayList<Integer> getAckList() {
 		return ackList;
 	}
 
-	public void setAckList(List<Integer> ackList) {
+	public void setAckList(CopyOnWriteArrayList<Integer> ackList) {
 		this.ackList = ackList;
+	}
+
+	public boolean isAcknowledged() {
+		return acknowledged;
+	}
+
+	public void setAcknowledged(boolean acknowledged) {
+		this.acknowledged = acknowledged;
+	}
+
+	/**
+	 * Clone the request object.
+	 */
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 
 	public String toString() {
@@ -108,6 +127,7 @@ public class Request implements Serializable {
 				+ " sourceServerClock : " + sourceServerClock
 				+ " : senderServerID : " + senderServerID
 				+ " senderServerClock : " + senderServerClock + " : ackList"
-				+ ackList + " : clientRequest : " + clientRequest;
+				+ ackList + " : clientRequest : " + clientRequest
+				+ " : acknowledged : " + acknowledged;
 	}
 }
