@@ -66,14 +66,11 @@ public class Client {
 		for (int i = 0; i < serverConfigList.size(); i++)
 			tcList.get(i).join();
 
-		// Send a request to the main server (0) to HALT
-//		sendHALTRequest(serverConfigList);
+//		 Send a request to the main server (0) to HALT
+		sendHALTRequest(serverConfigList);
 
 		// cleanup the logger, simply write "HALT" to the writer queue
 		log.write("HALT");
-
-		// // Send a request to the main server (0) to HALT
-		// sendHALTRequest(serverConfigList);
 
 	}
 
