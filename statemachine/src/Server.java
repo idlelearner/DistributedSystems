@@ -22,7 +22,7 @@ public class Server extends Thread {
 		System.out.println("New client.");
 		this.s = s;
 		this.serverManager = serverManager;
-		log = ServerLogger.getInstance();
+		log = ServerLogger.getInstance(serverManager.getServerId());
 	}
 
 	public static void main(String[] args) throws FileNotFoundException,
@@ -106,8 +106,8 @@ public class Server extends Thread {
 			try {
 				while (true) {
 					ClientRequest r = (ClientRequest) in.readObject();
-					log.write("Transaction type : " + r.getTransactionType());
-					log.write("Parameter received : " + r.params);
+					//log.write("Transaction type : " + r.getTransactionType());
+					//log.write("Parameter received : " + r.params);
 					// TODO : Add logic for halt.
 					if (r.getTransactionType().contains("exit"))
 						break;

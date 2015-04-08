@@ -9,12 +9,10 @@ import java.util.Hashtable;
 public class BankOperations {
 	Hashtable<Integer, Account> accountMap;
 	volatile int maxAcctID;
-	ServerLogger log;
 
 	public BankOperations() {
 		maxAcctID = 1;
 		accountMap = new Hashtable<Integer, Account>();
-		log = ServerLogger.getInstance();
 	}
 
 	public synchronized int createAccount(String firstname, String lastname,
@@ -50,7 +48,7 @@ public class BankOperations {
 
 	public synchronized int getBalance(int acctID) {
 		int balance = accountMap.get(acctID).getBalance();
-		log.write("Balance of Acct acctID :" + acctID + " : " + balance);
+		//log.write("Balance of Acct acctID :" + acctID + " : " + balance);
 		return balance;
 	}
 

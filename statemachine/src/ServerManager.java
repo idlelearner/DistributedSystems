@@ -31,7 +31,7 @@ public class ServerManager {
 	ServerOperationExecutor executor;
 
 	public ServerManager(int serverID, List<ServerDetails> peerServerList) {
-		log = ServerLogger.getInstance();
+		log = ServerLogger.getInstance(serverID);
 		reqReceiveTimeMap = new Hashtable<Double, Long>();
 		reqServicedTimeMap = new Hashtable<Double, Long>();
 		bankOperations = new BankOperations();
@@ -63,6 +63,10 @@ public class ServerManager {
 		// Start the executor thread.
 		executor = new ServerOperationExecutor(repManager, bankOperations);
 		executor.start();
+	}
+	
+	public int getServerId() {
+		return serverID;
 	}
 
 	/**

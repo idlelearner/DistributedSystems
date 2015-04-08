@@ -11,13 +11,11 @@ import java.net.Socket;
 public class PeerServerConnectionHandler extends Thread {
 	private ServerSocket serverForPeerConnections;
 	private ServerManager serverManager;
-	protected ServerLogger log;
 
 	public PeerServerConnectionHandler(ServerSocket serverForPeerConnections,
 			ServerManager serverManager) {
 		this.serverForPeerConnections = serverForPeerConnections;
 		this.serverManager = serverManager;
-		log = ServerLogger.getInstance();
 	}
 
 	public void run() {

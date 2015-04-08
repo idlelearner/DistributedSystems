@@ -8,13 +8,13 @@ import java.util.concurrent.ArrayBlockingQueue;
  *
  */
 public class ServerLogger {
-	static private ServerLogger logger = new ServerLogger();
+	static private ServerLogger logger;
 	private String filename;
 	public Writer writer;
 	ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<String>(10000);
 
-	private ServerLogger() {
-		filename = "serverLogFile.txt";
+	private ServerLogger(int serverId) {
+		filename = "serverLogFile_" + serverId + ".txt";
 		try {
 			FileWriter fw = new FileWriter(filename, queue);
 			fw.start();
@@ -26,7 +26,10 @@ public class ServerLogger {
 		}
 	}
 
-	public static ServerLogger getInstance() {
+	public static ServerLogger getInstance(int serverId) {
+		if(logger == null) {
+			logger = new ServerLogger(serverId);
+		}
 		return logger;
 	}
 

@@ -14,12 +14,10 @@ import java.net.Socket;
 public class PeerServerRequestHandler extends Thread {
 	private Socket s;
 	private ServerManager serverManager;
-	protected ServerLogger log;
 
 	public PeerServerRequestHandler(Socket s, ServerManager serverManager) {
 		this.s = s;
 		this.serverManager = serverManager;
-		log = ServerLogger.getInstance();
 	}
 
 	public void run() {
