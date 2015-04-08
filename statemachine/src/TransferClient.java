@@ -26,7 +26,6 @@ public class TransferClient extends Thread {
 	public TransferClient(String host, int port) {
 		this.host = host;
 		this.port = port;
-		this.iterationCount = 1;
 		this.iterationCount = 100;
 		this.setName(host + port);
 		// Initialize acct IDs.
