@@ -41,8 +41,8 @@ public class FileWriter extends Thread {
 			String s;
 			try {
 				s = queue.take();
-				if (s.contains("final client exit")) {
-					System.out.println("Exiting!! from logger");
+				if (s.contains("HALT")) {
+					System.out.println("Exiting from logger!!");
 					writer.write(s);
 					writer.write("\nExit encountered!");
 					writer.flush();
