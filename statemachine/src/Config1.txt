@@ -1,0 +1,3 @@
+kh1262-01.cselabs.umn.edu 1 5000 6000
+kh1262-03.cselabs.umn.edu 2 5001 6001
+kh1262-04.cselabs.umn.edu 3 5002 6002
