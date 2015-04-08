@@ -23,30 +23,43 @@ public class PeerServerRequestHandler extends Thread {
 	}
 
 	public void run() {
+		InputStream istream = null;
+		OutputStream ostream = null;
+		ObjectInputStream in = null;
+		ObjectOutputStream out = null;
 		try {
-			InputStream istream = s.getInputStream();
-			OutputStream ostream = s.getOutputStream();
-			ObjectInputStream in = new ObjectInputStream(istream);
-			ObjectOutputStream out = new ObjectOutputStream(ostream);
-			try {
-				while (true) {
-					// Get the request the from the peer servers
-//					synchronized (in) {
-						Request r = (Request) in.readObject();
-						serverManager.receiveRequest(r);
-//					}
-					// in.reset();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			in.close();
+			istream = s.getInputStream();
+			ostream = s.getOutputStream();
+			in = new ObjectInputStream(istream);
+			out = new ObjectOutputStream(ostream);
 
-			out.close();
+			while (true) {
+				try {
+					// Get the request the from the peer servers
+					// synchronized (in) {
+					Request r = (Request) in.readObject();
+					serverManager.receiveRequest(r);
+					//TODO : if halt stop this thread.
+					// }
+					// in.reset();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
 			// log.write("Server connection exitting.");
 			// System.out.println("Server exitting.");
 		} catch (IOException ex) {
 			ex.printStackTrace();
+			try {
+				in.close();
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		} finally {
 			try {
 				s.close();
@@ -55,5 +68,4 @@ public class PeerServerRequestHandler extends Thread {
 			}
 		}
 	}
-
 }

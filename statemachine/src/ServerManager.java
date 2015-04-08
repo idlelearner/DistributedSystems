@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -22,7 +23,7 @@ public class ServerManager {
 	private Double lamportClockCounter;
 	private PriorityQueue<Request> reqQueue;
 	private int serverID;
-	Hashtable<Double, Request> requestMap;
+	ConcurrentHashMap<Double, Request> requestMap;
 	Hashtable<Double, ObjectOutputStream> requestOuputStreamMap;
 	Hashtable<Double, Long> reqReceiveTimeMap;
 	Hashtable<Double, Long> reqServicedTimeMap;
@@ -44,7 +45,7 @@ public class ServerManager {
 		});
 
 		// Map for easy updation of the request objects.
-		requestMap = new Hashtable<>();
+		requestMap = new ConcurrentHashMap<>();
 		requestOuputStreamMap = new Hashtable<>();
 		tempAckMap = new Hashtable<>();
 
@@ -128,7 +129,8 @@ public class ServerManager {
 		Request request = new Request();
 		request.setClientRequest(req);
 		request.setSourceServerID(serverID);
-		request.setSourceServerClock(getLamportClockCounter());
+		Double curLamportClock = getLamportClockCounter();
+		request.setSourceServerClock(curLamportClock);
 
 		Date curTime = new java.util.Date();
 		// Log the request in the form required to the server log file
@@ -136,9 +138,9 @@ public class ServerManager {
 				+ request.getSourceServerClock() + "  " + req.transactionType
 				+ "  " + req.params);
 
-		requestMap.put(getLamportClockCounter(), request);
+		requestMap.put(curLamportClock, request);
 		// Store the output stream to a map for sending back the response
-		requestOuputStreamMap.put(getLamportClockCounter(), out);
+		requestOuputStreamMap.put(curLamportClock, out);
 		incrementClock();
 		request.setSenderServerID(serverID);
 		request.setSenderServerClock(getLamportClockCounter());
@@ -244,8 +246,9 @@ public class ServerManager {
 							req.getSenderServerID());
 				}
 			} else {
-				requestMap.get(req.getSourceServerClock()).getAckList()
-						.add(req.getSenderServerID());
+				if (requestMap.containsKey(req.getSourceServerClock()))
+					requestMap.get(req.getSourceServerClock()).getAckList()
+							.add(req.getSenderServerID());
 				// If the request has acknowledgement from all the servers set
 				// acknowledged flag.
 				if (req.getAckList().size() >= 3)
