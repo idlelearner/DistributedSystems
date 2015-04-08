@@ -141,6 +141,10 @@ public class ServerManager {
 		log.write(serverID + "  CLNT-REQ  " + curTime + "  "
 				+ request.getSourceServerClock() + "  " + req.transactionType
 				+ "  " + req.params);
+		
+		// record the time when the request has been received
+				reqReceiveTimeMap.put(request.getSourceServerClock(), new Long(
+						new java.util.Date().getTime()));
 
 		requestMap.put(curLamportClock, request);
 		// Store the output stream to a map for sending back the response
@@ -177,19 +181,13 @@ public class ServerManager {
 				+ req.getClientRequest().transactionType + "  "
 				+ req.getClientRequest().params);
 
-		// record the time when the request has been received
-		reqReceiveTimeMap.put(req.getSourceServerClock(), new Long(
-				new java.util.Date().getTime()));
-
 		// Update the current server lamport clock if needed
 		if (req.getSenderServerClock() > getLamportClockCounter()) {
 			setLamportClockCounter(req.getSenderServerClock());
 		}
 
-		// record the time when the request has been received
-		reqReceiveTimeMap.put(req.getSourceServerClock(), new Long(
-				new java.util.Date().getTime()));
 		if (req.getReqType().equals("New")) {
+			
 			req.setSenderServerID(serverID);
 			// If the current request is lesser than the server's clock - should
 			// be taken from the head of the queue??

@@ -75,15 +75,15 @@ public class Client {
 	}
 
 	/**
-	 * Called by the main thread to send a HALT request to server with id 1
+	 * Called by the main thread to send a HALT request to server with id 0
 	 * 
 	 * @param serverConfigList
 	 */
 	public static void sendHALTRequest(ArrayList<ServerDetails> serverConfigList) {
 		Socket socket;
 		try {
-			socket = new Socket(serverConfigList.get(1).getServerHostName(),
-					serverConfigList.get(1).getClientport());
+			socket = new Socket(serverConfigList.get(0).getServerHostName(),
+					serverConfigList.get(0).getClientport());
 			OutputStream rawOut = socket.getOutputStream();
 			InputStream rawIn = socket.getInputStream();
 			ObjectOutputStream out = new ObjectOutputStream(rawOut);
