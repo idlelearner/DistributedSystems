@@ -107,7 +107,8 @@ public class ServerManager {
 	 * @param clock
 	 */
 	public void setLamportClockCounter(double clock) {
-		lamportClockCounter = (double) ((double)(int) clock) + (serverID / 10.0);
+		lamportClockCounter = (double) ((double) (int) clock)
+				+ (serverID / 10.0);
 	}
 
 	/**
@@ -171,8 +172,9 @@ public class ServerManager {
 			// If the current request is lesser than the server's clock - should
 			// be taken from the head of the queue??
 			// Acknowledge the reqs Eg: 1.1 < 1.2
-			if (req.getSourceServerClock() < reqQueue.peek()
-					.getSourceServerClock()) {
+			if (reqQueue.isEmpty()
+					|| req.getSourceServerClock() < reqQueue.peek()
+							.getSourceServerClock()) {
 				req.getAckList().add(serverID);
 				req.setReqType("Ack");
 				repManager.multicastAcknowledgements(req);
