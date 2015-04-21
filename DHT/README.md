@@ -1,1 +1,1 @@
-Distributed Hash Table implementationu using chord
+Distributed Hash Table implementation using chord
