@@ -3,7 +3,7 @@ import java.rmi.RemoteException;
 
 public interface MainNodeManager extends Remote {
 	
-	public void join(String url) throws RemoteException;
+	public Node join(String url) throws RemoteException;
 	
 	public void joinDone(String url) throws RemoteException;
 	

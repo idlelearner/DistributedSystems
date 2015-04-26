@@ -8,12 +8,14 @@ public class NodeManagerImpl extends UnicastRemoteObject implements NodeManager 
 	private ArrayList<FingerTableEntry> fingerTable;
 	private Node node;
 
-	public NodeManagerImpl() throws RemoteException {
+	public NodeManagerImpl(Node node) throws RemoteException {
 		super();
 		log = ServerLogger.getInstance();
 		fingerTable = new ArrayList<>();
-		//TODO : Need to pass the 
-		node = new Node();
+		// TODO : Need to pass the
+		this.node = node;
+		
+		//Register this node for lookup
 	}
 
 	@Override

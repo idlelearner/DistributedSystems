@@ -19,18 +19,19 @@ public class MainNodeManagerImpl extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public void join(String url) throws RemoteException {
+	public Node join(String url) throws RemoteException {
 		// TODO Auto-generated method stub
 		boolean free = true;
 
 		free = false;
 		if (!free) {
 			// return "wait" or null;
+			return null;
 		} else {
 
 			free = true;
 
-			// return the required details
+			return new Node();
 		}
 	}
 
