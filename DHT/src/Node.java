@@ -10,6 +10,8 @@ public class Node {
 	private int nodeID;
 	private String nodeURL;
 	private BigDecimal hashcode;
+	private Node predecessor;
+	private Node successor;
 
 	public int getNodeID() {
 		return nodeID;
@@ -33,6 +35,22 @@ public class Node {
 
 	public void setHashcode(BigDecimal hashcode) {
 		this.hashcode = hashcode;
+	}
+
+	public Node getPredecessor() {
+		return predecessor;
+	}
+
+	public void setPredecessor(Node predecessor) {
+		this.predecessor = predecessor;
+	}
+
+	public Node getSuccessor() {
+		return successor;
+	}
+
+	public void setSuccessor(Node successor) {
+		this.successor = successor;
 	}
 
 }

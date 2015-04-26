@@ -5,12 +5,15 @@ import java.util.ArrayList;
 public class NodeManagerImpl extends UnicastRemoteObject implements NodeManager {
 
 	private ServerLogger log;
-	private ArrayList<String> fingerTable;
+	private ArrayList<FingerTableEntry> fingerTable;
+	private Node node;
 
 	public NodeManagerImpl() throws RemoteException {
 		super();
 		log = ServerLogger.getInstance();
-		fingerTable = new ArrayList<String>();
+		fingerTable = new ArrayList<>();
+		//TODO : Need to pass the 
+		node = new Node();
 	}
 
 	@Override

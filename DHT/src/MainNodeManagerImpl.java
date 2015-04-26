@@ -8,12 +8,14 @@ public class MainNodeManagerImpl extends UnicastRemoteObject implements
 	private ServerLogger log;
 	private ArrayList<Node> activeNodes;
 	private ArrayList<Node> ongoingNodes;
+	private ArrayList<FingerTableEntry> fingerTable;
 
 	public MainNodeManagerImpl() throws RemoteException {
 		super();
 		log = ServerLogger.getInstance();
 		activeNodes = new ArrayList<Node>();
 		ongoingNodes = new ArrayList<Node>();
+		fingerTable = new ArrayList<>();
 	}
 
 	@Override
