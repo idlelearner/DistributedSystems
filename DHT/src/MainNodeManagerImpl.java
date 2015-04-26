@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -12,28 +13,41 @@ public class MainNodeManagerImpl extends UnicastRemoteObject implements
 	private boolean free;
 	private Node node;
 
-	public MainNodeManagerImpl(String url, String port) throws RemoteException {
+	public MainNodeManagerImpl(String url, int port) throws RemoteException {
 		super();
 		log = ServerLogger.getInstance();
 		activeNodes = new ArrayList<Node>();
 		ongoingNodes = new ArrayList<Node>();
 		fingerTable = new ArrayList<>();
 		free = true;
-		initMasterNode();
+		initMasterNode(url, port);
 	}
 
-	private void initMasterNode() {
+	private void initMasterNode(String url, int port) {
+		// Construct the current node
+		node = new Node();
+		node.setNodeURL(url);
+		node.setPort(port);
+		BigDecimal masterNodeHashCode = Util.getHashCode(url + port);
+		node.setHashcode(masterNodeHashCode);
+
+		// Build the finger Table
+		for (int i = 0; i < 160; i++) {
+			fingerTable.add(new FingerTableEntry(i, node));
+		}
 		
+		node.setPredecessor(node);
+		node.setPredecessor(node);
 	}
 
 	public static void main(String[] args) throws RemoteException {
-		
-		
-//		MainNodeManager mainNodeManager = new MainNodeManagerImpl();
-		
-		
+
+		String url = args[0];
+		int port = Integer.parseInt(args[1]);
+		MainNodeManager mainNodeManager = new MainNodeManagerImpl(url, port);
+
 	}
-	
+
 	@Override
 	public Node join(String url) throws RemoteException {
 		// TODO Auto-generated method stub

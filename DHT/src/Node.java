@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * class to contain details about the node in the chord.
@@ -9,7 +10,10 @@ import java.math.BigDecimal;
 public class Node {
 	private int nodeID;
 	private String nodeURL;
+	private int port;
 	private BigDecimal hashcode;
+	// 160 Bit ID space so will have 160 entries
+	private ArrayList<FingerTableEntry> fingerTable;
 	private Node predecessor;
 	private Node successor;
 
@@ -51,6 +55,22 @@ public class Node {
 
 	public void setSuccessor(Node successor) {
 		this.successor = successor;
+	}
+
+	public ArrayList<FingerTableEntry> getFingerTable() {
+		return fingerTable;
+	}
+
+	public void setFingerTable(ArrayList<FingerTableEntry> fingerTable) {
+		this.fingerTable = fingerTable;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 }
