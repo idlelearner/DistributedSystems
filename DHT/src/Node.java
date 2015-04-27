@@ -18,6 +18,7 @@ public class Node {
 	private ArrayList<FingerTableEntry> fingerTable;
 	private Node predecessor;
 	private Node successor;
+	private int jumps;
 	
 	private Boolean isConnected = false;
 
@@ -104,5 +105,15 @@ public class Node {
 		}
 		//figure out what all needs to be done when setting an entry into the finger table
 	}
+	
+	public void addJumps(int jumps) {
+		this.jumps += jumps;
+	}
+	
+	public int getFingerTableSize() {
+		return fingerTable.size();
+	}
+	
+	public 	
 
 }

@@ -1,9 +1,11 @@
 import java.net.MalformedURLException;
+import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * Class to describe the Chord Ring
+ * Class to describe the Chord Ring and its functions
+ * All rmi calls are made from here
  * @author varun
  *
  */
@@ -68,11 +70,13 @@ public class Ring implements Remote {
 		Node tmpNode = findPredecessorOfNode(node, id);
 		
 		//get the first successor of this predecessor node
-		int tmpSuccId = tmpNode.getFirstSuccessor();
+		Node tmpSucc = tmpNode.getSuccessor();
 		
-		java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("");
+		//TODO : how do I do this?
+		java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("rmi:/" + );
 		
 		try {
+			//TODO : How do I do this ?
 			return (Node) Naming.lookup();
 		}catch (RemoteException e) {
 			
@@ -83,10 +87,50 @@ public class Ring implements Remote {
 	}
 	
 	public static Node findPredecessorOfNode(Node n, int id) {
+		Node succ = null;
+		Node startNode = n;
+		//TODO : how do I do this?
+		java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("rmi:/" + );
 		
+		succ = n.getSuccessor();
+		
+		Node tempNode = null;
+		
+		int jumps = 0;
+		
+		//TODO: change this condition to check until id is between tempNode and tempNode.successor
+		while(true) {
+			if(tempNode != null)
+				if(tempNode.getNodeID() == n.getNodeID()) break;
+			
+			jumps++;
+			tempNode = n;
+			
+			n = (Node) findNearestPreceedingFinger(n, id);
+			
+			try {
+				int refreshedId = n.getSuccessor().getNodeID();
+				//TODO : How to do this RMI lookup
+				succ = lookup;
+			}catch (RemoteException e) {
+				//Log this
+			}
+		}
+		
+		startNode.addJumps(jumps);
+		return n;
 	}
 	
-	public static Node findClosestPrecedingFingerOfNode() {
+	public static Node findNearestPreceedingFinger(Node n, int id) {
+		int fingerId;
 		
+		if(n.getFingerTableSize() == 0) return n;
+		
+		//traverse the finger table from the end
+		for(int i = n.getFingerTableSize() - 1; i>=0 ; i--) {
+			//return the first node that is between node and id
+		}
+		
+		return n;
 	}
 }
