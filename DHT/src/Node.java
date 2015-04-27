@@ -10,7 +10,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
  *
  */
 public class Node {
-	private int nodeID;
+	private int nodeID = -1; //defualt value for the id of the node object
 	private String nodeURL;
 	private int port;
 	private BigDecimal hashcode;
@@ -83,6 +83,26 @@ public class Node {
 	
 	public void toggleConnectionStatus() {
 		isConnected = !isConnected;
+	}
+	
+	public Node findSuccessor(int id) {
+		Node foundNode = null;
+		
+		try {
+			foundNode = Ring.findSuccessorOfNode(this, id);
+		}catch (Exception e) {
+			//Log this exception in the server logs
+		}
+		
+		return foundNode;
+	}
+	
+	public void setFinger(Node node, int index) {
+		//the max length is 160, from 0-159
+		if(index > 159) {
+			return;
+		}
+		//figure out what all needs to be done when setting an entry into the finger table
 	}
 
 }
