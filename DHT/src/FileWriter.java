@@ -27,7 +27,10 @@ public class FileWriter extends Thread {
 					new FileOutputStream(filename), "utf-8"));
 			writer.write("Logging started\n");
 			// writer.close();
-		} catch (UnsupportedEncodingException | FileNotFoundException e) {
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {

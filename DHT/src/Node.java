@@ -1,6 +1,8 @@
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 /**
  * class to contain details about the node in the chord.
  * 
@@ -16,6 +18,8 @@ public class Node {
 	private ArrayList<FingerTableEntry> fingerTable;
 	private Node predecessor;
 	private Node successor;
+	
+	private Boolean isConnected = false;
 
 	public int getNodeID() {
 		return nodeID;
@@ -71,6 +75,14 @@ public class Node {
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+	
+	public Boolean getConnectionStatus() {
+		return isConnected;
+	}
+	
+	public void toggleConnectionStatus() {
+		isConnected = !isConnected;
 	}
 
 }

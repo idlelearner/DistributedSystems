@@ -18,7 +18,7 @@ public class MainNodeManagerImpl extends UnicastRemoteObject implements
 		log = ServerLogger.getInstance();
 		activeNodes = new ArrayList<Node>();
 		ongoingNodes = new ArrayList<Node>();
-		fingerTable = new ArrayList<>();
+		fingerTable = new ArrayList();
 		free = true;
 		initMasterNode(url, port);
 	}

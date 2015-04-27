@@ -11,7 +11,7 @@ public class NodeManagerImpl extends UnicastRemoteObject implements NodeManager 
 	public NodeManagerImpl(Node node) throws RemoteException {
 		super();
 		log = ServerLogger.getInstance();
-		fingerTable = new ArrayList<>();
+		fingerTable = new ArrayList();
 		// TODO : Need to pass the
 		this.node = node;
 		
