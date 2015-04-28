@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
@@ -71,6 +72,10 @@ public class Node extends UnicastRemoteObject{
 	
 	public Boolean getConnectionStatus() {
 		return isConnected;
+	}
+	
+	public Map<NodeKey, Set<WordEntry>> getWordEntryMap() {
+		return this.wordEntryMap;
 	}
 	
 	public void toggleConnectionStatus() {
@@ -160,7 +165,98 @@ public class Node extends UnicastRemoteObject{
 	}
 	
 	public void addWordEntry(NodeKey node, WordEntry entry) {
+		Set<WordEntry> entrySet;
+		synchronized (this.wordEntryMap) {
+			//if the nodeKey is already present, then we just add to the set, else create new set
+			boolean alreadyPresent = false;
+			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = wordEntryMap.entrySet().iterator();
+			Map.Entry<NodeKey, Set<WordEntry>> itE = null;
+			
+			//lets traverse through the map
+			while((it.hasNext())) {
+				itE = it.next();
+				if(itE.getKey().equals(node)) {
+					alreadyPresent = true;
+					break;
+				}
+			}
+			
+			//entries for this id are already present in the map, so add to the set
+			if(alreadyPresent){
+				entrySet = itE.getValue();
+				entrySet.add(entry);
+			}else {
+				//create a new set and introduce a new NodeKey/Set to the map
+				entrySet = new TreeSet<WordEntry>();
+				entrySet.add(entry);
+				this.wordEntryMap.put(node, entrySet);
+			}
+		}
 		
+		//yay, we are done
+	}
+	
+	//get the word entries for a given node key for this node
+	public Set<WordEntry> getWordEntries(NodeKey key) throws RemoteException{
+		synchronized (this.wordEntryMap) {
+			if(!this.wordEntryMap.containsKey(key)) {
+				return null;
+			}
+			
+			else {
+				return this.wordEntryMap.get(key);
+			}
+		}
+	}
+	
+	public void setWordEntriesForKey(NodeKey key, Set<WordEntry> entries) {
+		synchronized (this.wordEntryMap) {
+			this.wordEntryMap.put(key, entries);
+		}
+	}
+	
+	public void removeEntriesForKey(NodeKey key) throws RemoteException {
+		synchronized (this.wordEntryMap) {
+			this.wordEntryMap.remove(key);
+		}
+	}
+	
+	public void join(Node freshNode) throws RemoteException{
+		try {
+			Ring.join(this, freshNode);
+		}catch (Exception e) {
+			//log the exception
+		}
+	}
+	
+	public Node findSuccessorNode(NodeKey id) {
+		try {
+			return Ring.findSuccessorOfNode(this, id);
+		}catch (Exception e) {
+			//log the exception
+		}
+	}
+	
+	public java.rmi.registry.Registry getRMIHandle()
+	{
+		//get this from the client
+	}
+	
+	public WordEntry getSpecificWordEntry(NodeKey nKey, WordKey wKey) {
+		WordEntry we = null;
+		return we;
+	}
+	
+	public WordEntry getEntryByWordKey(WordKey wKey) {
+		for (Map.Entry<NodeKey, Set<WordEntry>> entry : this.wordEntryMap.entrySet())
+		{
+			WordEntry found = getSpecificWordEntry(entry.getKey(), wKey);
+			if (found != null)
+			{
+				return found;
+			}
+		}
+		return null;
 	}
 	
 	public void addJumps(int jumps) {
