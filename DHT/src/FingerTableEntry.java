@@ -8,11 +8,11 @@
 public class FingerTableEntry {
 
 	private int index;
-	private Node node;
+	private NodeKey nodeId;
 
-	public FingerTableEntry(int index, Node node) {
+	public FingerTableEntry(int index, NodeKey nodeId) {
 		this.index = index;
-		this.node = node;
+		this.nodeId = nodeId;
 	}
 
 	public int getIndex() {
@@ -23,12 +23,12 @@ public class FingerTableEntry {
 		this.index = index;
 	}
 
-	public Node getNode() {
-		return node;
+	public NodeKey getNodeId() {
+		return nodeId;
 	}
 
-	public void setNode(Node node) {
-		this.node = node;
+	public void setNodeId(NodeKey nodeId) {
+		this.nodeId = nodeId;
 	}
 
 }
