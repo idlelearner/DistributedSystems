@@ -2,10 +2,12 @@ import java.io.Serializable;
 
 /**
  * class for the NodeKey which is part of every node and used to hash into the chord ring
+ * for the node key, the hashing is done on hostname and port
+ * in this way we can have multiple nodes in one physical machine on different ports (processes)
  * @author varun
  *
  */
-public class NodeKey implements Serializable {
+public class NodeKey extends GenericKey implements Serializable {
 	private byte[] hashKey;
 	private String host;
 	private String port;
@@ -34,7 +36,8 @@ public class NodeKey implements Serializable {
 		return this.hashKey;
 	}
 	
-	public boolean equals(NodeKey k) {
+	@Override
+	public boolean equals(GenericKey k) {
 		return this.hashKey.equals(k.getByteKey());
 	}
 	

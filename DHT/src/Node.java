@@ -1,8 +1,13 @@
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
@@ -17,15 +22,19 @@ public class Node extends UnicastRemoteObject{
 	private ArrayList<FingerTableEntry> fingerTable;
 	private NodeKey predecessor;
 	private NodeKey successor;
+	//Every node object will maintain a mapping of NodeKey to actual word entries (as a set)
+	//This mapping is needed when re-distributing, so that entries can be moved as a whole
+	private Map<NodeKey, Set<WordEntry>> wordEntryMap;
 	private int jumps = 0;
 	
 	private Boolean isConnected = false;
 	
-	public Node(NodeKey id) {
+	public Node(NodeKey id) throws RemoteException{
 		fingerTable = new ArrayList<FingerTableEntry>(32);
 		nodeID = id;
 		predecessor = null;
 		successor = null;
+		wordEntryMap = new HashMap<NodeKey, Set<WordEntry>>();
 	}
 
 	public NodeKey getNodeID() {
@@ -90,7 +99,7 @@ public class Node extends UnicastRemoteObject{
 		
 		if(fingerTable.size() == 0) {
 			//this is the first entry into the finger table
-			fingerTable.add(0, new FingerTableEntry(index, node));
+			fingerTable.add(0, new FingerTableEntry(node, 0, 159));
 			return;
 		}
 		
@@ -117,12 +126,12 @@ public class Node extends UnicastRemoteObject{
 			
 			entry.setEndElement(index - 1);
 			
-			fingerTable.add(fingerTable.size(), new FingerTableEntry(index, node));
+			fingerTable.add(fingerTable.size(), new FingerTableEntry(node, index, 159));
 		}else {
 			for(int j=0;j<fingerTable.size(); j++) {
 				fingerTable.remove(j);
 			}
-			fingerTable.add(0, new FingerTableEntry(index, node));
+			fingerTable.add(0, new FingerTableEntry(node, 0 , 159));
 		}
 		
 		//sort the finger table entries
@@ -143,7 +152,16 @@ public class Node extends UnicastRemoteObject{
 		fingerTable.remove(i);
 	}
 	
+	public List<NodeKey> getFingers() {
+		List<NodeKey> list = new ArrayList<NodeKey>();
+		for(int i = 0; i < fingerTable.size(); i++) list.add(i, fingerTable.get(i).getNodeId());
+		
+		return list;
+	}
 	
+	public void addWordEntry(NodeKey node, WordEntry entry) {
+		
+	}
 	
 	public void addJumps(int jumps) {
 		this.jumps += jumps;
