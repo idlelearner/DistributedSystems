@@ -1,9 +1,8 @@
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
-import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 
 /**
@@ -14,88 +13,73 @@ import java.rmi.RemoteException;
  */
 public class NodeStart {
 	static NodeImpl currentNode;
-	
-	public static void main(String[] args) throws IOException, InterruptedException{
-		if(args.length != 2) {
-			//throw error message that there should be atleast 2 arguments
-			//the argument that the user needs to pass is the node number - node00, node01, etc
-			//we will not need the port anymore, the node number will distinguish between 2 nodes
-			//even on the same host
+
+	public static void main(String[] args) throws IOException,
+			InterruptedException {
+		if (args.length != 2) {
+			// throw error message that there should be atleast 2 arguments
+			// the argument that the user needs to pass is the node number -
+			// node00, node01, etc
+			// we will not need the port anymore, the node number will
+			// distinguish between 2 nodes
+			// even on the same host
 		}
-		InetAddress ip;
+		String hostName;
 		String nodeNum = args[1];
 
+		int defaultPort = 1099;
+		// get the host ip address
+		hostName = Util.getHosttName();
 
-		//get the host ip address
-		ip = Util.getIP();
+		currentNode = new NodeImpl(new NodeKey(hostName, nodeNum));
 
-		currentNode = new NodeImpl( new NodeKey(ip.getHostName(), nodeNum));
-
-		//Get node 0 from the registry
+		// Get node 0 from the registry
 		Node startingNode = null;
-		try
-		{
-			startingNode = (Node) Naming.lookup();
+		// Starting node lookup URL??
+		String startingNodeURL = currentNode.getNodeID().getHost() + ":"
+				+ defaultPort + "/node00Node";
+		try {
+			startingNode = (Node) Naming.lookup(startingNodeURL);
+		} catch (RemoteException ex) {
+		} catch (NotBoundException ex) {
+		} catch (Exception genE) {
 		}
-		catch (RemoteException ex)
+
+		if (startingNode == null) /* This is the first node */
 		{
-		}
-		catch (NotBoundException ex)
-		{
-		}
-		catch (Exception genE)
-		{
-		}
-		
-		if (startingNode == null) /*This is the first node*/
-		{
-			try
-			{
-				//bind the starting node
-				Naming.bind();
-			}
-			catch (RemoteException ex)
-			{
-			}
-			catch (NodeAlreadyPresentException ex)
-			{
+			try {
+				// bind the starting node
+				Naming.bind(nodeNum + "Node", currentNode);
+			} catch (RemoteException ex) {
+			} catch (AlreadyBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
-			try
-			{
-				//we will create the ring with this start node
+			try {
+				// we will create the ring with this start node
 				currentNode.create();
-			}
-			catch (NodeAlreadyPresentException ex)
-			{
+			} catch (NodeAlreadyPresentException ex) {
 				System.out.println("AlreadyConnectedException");
-			}
-			catch (NodeNotFoundException ex)
-			{
+			} catch (NodeNotFoundException ex) {
 				System.out.println("IDNotFoundException");
 			}
 
-		}
-		else //node-0 is present, we need to send a join request
+		} else // node-0 is present, we need to send a join request
 		{
-
-			try
-			{
-				Naming.bind();
-
-			}
-			catch (RemoteException ex)
-			{
-			}
-			catch (NodeAlreadyPresentException ex)
-			{
+			try {
+				// Binding node0?Node
+				Naming.bind(nodeNum + "Node", currentNode);
+			} catch (RemoteException ex) {
+			} catch (AlreadyBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
-			try
-			{
-				currentNode.join(startingNode);
+			try {
+				startingNode.join(currentNode);
+			} catch (NullPointerException e) {
 			}
-			catch (NullPointerException e) {}
 		}
 	}
 }

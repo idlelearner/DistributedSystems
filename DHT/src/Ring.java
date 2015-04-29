@@ -3,99 +3,115 @@ import java.net.MalformedURLException;
 import java.rmi.AccessException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * Class to describe the Chord Ring and its functions
- * All rmi calls are made from here
+ * Class to describe the Chord Ring and its functions All rmi calls are made
+ * from here
+ * 
  * @author varun
  *
  */
 public class Ring implements Remote {
-	
+
 	/**
 	 * create a chord ring by introducing the first node
+	 * 
 	 * @param node
 	 */
-	public static void createRing(Node node) 
-			throws NodeAlreadyPresentException, NodeNotFoundException{
-		
+	public static int port = 1099;
+
+	public static void createRing(Node node)
+			throws NodeAlreadyPresentException, NodeNotFoundException {
+		System.setSecurityManager(new RMISecurityManager());
 		try {
-			if(node.getConnectionStatus()) {
-				throw new NodeAlreadyPresentException("Node is already in the ring,check!");
-			}else if (node.getNodeID() == null) {
-				throw new NodeNotFoundException("Node creation was unsuccessful!");
+			if (node.getConnectionStatus()) {
+				throw new NodeAlreadyPresentException(
+						"Node is already in the ring,check!");
+			} else if (node.getNodeID() == null) {
+				throw new NodeNotFoundException(
+						"Node creation was unsuccessful!");
 			}
 			node.toggleConnectionStatus();
-			//make itself the successor
+			// make itself the successor
 			node.setSuccessor(node.getNodeID());
-			//set the predecessor to NULL for this node
+			// set the predecessor to NULL for this node
 			node.setPredecessor(null);
-			
+
 		} catch (Exception e) {
-			//server should log this exception
+			// server should log this exception
 		}
 	}
-	
+
 	/**
 	 * introduces the node n1 to the chord ring which already has node n2
 	 * predecessor of n1 -> null, successor will be queried and set
-	 * @param Node n1
-	 * @param Node n2
+	 * 
+	 * @param Node
+	 *            n1
+	 * @param Node
+	 *            n2
 	 * @throws RemoteException
 	 * @throws MalformedURLException
 	 */
 	public static void join(Node n1, Node n2) throws RemoteException {
-		
-		//set predecessor to n1 to null
+
+		// set predecessor to n1 to null
 		n1.setPredecessor(null);
-		
-		Node succNode = null; //currently we do not have it, will query
-		
+
+		Node succNode = null; // currently we do not have it, will query
+
 		try {
 			succNode = n2.findSuccessorNode(n1.getNodeID());
 		} catch (Exception e) {
-			//Log this exception
+			// Log this exception
 		}
-		
-		//set this successor node 
+
+		// set this successor node
 		n1.setSuccessor(succNode.getNodeID());
-		
-		//set the successor we just got as the first in the fingerTable
+
+		// set the successor we just got as the first in the fingerTable
 		n1.setFinger(succNode.getNodeID(), 0);
 	}
-	
-	//Ask node to find the successor of the node with given key
-	public static Node findSuccessorOfNode(Node node, GenericKey id) 
-			throws RemoteException, MalformedURLException{
-		//first get the predecessor
+
+	// Ask node to find the successor of the node with given key
+	public static Node findSuccessorOfNode(Node node, GenericKey id)
+			throws RemoteException, MalformedURLException {
+		// first get the predecessor
 		Node tmpNode = findPredecessorOfNode(node, id);
-		
-		//get the first successor of this predecessor node
+
+		// get the first successor of this predecessor node
 		NodeKey tmpSucc = tmpNode.getSuccessor();
-		
-		//TODO : how do I do this?
-		java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("rmi:/" + );
-		
+
+		// TODO : how do I do this? Do we need this??
+		// java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry
+		// .getRegistry("rmi:/" + tmpSucc.getHost() + tmpSucc.getPort()
+		// + "/Node");
+
 		try {
-			//TODO : How do I do this ?
-			return (Node) Naming.lookup();
-		}catch (RemoteException e) {
-			
+			// TODO : How do I do this ?
+			return (Node) Naming.lookup(tmpSucc.getHost() + ":" + port + "/"
+					+ tmpSucc.getPort() + "Node");
+		} catch (RemoteException e) {
+
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		//we were not able to locate it, so return null
+
+		// we were not able to locate it, so return null
 		return null;
 	}
-	
+
 	public static Node findPredecessorOfNode(Node n, GenericKey id) {
 		Node succ = null;
 		Node startNode = n;
 		//TODO : how do I do this?
-		java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("rmi:/" + );
+//		java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("rmi:/" + );
 		try {
 			NodeKey succId = n.getSuccessor();
 		}catch (Exception e) {
@@ -128,92 +144,77 @@ public class Ring implements Remote {
 		startNode.addJumps(jumps);
 		return n;
 	}
-	
+
 	public static Node findNearestPreceedingFinger(Node n, GenericKey id) {
 		int fingerId;
-		
-		if(n.getFingerTableSize() == 0) return n;
-		
-		//traverse the finger table from the end
-		for(int i = n.getFingerTableSize() - 1; i>=0 ; i--) {
-			//return the first node that is between node and id
+
+		if (n.getFingerTable().isEmpty())
+			return n;
+
+		// traverse the finger table from the end
+		for (int i = n.getFingerTable().size() - 1; i >= 0; i--) {
+			// return the first node that is between node and id
 		}
-		
+
 		return n;
 	}
-	
-	public static void redistributeKeys(Node node) throws RemoteException{
+
+	public static void redistributeKeys(Node node) throws RemoteException {
 		Node thisNode = (Node) node;
 		NodeKey predecessor = thisNode.getPredecessor();
 		NodeKey successor = thisNode.getSuccessor();
 
 		byte[] step = toByteArray(1);
-		
+
 		Node predecessorNode = null, successorNode = null;
-		
-		try //set predecessorNode
+
+		try // set predecessorNode
 		{
-			try
-			{
-				predecessorNode = (Node) Naming.lookup("/" + predecessor.getIP() + ":1099/" + String.valueOf(predecessor.getPID()));
+			try {
+				predecessorNode = (Node) Naming.lookup("/"
+						+ predecessor.getIP() + ":1099/"
+						+ String.valueOf(predecessor.getPID()));
+			} catch (MalformedURLException ex) {
+				// log
 			}
-			catch (MalformedURLException ex)
-			{
-				//log
+		} catch (ConnectException ce) {
+			// log
+		} catch (NotBoundException ex) {
+			// log
+		} catch (AccessException ex) {
+			// log
+		}
+
+		try // set successorNode
+		{
+			try {
+				successorNode = (Node) Naming.lookup("//" + successor.getHost()
+						+ ":" + port + "/" + String.valueOf(successor.getPID()));
+			} catch (MalformedURLException ex) {
 			}
+		} catch (ConnectException ce) {
+		} catch (NotBoundException ex) {
+		} catch (AccessException ex) {
 		}
-		catch (ConnectException ce)
-		{
-			//log
-		}
-		catch (NotBoundException ex)
-		{
-			//log
-		}
-		catch (AccessException ex)
-		{
-			//log
-		}
-		
-		try //set successorNode
-		{
-			try
-			{
-				successorNode = (Node) Naming.lookup("/" + successor.getIP() + ":1099/" +String.valueOf(successor.getPID()));
-			}
-			catch (MalformedURLException ex)
-			{
-			}
-		}
-		catch (ConnectException ce)
-		{
-		}
-		catch (NotBoundException ex)
-		{
-		}
-		catch (AccessException ex)
-		{
-		}
-		
+
 		/*
 		 * for every IdKey in the successor, pass them to successor
 		 */
 		Map<NodeKey, Set<WordEntry>> entries = node.getWordEntryMap();
 
-		for (NodeKey counter : entries.keySet())
-		{
-			//add this to the map
+		for (NodeKey counter : entries.keySet()) {
+			// add this to the map
 		}
 
-		successorNode.setPredecessor(predecessor);//successor's predecessor = node's predecessor
+		successorNode.setPredecessor(predecessor);// successor's predecessor =
+													// node's predecessor
 		predecessorNode.setSuccessor(successor);// set the successor
 	}
-	
+
 	/**
 	 * converts number's value to byteArray
 	 */
-	public static byte[] toByteArray(int number)
-	{
+	public static byte[] toByteArray(int number) {
 		Integer num = (Integer) number;
 		byte[] tempArray = new byte[1];
 		tempArray[0] = num.byteValue();
