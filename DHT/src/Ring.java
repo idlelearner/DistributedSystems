@@ -47,6 +47,22 @@ public class Ring implements Remote {
 		}
 	}
 	
+	public static Node findNodeWithGivenNodeKey(NodeKey nKey) throws RemoteException{
+		Node foundNode = null;
+		try {
+			//get the successor node
+			foundNode = (Node) Naming.lookup("/" + nKey.getHost() + ":" + Ring.port + "/" + nKey.getNodeNum());
+		}catch (RemoteException e){
+			
+		}catch (MalformedURLException e) {
+			
+		}catch (NotBoundException e) {
+			
+		}
+		
+		return foundNode;
+	}
+	
 	/**
 	 * method called by a node that is possible predecessor to the current node
 	 * checks whether predecessor of node is not set, or if the possible predecessor

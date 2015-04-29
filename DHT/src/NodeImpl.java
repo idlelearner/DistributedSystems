@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -505,5 +506,32 @@ public void addNewWordEntriesAtNodeKeys(
 
 	public int getFingerTableSize() throws RemoteException {
 		return fingerTable.size();
+	}
+	
+	/**
+	 * this is a trial print function to just print on the system out
+	 * Later we need to move this to the client logs, so it will change
+	 */
+	public void printChordRingInfo() {
+		//start with the successor of this node
+		NodeKey nextKey = this.getSuccessor();
+		Node nextNode = null;
+		
+		//first print the info of this node
+		//currently printing only the Node Num
+		System.out.println("Node Number : "+this.getNodeID().getNodeNum());
+		
+		//keep going around the ring till we don't come back to the original element
+		while(!nextKey.equals(this.getNodeID())) {
+			
+			try {
+				//get the successor node
+				nextNode = Ring.findNodeWithGivenNodeKey(nextKey);
+				System.out.println("Node Number : "+this.getNodeID().getNodeNum()); 
+				nextKey = nextNode.getSuccessor();
+			}catch (Exception e){
+				
+			}
+		}
 	}
 }
