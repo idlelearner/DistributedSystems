@@ -29,7 +29,13 @@ public class GetRingDetailsClient {
 			// print Get nodedetails of successor.
 			// print node details.
 
-		} catch (MalformedURLException | RemoteException | NotBoundException e) {
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (NotBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
