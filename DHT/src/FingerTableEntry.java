@@ -42,9 +42,9 @@ public class FingerTableEntry implements Comparable<FingerTableEntry>{
 	}
 	
 	public int compareTo(FingerTableEntry o) {
-//		if(this.endElement > o.endElement) return 1;
-//		if(this.endElement < o.endElement) return -1;
-		return Integer.compare(this.endElement, o.endElement);
+		if(this.endElement > o.endElement) return 1;
+		if(this.endElement < o.endElement) return -1;
+		return this.getNodeId().getHashKey().compareTo(o.getNodeId().getHashKey());
 	}
 	
 	public boolean contains(NodeKey key) {

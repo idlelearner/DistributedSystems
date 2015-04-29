@@ -4,14 +4,14 @@ import java.io.Serializable;
  * Class to capture a word entry
  * @varun
  */
-public class WordEntry implements Serializable, Comparable {
+public class WordEntry implements Serializable, Comparable<WordEntry> {
 	private GenericKey wKey; //this is the word key, which contains the hash of the word
 	private GenericKey nKey; //this is the node key, which contains the hash of the node
 	private String meaning; // meaning of the work which will be looked up
 	
 	public WordEntry(String word, String host, String port, String meaning) {
 		this.wKey = new WordKey(word);
-		this.nKey = new NodeKey(host, port);
+		this.nKey = new NodeKey(HashingHelper.hash((host + "|" + port).getBytes()), host, port);
 		this.meaning = meaning;
 	}
 	
@@ -27,19 +27,28 @@ public class WordEntry implements Serializable, Comparable {
 		return this.meaning;
 	}
 	
-	public byte[] getByteKey() {
-		return wKey.getByteKey();
+	public ByteWrapper getHashKey()
+	{
+		return wKey.getHashKey();
+	}
+
+	public ByteWrapper getHashedIDKey()
+	{
+		return new ByteWrapper(nKey.getByteKey());
 	}
 	
-	public byte[] getHashedNodeIdKey() {
-		return nKey.getByteKey();
+	public byte[] getByteKey()
+	{
+		ByteWrapper hashKey = new ByteWrapper(wKey.getByteKey());
+		return hashKey.getBytes();
 	}
 	
 	public boolean equals(GenericKey k) {
 		return this.wKey.equals(k);
 	}
 	
-	public int compareTo(Object o) {
-		return this.compareTo(o);
+	public int compareTo(WordEntry o) {
+			WordEntry entry = (WordEntry) o;
+			return this.wKey.getHashKey().compareTo(entry.getHashKey());
 	}
 }
