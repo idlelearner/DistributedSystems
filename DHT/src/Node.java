@@ -4,6 +4,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +97,7 @@ public class Node extends UnicastRemoteObject{
 			return;
 		}
 		
+		//We do not need a redundant addition to the fingerTable, so first make sure its not already there
 		Iterator<FingerTableEntry> it = fingerTable.iterator();
 		FingerTableEntry temp;
 		while(it.hasNext()){
@@ -145,14 +147,21 @@ public class Node extends UnicastRemoteObject{
 		fingerTable.remove(i);
 	}
 	
-	public List<NodeKey> getFingers() {
+	public void removeAllFingers() {
+		for (int i = 0; i < fingerTable.size(); i++)
+		{
+			fingerTable.remove(i);
+		}
+	}
+	
+	public List<NodeKey> getFingerNodeIds() {
 		List<NodeKey> list = new ArrayList<NodeKey>();
 		for(int i = 0; i < fingerTable.size(); i++) list.add(i, fingerTable.get(i).getNodeId());
 		
 		return list;
 	}
 	
-	public void addWordEntry(NodeKey node, WordEntry entry) {
+	public void addWordEntryAtNodeKey(NodeKey node, WordEntry entry) {
 		Set<WordEntry> entrySet;
 		synchronized (this.wordEntryMap) {
 			//if the nodeKey is already present, then we just add to the set, else create new set
@@ -185,7 +194,7 @@ public class Node extends UnicastRemoteObject{
 	}
 	
 	//get the word entries for a given node key for this node
-	public Set<WordEntry> getWordEntries(NodeKey key) throws RemoteException{
+	public Set<WordEntry> getWordEntriesForNodeKey(NodeKey key) {
 		synchronized (this.wordEntryMap) {
 			if(!this.wordEntryMap.containsKey(key)) {
 				return null;
@@ -197,7 +206,14 @@ public class Node extends UnicastRemoteObject{
 		}
 	}
 	
-	public void setWordEntriesForKey(NodeKey key, Set<WordEntry> entries) {
+	public void removeNodeKeyFromMap(NodeKey key) {
+		synchronized (this.wordEntryMap)
+		{
+			this.wordEntryMap.remove(key);
+		}
+	}
+	
+	public void setWordEntriesForNodeKey(NodeKey key, Set<WordEntry> entries) {
 		synchronized (this.wordEntryMap) {
 			this.wordEntryMap.put(key, entries);
 		}
@@ -229,26 +245,216 @@ public class Node extends UnicastRemoteObject{
 		return retNode;
 	}
 	
-	public java.rmi.registry.Registry getRMIHandle()
-	{
-		//get this from the client
+	public NodeKey findSuccessorNodeId(GenericKey id) {
+		NodeKey retNode = null;
+		
+		try {
+			retNode = Ring.findSuccessorOfNode(this, id).getNodeID();
+		}catch (Exception e) {
+			//log the exception
+		}
+		
+		return retNode;
 	}
 	
-	public WordEntry getSpecificWordEntry(NodeKey nKey, WordKey wKey) {
-		WordEntry we = null;
-		return we;
+//	public java.rmi.registry.Registry getRMIHandle()
+//	{
+//		//get this from the client
+//	}
+	
+	public WordEntry getWordEntryGivenNodeKey(NodeKey nKey, WordKey wKey) {
+		Set<WordEntry> relevantSet = this.wordEntryMap.get(nKey);
+
+		Iterator<WordEntry> it = relevantSet.iterator();
+
+		while (it.hasNext())
+		{
+			WordEntry temp = it.next();
+			if (temp.getWKey().equals(wKey))
+			{
+				return temp;
+			}
+		}
+		return null;
 	}
 	
-	public WordEntry getEntryByWordKey(WordKey wKey) {
+	public WordEntry getWordEntryGivenJustWordKey(WordKey wKey) {
 		for (Map.Entry<NodeKey, Set<WordEntry>> entry : this.wordEntryMap.entrySet())
 		{
-			WordEntry found = getSpecificWordEntry(entry.getKey(), wKey);
+			WordEntry found = getWordEntryGivenNodeKey(entry.getKey(), wKey);
 			if (found != null)
 			{
 				return found;
 			}
 		}
 		return null;
+	}
+	
+	public Map<NodeKey, Set<WordEntry>> giveEntries(NodeKey successorId)
+	{
+
+		synchronized (this.wordEntryMap)
+		{
+			Map<NodeKey, Set<WordEntry>> temporaryMap = new HashMap<NodeKey, Set<WordEntry>>();
+			WordEntry entry = null;
+			Map.Entry<NodeKey, Set<WordEntry>> itEntry;
+			Iterator<WordEntry> iter;
+			Set<WordEntry> set;
+			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = this.wordEntryMap.entrySet().iterator();
+
+			//iterate through the entire Map
+			while (it.hasNext())
+			{
+				//initialize a mpa for every IdKey
+				set = new HashSet<WordEntry>();
+				itEntry = it.next();
+				iter = itEntry.getValue().iterator();
+
+				//iterate through the entire set of the IdKey
+				while (iter.hasNext())
+				{
+					entry = iter.next();
+
+					//if id is not in (newSuccessor, successor], then it should be moved to successor
+					//(it belongs to (predecessor, newSuccessor] part of the entries)
+					if (!GenericKey.isBetweenSuccessor(entry.getWKey(), successorId, this.nodeID))/*(itEntry.getKey().getHashKey().compareTo(predecessorID.getHashKey()) <= 0)*/
+					{
+						//add to the set the FIDEntry that corresponds to the above
+						set.add(entry);
+					}
+				}
+
+				//add the set of the entries to the returning map
+				if (!set.isEmpty())
+				{
+					temporaryMap.put(itEntry.getKey(), set);
+				}
+
+				//delete the entries of the set, from the node's Set
+				itEntry.getValue().removeAll(set);
+			}
+			return temporaryMap;
+		}
+	}
+	
+	public void addNewWordEntriesAtNodeKey(Map<NodeKey, Set<WordEntry>> newEntries)
+	{
+		synchronized (this.wordEntryMap)
+		{
+			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = newEntries.entrySet().iterator();
+			Map.Entry<NodeKey, Set<WordEntry>> itEntry;
+			Iterator<WordEntry> iter;
+			WordEntry entry;
+
+			//iterate the entire map
+			while (it.hasNext())
+			{
+				itEntry = it.next();
+				iter = itEntry.getValue().iterator();
+
+				//for every id key, iterate in its set of entries
+				while (iter.hasNext())
+				{
+					entry = iter.next();
+					//add the entries to the node's map
+					this.addWordEntryAtNodeKey(itEntry.getKey(), entry);
+				}
+			}
+		}
+	}
+	
+	public void removeWordEntriesGivenNodeKey(NodeKey id)
+	{
+		Set<WordEntry> nSet;
+		synchronized (this.wordEntryMap)
+		{
+			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = this.wordEntryMap.entrySet().iterator();
+			Map.Entry<NodeKey, Set<WordEntry>> itEntry = null;
+
+			//iterate through the entire Map
+			while (it.hasNext())
+			{
+				itEntry = it.next();
+
+				//check if any of the ids already in the map equal with idKey
+				//if anyone does, then remove it and stop the repetition
+				if (itEntry.getKey().equals(id))
+				{
+					this.wordEntryMap.remove(itEntry.getKey());
+					break;
+				}
+			}
+		}
+	}
+	
+	public boolean checkIfWordEntryPresentAtNodeKey(WordEntry fid, NodeKey id)
+	{
+		Set<WordEntry> nSet;
+		synchronized (this.wordEntryMap)
+		{
+			boolean contains = false;
+			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = this.wordEntryMap.entrySet().iterator();
+			Map.Entry<NodeKey, Set<WordEntry>> itEntry = null;
+			WordEntry entry = null;
+
+			//iterate through the entire Map
+			while (it.hasNext())
+			{
+				itEntry = it.next();
+
+				//check if any of the ids already in the map equal with id
+				if (itEntry.getKey().equals(id))
+				{
+					contains = true;
+					break;
+				}
+			}
+
+			//if the id existed in the map check if there was also the filename present
+			if (contains)
+			{
+				Iterator<WordEntry> iter = itEntry.getValue().iterator();
+				while (iter.hasNext())
+				{
+					entry = iter.next();
+
+					//if it does, return true, else return false
+					if (fid.equals(entry.getWKey()))
+					{
+						return true;
+					}
+				}
+			}
+			else
+			{
+				return false;
+			}
+
+			return false;
+		}
+	}
+	
+	public int getCountOfWordEntriesInMap()
+	{
+		int count = 0;
+		Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = this.wordEntryMap.entrySet().iterator();
+		Map.Entry<NodeKey, Set<WordEntry>> entry;
+
+
+		while (it.hasNext())
+		{
+			entry = it.next();
+			count += entry.getValue().size();
+		}
+
+		return count;
+	}
+
+	
+	public void create() throws NodeAlreadyPresentException, NodeNotFoundException
+	{
+
+		Ring.createRing(this);
 	}
 	
 	public void addJumps(int jumps) {
