@@ -39,7 +39,7 @@ public class NodeStart {
 		String startingNodeURL = currentNode.getNodeID().getHost() + ":"
 				+ defaultPort + "/node00Node";
 		try {
-			startingNode = (Node) Naming.lookup(startingNodeURL);
+			startingNode = (Node) Naming.lookup("//" + startingNodeURL);
 		} catch (RemoteException ex) {
 		} catch (NotBoundException ex) {
 		} catch (Exception genE) {

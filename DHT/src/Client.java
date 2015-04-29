@@ -50,22 +50,25 @@ public class Client {
 		// lookup for the node in the master node.
 		// What should be the master node URL and class
 		System.setSecurityManager(new RMISecurityManager());
-		String hostname = args[0] + ":" + args[1];
-		MainNodeManager mainNode = (MainNodeManager) Naming.lookup("//"
-				+ hostname + "/MainNode");
+		// default port
+		int port = 1099;
+		String hostname = args[0] + ":" + port;
+		Node mainNode = (Node) Naming.lookup("//" + hostname + ":" + port + "/"
+				+ "node00");
 
 		// get the node to insert
 		// insert.
 		for (String key : wordMeaningMap.keySet()) {
-			// Hash the word to get the key
+			// Find the node where to insert.
+			NodeKey nodeToBeInserted = mainNode.find_node(key);
+			Node curNodeToInsert = (Node) Naming.lookup("//"
+					+ nodeToBeInserted.getHost() + ":" + port + "/"
+					+ nodeToBeInserted.getNodeNum() + "Node");
 
-			// Node nodeToBeInserted = mainNode.lookup(key);
-
-			// NodeManager nodeManager = (NodeManager) Naming.lookup("//" +
-			// hostname + "/" + nodeToBeInserted.getURL());
-
-			// nodeManager.insert(key, wordMeaningMap.get(key));
-			System.out.println(key + " : " + wordMeaningMap.get(key));
+			// Insert in that word.
+			curNodeToInsert.insert(key, wordMeaningMap.get(key));
+			System.out.println("Inserted : " + key + " : "
+					+ wordMeaningMap.get(key));
 		}
 
 		// If the word entered quit, else fetch the work
@@ -78,13 +81,15 @@ public class Client {
 			if (word.equals("exit"))
 				break;
 			// Hash the word to get the key
+			NodeKey nodeToBeSearched = mainNode.find_node(word);
+			Node curNodeToSearch = (Node) Naming.lookup("//"
+					+ nodeToBeSearched.getHost() + ":" + port + "/"
+					+ nodeToBeSearched.getNodeNum() + "Node");
 
-			// Node nodeToBeSearched = mainNode.lookup(key);
-
-			// NodeManager nodeManager = (NodeManager) Naming.lookup("//" +
-			// hostname + "/" + nodeToBeSearched.getURL());
-
-			// String output = nodeManager.lookup(key);
+			// Insert in that word.
+			WordEntry entry = curNodeToSearch.lookup(word);
+			System.out.println("Searched : " + entry.getWord() + " : "
+					+ entry.getMeaning());
 
 		}
 

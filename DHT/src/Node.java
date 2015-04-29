@@ -40,7 +40,7 @@ public interface Node extends Remote{
 	public int getCountOfWordEntriesInMap() throws RemoteException;
 	public FingerTableEntry getFingerAtIndex(int index) throws RemoteException;
 	public void create() throws NodeAlreadyPresentException, NodeNotFoundException, RemoteException;
-	public NodeKey find_node(String word, Node qNode) throws RemoteException;
+	public NodeKey find_node(String word) throws RemoteException;
 	public WordEntry lookup(String word) throws RemoteException;
 	public void insert(String word, String meaning) throws RemoteException;
 	public void addNewWordEntriesAtParticularNodeKey(NodeKey idKey, Set<WordEntry> entries);
