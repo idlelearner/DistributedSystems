@@ -336,7 +336,7 @@ public class NodeImpl implements Node{
 		}
 	}
 	
-	public void addNewWordEntriesAtNodeKey(Map<NodeKey, Set<WordEntry>> newEntries) throws RemoteException
+	public void addNewWordEntriesAtNodeKeys(Map<NodeKey, Set<WordEntry>> newEntries) throws RemoteException
 	{
 		synchronized (this.wordEntryMap)
 		{
@@ -359,6 +359,16 @@ public class NodeImpl implements Node{
 					this.addWordEntryAtNodeKey(itEntry.getKey(), entry);
 				}
 			}
+		}
+	}
+	
+	public void addNewWordEntriesAtParticularNodeKey(NodeKey idKey, Set<WordEntry> entries)
+	{
+		Set<WordEntry> nSet;
+		synchronized (this.wordEntryMap)
+		{
+			nSet = entries;
+			this.wordEntryMap.put(idKey, nSet);
 		}
 	}
 	
@@ -497,6 +507,10 @@ public class NodeImpl implements Node{
 		} catch (RemoteException e) {
 			//
 		}
+	}
+	
+	public FingerTableEntry getFingerAtIndex(int index) throws RemoteException{
+		return fingerTable.get(index);
 	}
 	
 	public void addJumps(int jumps) throws RemoteException{

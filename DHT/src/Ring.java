@@ -46,6 +46,24 @@ public class Ring implements Remote {
 			// server should log this exception
 		}
 	}
+	
+	/**
+	 * method called by a node that is possible predecessor to the current node
+	 * checks whether predecessor of node is not set, or if the possible predecessor
+	 * is closer to the current node than the current predecessor
+	 * and updates(if needed) the predecessor variable
+	 */
+	public static void informNode(Node self, Node possiblePredecessor) throws RemoteException
+	{
+		/*
+		 *checks if current predecessor is not set(null)
+		 * and if possiblePredecessor's ID lies between (currentPredecessor's ID, currentNode's ID
+		 */
+		if (self.getPredecessor() == null || GenericKey.isBetweenNotify(possiblePredecessor.getNodeID(), self.getPredecessor(), self.getNodeID())) // updates the local variable of current Node
+		{
+			self.setPredecessor(possiblePredecessor.getNodeID());
+		}
+	}
 
 	/**
 	 * introduces the node n1 to the chord ring which already has node n2
@@ -76,6 +94,17 @@ public class Ring implements Remote {
 
 		// set the successor we just got as the first in the fingerTable
 		n1.setFinger(succNode.getNodeID(), 0);
+		
+		try
+		{
+			Node n = (Node) Naming.lookup("//" + n2.getNodeID().getHost() + ":" + port + "/" + n2.getNodeID().getNodeNum());
+			informNode(n1, n);
+		} catch (MalformedURLException e) {
+			
+		}
+		catch (NotBoundException ex)
+		{
+		}
 	}
 
 	// Ask node to find the successor of the node with given key
@@ -86,11 +115,6 @@ public class Ring implements Remote {
 
 		// get the first successor of this predecessor node
 		NodeKey tmpSucc = tmpNode.getSuccessor();
-
-		// TODO : how do I do this? Do we need this??
-		// java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry
-		// .getRegistry("rmi:/" + tmpSucc.getHost() + tmpSucc.getPort()
-		// + "/Node");
 
 		try {
 			// TODO : How do I do this ?
@@ -110,50 +134,81 @@ public class Ring implements Remote {
 	public static Node findPredecessorOfNode(Node n, GenericKey id) {
 		Node succ = null;
 		Node startNode = n;
-		//TODO : how do I do this?
-//		java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("rmi:/" + );
+		NodeKey succId;
 		try {
-			NodeKey succId = n.getSuccessor();
+			succId = n.getSuccessor();
+			succ = (Node) Naming.lookup("//" + succId.getHost()
+					+ ":" + port + "/" + succId.getNodeNum());
+		
+		
+			Node tempNode = null;
+		
+			//TODO: change this condition to check until id is between tempNode and tempNode.successor
+			while(!GenericKey.isBetweenSuccessor(id, n.getNodeID(), n.getSuccessor())) {
+				if(tempNode != null)
+					if(tempNode.getNodeID() == n.getNodeID()) break;
+			
+				tempNode = n;
+			
+				n = (Node) findNearestPreceedingFinger(n, id);
+				
+				try {
+					NodeKey refreshedId = n.getSuccessor();
+					//TODO : How to do this RMI lookup
+					succ = (Node) Naming.lookup("//" + refreshedId.getHost()
+						+ ":" + port + "/" + refreshedId.getNodeNum());
+				}catch (RemoteException e) {
+					//Log this
+				}
+			}
 		}catch (Exception e) {
 			//log
-		}
-		
-		Node tempNode = null;
-		
-		int jumps = 0;
-		
-		//TODO: change this condition to check until id is between tempNode and tempNode.successor
-		while() {
-			if(tempNode != null)
-				if(tempNode.getNodeID() == n.getNodeID()) break;
-			
-			jumps++;
-			tempNode = n;
-			
-			n = (Node) findNearestPreceedingFinger(n, id);
-			
-			try {
-				NodeKey refreshedId = n.getSuccessor();
-				//TODO : How to do this RMI lookup
-				succ = (Node) Naming.lookup("//" + refreshedId.getHost()
-						+ ":" + port + "/" + refreshedId.getNodeNum());
-			}catch (RemoteException e) {
-				//Log this
-			}
 		}
 		
 		return n;
 	}
 
 	public static Node findNearestPreceedingFinger(Node n, GenericKey id) {
-		int fingerId;
+		NodeKey fingerId;
+		try {
+			if (n.getFingerTable().isEmpty())
+				return n;
 
-		if (n.getFingerTable().isEmpty())
-			return n;
+			// traverse the finger table from the end
+			for (int i = n.getFingerTable().size() - 1; i >= 0; i--) {
+				// return the first node that is between node and id
+				fingerId = n.getFingerAtIndex(i).getNodeId();
 
-		// traverse the finger table from the end
-		for (int i = n.getFingerTable().size() - 1; i >= 0; i--) {
-			// return the first node that is between node and id
+				if (fingerId == null)
+				{
+					continue;
+				}
+
+				//returns the first node that is between (node, id)
+				if (GenericKey.isBetween(fingerId, n.getNodeID(), id))
+				{
+					try
+					{
+						try
+						{
+							return (Node) Naming.lookup("//" + fingerId.getHost() + ":" + port + fingerId.getNodeNum());
+						}
+						catch (MalformedURLException ex)
+						{
+						}
+						// java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("rmi:/" + node.getLocalID().getIP());
+						// return (Node) remote.lookup(String.valueOf(finger.getPID()));
+					}
+					catch (RemoteException ex)
+					{
+					}
+					catch (NotBoundException ex)
+					{
+					}
+				}
+			}
+		}catch (RemoteException e) {
+			
 		}
 
 		return n;
@@ -200,7 +255,7 @@ public class Ring implements Remote {
 		Map<NodeKey, Set<WordEntry>> entries = node.getWordEntryMap();
 
 		for (NodeKey counter : entries.keySet()) {
-			// add this to the map
+			successorNode.addNewWordEntriesAtParticularNodeKey(counter, entries.get(counter));
 		}
 
 		successorNode.setPredecessor(predecessor);// successor's predecessor =

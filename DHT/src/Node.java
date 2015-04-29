@@ -34,12 +34,14 @@ public interface Node extends Remote{
 	public WordEntry getWordEntryGivenNodeKey(NodeKey nKey, WordKey wKey) throws RemoteException;
 	public WordEntry getWordEntryGivenJustWordKey(WordKey wKey) throws RemoteException;
 	public Map<NodeKey, Set<WordEntry>> giveEntries(NodeKey successorId) throws RemoteException;
-	public void addNewWordEntriesAtNodeKey(Map<NodeKey, Set<WordEntry>> newEntries) throws RemoteException;
+	public void addNewWordEntriesAtNodeKeys(Map<NodeKey, Set<WordEntry>> newEntries) throws RemoteException;
 	public void removeWordEntriesGivenNodeKey(NodeKey id) throws RemoteException;
 	public boolean checkIfWordEntryPresentAtNodeKey(WordEntry fid, NodeKey id) throws RemoteException;
 	public int getCountOfWordEntriesInMap() throws RemoteException;
+	public FingerTableEntry getFingerAtIndex(int index) throws RemoteException;
 	public void create() throws NodeAlreadyPresentException, NodeNotFoundException, RemoteException;
 	public NodeKey find_node(String word, Node qNode) throws RemoteException;
 	public WordEntry lookup(String word) throws RemoteException;
 	public void insert(String word, String meaning) throws RemoteException;
+	public void addNewWordEntriesAtParticularNodeKey(NodeKey idKey, Set<WordEntry> entries);
 }
