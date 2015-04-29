@@ -9,9 +9,9 @@ public class WordEntry implements Serializable, Comparable<WordEntry> {
 	private GenericKey nKey; //this is the node key, which contains the hash of the node
 	private String meaning; // meaning of the work which will be looked up
 	
-	public WordEntry(String word, String host, String port, String meaning) {
+	public WordEntry(String word, String host, String nodeNum, String meaning) {
 		this.wKey = new WordKey(word);
-		this.nKey = new NodeKey(HashingHelper.hash((host + "|" + port).getBytes()), host, port);
+		this.nKey = new NodeKey(HashingHelper.hash((host + "|" + nodeNum).getBytes()), host, nodeNum);
 		this.meaning = meaning;
 	}
 	

@@ -456,6 +456,49 @@ public class NodeImpl implements Node{
 		Ring.createRing(this);
 	}
 	
+	public NodeKey find_node(String word, Node qNode) throws RemoteException
+	{
+		GenericKey wKey = new WordKey(word);
+		Node responsibleNode = null;
+		try
+		{
+
+			responsibleNode = qNode.findSuccessorNode(wKey);
+		}
+		catch (Exception ex)
+		{
+		}
+		
+		return responsibleNode.getNodeID();
+	}
+	
+	public WordEntry lookup(String word) throws RemoteException
+	{
+		WordKey wKey = new WordKey(word);
+		WordEntry wordEntry = null;
+		
+		try
+		{
+			//request word from this node
+			wordEntry = this.getWordEntryGivenJustWordKey(wKey);
+		}
+		catch (RemoteException ex)
+		{
+		}
+
+		return wordEntry;
+		
+	}
+	
+	public void insert(String word, String meaning) throws RemoteException{
+		WordEntry wEntry = new WordEntry(word, this.getNodeID().getHost(), this.getNodeID().getNodeNum(), meaning);
+		try {
+			addWordEntryAtNodeKey(this.getNodeID(), wEntry);
+		} catch (RemoteException e) {
+			//
+		}
+	}
+	
 	public void addJumps(int jumps) throws RemoteException{
 		this.jumps += jumps;
 	}

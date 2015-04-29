@@ -142,7 +142,6 @@ public class Ring implements Remote {
 			}
 		}
 		
-		startNode.addJumps(jumps);
 		return n;
 	}
 
