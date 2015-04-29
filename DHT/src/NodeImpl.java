@@ -29,7 +29,6 @@ public class NodeImpl implements Node {
 	// This mapping is needed when re-distributing, so that entries can be moved
 	// as a whole
 	private Map<NodeKey, Set<WordEntry>> wordEntryMap;
-	private int jumps = 0;
 
 	private Boolean isConnected = false;
 
