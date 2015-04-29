@@ -2,24 +2,24 @@ import java.io.Serializable;
 
 public class WordKey extends GenericKey implements Serializable {
 	private String word;
-	private byte[] hashKey;
+	private ByteWrapper hashKey;
 	private String stringForHashKey;
 	
 	public WordKey(String word) {
 		this(HashingHelper.hash(word.getBytes()), word);
 	}
 	
-	public WordKey(byte[] key, String word) {
-		this.hashKey = key;
+	public WordKey(ByteWrapper hashKey, String word) {
+		this.hashKey = hashKey;
 		this.word = word;
-		this.stringForHashKey = this.hexString();
+		this.stringForHashKey = hashKey.toHexString();
 	}
 	
 	public String getWord() {
 		return word;
 	}
 	
-	public byte[] getHashKey() {
+	public ByteWrapper getHashKey() {
 		return hashKey;
 	}
 	
@@ -32,21 +32,8 @@ public class WordKey extends GenericKey implements Serializable {
 		return this.hashKey.equals(k.getByteKey());
 	}
 	
+	@Override
 	public byte[] getByteKey() {
-		return this.hashKey;
-	}
-	
-	private String hexString() {
-		String str = "";
-		String temp;
-		for (byte b : hashKey) {
-			temp = Integer.toHexString(b & 0xff).toUpperCase();
-			
-			if(temp.length() == 1) temp = "0" + temp;
-			
-			str += temp;
-		}
-		
-		return str;
+		return this.hashKey.getBytes();
 	}
 }

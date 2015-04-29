@@ -4,7 +4,7 @@ public final class HashingHelper {
 	private static String HASHING_ALGO = "SHA-1";
 	private static MessageDigest md;
 	
-	public static byte[] hash(byte[] hashKey) {
+	public static ByteWrapper hash(byte[] hashKey) {
 		try {
 			md = MessageDigest.getInstance(HASHING_ALGO);
 		}catch (Exception e) {
@@ -14,6 +14,6 @@ public final class HashingHelper {
 		md.reset();
 		md.update(hashKey);
 		
-		return md.digest();
+		return new ByteWrapper(md.digest());
 	}
 }
