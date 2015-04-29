@@ -1,13 +1,17 @@
 /**
- * structure for a generic key (abstract class)
- * word key and node key will extend this class
+ * structure for a generic key (abstract class) word key and node key will
+ * extend this class
+ * 
  * @author varun
  *
  */
 public abstract class GenericKey {
 	public abstract byte[] getByteKey();
+
 	public abstract boolean equals(GenericKey k);
+
 	public abstract ByteWrapper getHashKey();
+
 	public abstract String getStringForHashKey();
 	
 	public static boolean isBetweenSuccessor(GenericKey id, GenericKey first, GenericKey last)
