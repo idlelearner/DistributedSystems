@@ -82,18 +82,6 @@ public class Node extends UnicastRemoteObject{
 		isConnected = !isConnected;
 	}
 	
-	public Node findSuccessor(int id) {
-		Node foundNode = null;
-		
-		try {
-			foundNode = Ring.findSuccessorOfNode(this, id);
-		}catch (Exception e) {
-			//Log this exception in the server logs
-		}
-		
-		return foundNode;
-	}
-	
 	public void setFinger(NodeKey node, int index) {
 		//the max length is 160, from 0-159
 		if(index > 159) {
@@ -229,12 +217,16 @@ public class Node extends UnicastRemoteObject{
 		}
 	}
 	
-	public Node findSuccessorNode(NodeKey id) {
+	public Node findSuccessorNode(GenericKey id) {
+		Node retNode = null;
+		
 		try {
-			return Ring.findSuccessorOfNode(this, id);
+			retNode = Ring.findSuccessorOfNode(this, id);
 		}catch (Exception e) {
 			//log the exception
 		}
+		
+		return retNode;
 	}
 	
 	public java.rmi.registry.Registry getRMIHandle()

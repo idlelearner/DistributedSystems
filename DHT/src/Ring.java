@@ -69,7 +69,7 @@ public class Ring implements Remote {
 	}
 	
 	//Ask node to find the successor of the node with given key
-	public static Node findSuccessorOfNode(Node node, int id) 
+	public static Node findSuccessorOfNode(Node node, GenericKey id) 
 			throws RemoteException, MalformedURLException{
 		//first get the predecessor
 		Node tmpNode = findPredecessorOfNode(node, id);
@@ -91,7 +91,7 @@ public class Ring implements Remote {
 		return null;
 	}
 	
-	public static Node findPredecessorOfNode(Node n, int id) {
+	public static Node findPredecessorOfNode(Node n, GenericKey id) {
 		Node succ = null;
 		Node startNode = n;
 		//TODO : how do I do this?
@@ -129,7 +129,7 @@ public class Ring implements Remote {
 		return n;
 	}
 	
-	public static Node findNearestPreceedingFinger(Node n, int id) {
+	public static Node findNearestPreceedingFinger(Node n, GenericKey id) {
 		int fingerId;
 		
 		if(n.getFingerTableSize() == 0) return n;
