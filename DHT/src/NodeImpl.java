@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -20,8 +21,9 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
  * @author varun
  *
  */
-public class NodeImpl implements Node {
+public class NodeImpl implements Node, Serializable {
 	private NodeKey nodeID;
+	private NodeImpl curNode = null;
 	private ArrayList<FingerTableEntry> fingerTable;
 	private NodeKey predecessor;
 	private NodeKey successor;
@@ -246,7 +248,7 @@ public class NodeImpl implements Node {
 
 	public Node findSuccessorNode(GenericKey id) {
 		Node retNode = null;
-
+		System.out.println("In find successor node");
 		try {
 			retNode = Ring.findSuccessorOfNode(this, id);
 		} catch (Exception e) {
@@ -347,7 +349,8 @@ public class NodeImpl implements Node {
 			return temporaryMap;
 		}
 	}
-public void addNewWordEntriesAtNodeKeys(
+
+	public void addNewWordEntriesAtNodeKeys(
 			Map<NodeKey, Set<WordEntry>> newEntries) throws RemoteException {
 		synchronized (this.wordEntryMap) {
 			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = newEntries
@@ -370,17 +373,15 @@ public void addNewWordEntriesAtNodeKeys(
 			}
 		}
 	}
-	
-	public void addNewWordEntriesAtParticularNodeKey(NodeKey idKey, Set<WordEntry> entries)
-	{
+
+	public void addNewWordEntriesAtParticularNodeKey(NodeKey idKey,
+			Set<WordEntry> entries) {
 		Set<WordEntry> nSet;
-		synchronized (this.wordEntryMap)
-		{
+		synchronized (this.wordEntryMap) {
 			nSet = entries;
 			this.wordEntryMap.put(idKey, nSet);
 		}
 	}
-
 
 	public void removeWordEntriesGivenNodeKey(NodeKey id)
 			throws RemoteException {
@@ -463,9 +464,11 @@ public void addNewWordEntriesAtNodeKeys(
 			NodeNotFoundException, RemoteException {
 
 		Ring.createRing(this);
+		curNode = this;
 	}
 
 	public NodeKey find_node(String word) throws RemoteException {
+		System.out.println("In find node... ");
 		GenericKey wKey = new WordKey(word);
 		Node responsibleNode = null;
 		try {
@@ -484,6 +487,7 @@ public void addNewWordEntriesAtNodeKeys(
 			// request word from this node
 			wordEntry = this.getWordEntryGivenJustWordKey(wKey);
 		} catch (RemoteException ex) {
+			ex.printStackTrace();
 		}
 
 		return wordEntry;
@@ -496,41 +500,39 @@ public void addNewWordEntriesAtNodeKeys(
 		try {
 			addWordEntryAtNodeKey(this.getNodeID(), wEntry);
 		} catch (RemoteException e) {
-			//
+			e.printStackTrace();
 		}
 	}
-	
-	public FingerTableEntry getFingerAtIndex(int index) throws RemoteException{
+
+	public FingerTableEntry getFingerAtIndex(int index) throws RemoteException {
 		return fingerTable.get(index);
 	}
 
 	public int getFingerTableSize() throws RemoteException {
 		return fingerTable.size();
 	}
-	
+
 	/**
-	 * this is a trial print function to just print on the system out
-	 * Later we need to move this to the client logs, so it will change
+	 * this is a trial print function to just print on the system out Later we
+	 * need to move this to the client logs, so it will change
 	 */
 	public void printChordRingInfo() {
-		//start with the successor of this node
+		// start with the successor of this node
 		NodeKey nextKey = this.getSuccessor();
 		Node nextNode = null;
-		
-		//first print the info of this node
-		//currently printing only the Node Num
-		System.out.println("Node Number : "+this.getNodeID().getNodeNum());
-		
-		//keep going around the ring till we don't come back to the original element
-		while(!nextKey.equals(this.getNodeID())) {
-			
+
+		System.out.println("Node Number : " + curNode.getNodeID().getNodeNum());
+
+		while (!nextKey.equals(curNode.getNodeID())) {
+
 			try {
-				//get the successor node
+				// get the successor node
 				nextNode = Ring.findNodeWithGivenNodeKey(nextKey);
-				System.out.println("Node Number : "+this.getNodeID().getNodeNum()); 
+				System.out.println("Node Number : "
+						+ this.getNodeID().getNodeNum());
 				nextKey = nextNode.getSuccessor();
-			}catch (Exception e){
-				
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}

@@ -44,38 +44,49 @@ public class Ring implements Remote {
 
 		} catch (Exception e) {
 			// server should log this exception
+			e.printStackTrace();
 		}
 	}
-	
-	public static Node findNodeWithGivenNodeKey(NodeKey nKey) throws RemoteException{
+
+	public static Node findNodeWithGivenNodeKey(NodeKey nKey)
+			throws RemoteException {
 		Node foundNode = null;
 		try {
-			//get the successor node
-			foundNode = (Node) Naming.lookup("/" + nKey.getHost() + ":" + Ring.port + "/" + nKey.getNodeNum());
-		}catch (RemoteException e){
-			
-		}catch (MalformedURLException e) {
-			
-		}catch (NotBoundException e) {
-			
+			// get the successor node
+			foundNode = (Node) Naming.lookup("/" + nKey.getHost() + ":"
+					+ Ring.port + "/" + nKey.getNodeNum() + "Node");
+		} catch (RemoteException e) {
+
+		} catch (MalformedURLException e) {
+
+		} catch (NotBoundException e) {
+
 		}
-		
+
 		return foundNode;
 	}
-	
+
 	/**
 	 * method called by a node that is possible predecessor to the current node
-	 * checks whether predecessor of node is not set, or if the possible predecessor
-	 * is closer to the current node than the current predecessor
+	 * checks whether predecessor of node is not set, or if the possible
+	 * predecessor is closer to the current node than the current predecessor
 	 * and updates(if needed) the predecessor variable
 	 */
-	public static void informNode(Node self, Node possiblePredecessor) throws RemoteException
-	{
+	public static void informNode(Node self, Node possiblePredecessor)
+			throws RemoteException {
 		/*
-		 *checks if current predecessor is not set(null)
-		 * and if possiblePredecessor's ID lies between (currentPredecessor's ID, currentNode's ID
+		 * checks if current predecessor is not set(null) and if
+		 * possiblePredecessor's ID lies between (currentPredecessor's ID,
+		 * currentNode's ID
 		 */
-		if (self.getPredecessor() == null || GenericKey.isBetweenNotify(possiblePredecessor.getNodeID(), self.getPredecessor(), self.getNodeID())) // updates the local variable of current Node
+		if (self.getPredecessor() == null
+				|| GenericKey.isBetweenNotify(possiblePredecessor.getNodeID(),
+						self.getPredecessor(), self.getNodeID())) // updates the
+																	// local
+																	// variable
+																	// of
+																	// current
+																	// Node
 		{
 			self.setPredecessor(possiblePredecessor.getNodeID());
 		}
@@ -110,16 +121,14 @@ public class Ring implements Remote {
 
 		// set the successor we just got as the first in the fingerTable
 		n1.setFinger(succNode.getNodeID(), 0);
-		
-		try
-		{
-			Node n = (Node) Naming.lookup("//" + n2.getNodeID().getHost() + ":" + port + "/" + n2.getNodeID().getNodeNum());
+
+		try {
+			Node n = (Node) Naming.lookup("//" + n2.getNodeID().getHost() + ":"
+					+ port + "/" + n2.getNodeID().getNodeNum() + "Node");
 			informNode(n1, n);
 		} catch (MalformedURLException e) {
-			
-		}
-		catch (NotBoundException ex)
-		{
+
+		} catch (NotBoundException ex) {
 		}
 	}
 
@@ -127,15 +136,15 @@ public class Ring implements Remote {
 	public static Node findSuccessorOfNode(Node node, GenericKey id)
 			throws RemoteException, MalformedURLException {
 		// first get the predecessor
+		System.out.println("In find successor of Node");
 		Node tmpNode = findPredecessorOfNode(node, id);
 
 		// get the first successor of this predecessor node
 		NodeKey tmpSucc = tmpNode.getSuccessor();
 
 		try {
-			// TODO : How do I do this ?
 			return (Node) Naming.lookup("//" + tmpSucc.getHost() + ":" + port
-					+ "/" + tmpSucc.getNodeNum());
+					+ "/" + tmpSucc.getNodeNum() + "Node");
 		} catch (RemoteException e) {
 
 		} catch (NotBoundException e) {
@@ -153,34 +162,38 @@ public class Ring implements Remote {
 		NodeKey succId;
 		try {
 			succId = n.getSuccessor();
-			succ = (Node) Naming.lookup("//" + succId.getHost()
-					+ ":" + port + "/" + succId.getNodeNum());
-		
-		
+			succ = (Node) Naming.lookup("//" + succId.getHost() + ":" + port
+					+ "/" + succId.getNodeNum() + "Node");
+
 			Node tempNode = null;
-		
-			//TODO: change this condition to check until id is between tempNode and tempNode.successor
-			while(!GenericKey.isBetweenSuccessor(id, n.getNodeID(), n.getSuccessor())) {
-				if(tempNode != null)
-					if(tempNode.getNodeID() == n.getNodeID()) break;
-			
+
+			// TODO: change this condition to check until id is between tempNode
+			// and tempNode.successor
+			while (!GenericKey.isBetweenSuccessor(id, n.getNodeID(),
+					n.getSuccessor())) {
+				if (tempNode != null)
+					if (tempNode.getNodeID() == n.getNodeID())
+						break;
+
 				tempNode = n;
-			
+
 				n = (Node) findNearestPreceedingFinger(n, id);
-				
+
 				try {
 					NodeKey refreshedId = n.getSuccessor();
-					//TODO : How to do this RMI lookup
+					// TODO : How to do this RMI lookup
 					succ = (Node) Naming.lookup("//" + refreshedId.getHost()
-						+ ":" + port + "/" + refreshedId.getNodeNum());
-				}catch (RemoteException e) {
-					//Log this
+							+ ":" + port + "/" + refreshedId.getNodeNum()
+							+ "Node");
+				} catch (RemoteException e) {
+					// Log this
 				}
 			}
-		}catch (Exception e) {
-			//log
+		} catch (Exception e) {
+			// log
+			e.printStackTrace();
 		}
-		
+
 		return n;
 	}
 
@@ -195,36 +208,31 @@ public class Ring implements Remote {
 				// return the first node that is between node and id
 				fingerId = n.getFingerAtIndex(i).getNodeId();
 
-				if (fingerId == null)
-				{
+				if (fingerId == null) {
 					continue;
 				}
 
-				//returns the first node that is between (node, id)
-				if (GenericKey.isBetween(fingerId, n.getNodeID(), id))
-				{
-					try
-					{
-						try
-						{
-							return (Node) Naming.lookup("//" + fingerId.getHost() + ":" + port + fingerId.getNodeNum());
+				// returns the first node that is between (node, id)
+				if (GenericKey.isBetween(fingerId, n.getNodeID(), id)) {
+					try {
+						try {
+							return (Node) Naming.lookup("//"
+									+ fingerId.getHost() + ":" + port
+									+ fingerId.getNodeNum() + "Node");
+						} catch (MalformedURLException ex) {
 						}
-						catch (MalformedURLException ex)
-						{
-						}
-						// java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("rmi:/" + node.getLocalID().getIP());
-						// return (Node) remote.lookup(String.valueOf(finger.getPID()));
-					}
-					catch (RemoteException ex)
-					{
-					}
-					catch (NotBoundException ex)
-					{
+						// java.rmi.registry.Registry remote =
+						// java.rmi.registry.LocateRegistry.getRegistry("rmi:/"
+						// + node.getLocalID().getIP());
+						// return (Node)
+						// remote.lookup(String.valueOf(finger.getPID()));
+					} catch (RemoteException ex) {
+					} catch (NotBoundException ex) {
 					}
 				}
 			}
-		}catch (RemoteException e) {
-			
+		} catch (RemoteException e) {
+
 		}
 
 		return n;
@@ -244,7 +252,7 @@ public class Ring implements Remote {
 			try {
 				predecessorNode = (Node) Naming.lookup("//"
 						+ predecessor.getHost() + ":" + port + "/"
-						+ predecessor.getNodeNum());
+						+ predecessor.getNodeNum() + "Node");
 			} catch (MalformedURLException ex) {
 				// log
 			}
@@ -258,7 +266,7 @@ public class Ring implements Remote {
 		{
 			try {
 				successorNode = (Node) Naming.lookup("//" + successor.getHost()
-						+ ":" + port + "/" + successor.getNodeNum());
+						+ ":" + port + "/" + successor.getNodeNum() + "Node");
 			} catch (MalformedURLException ex) {
 			}
 		} catch (NotBoundException ex) {
@@ -271,7 +279,8 @@ public class Ring implements Remote {
 		Map<NodeKey, Set<WordEntry>> entries = node.getWordEntryMap();
 
 		for (NodeKey counter : entries.keySet()) {
-			successorNode.addNewWordEntriesAtParticularNodeKey(counter, entries.get(counter));
+			successorNode.addNewWordEntriesAtParticularNodeKey(counter,
+					entries.get(counter));
 		}
 
 		successorNode.setPredecessor(predecessor);// successor's predecessor =

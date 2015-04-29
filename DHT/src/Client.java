@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
-import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -21,9 +20,9 @@ public class Client {
 	public static void main(String[] args) throws IOException,
 			NotBoundException {
 
-		if (args.length != 1) {
+		if (args.length != 2) {
 			throw new RuntimeException(
-					"Pass the word meaning file as argument!");
+					"Pass the word meaning file and node-0 host as argument!");
 		}
 
 		HashMap<String, String> wordMeaningMap = new HashMap<String, String>();
@@ -52,9 +51,9 @@ public class Client {
 		System.setSecurityManager(new RMISecurityManager());
 		// default port
 		int port = 1099;
-		String hostname = args[0] + ":" + port;
-		Node mainNode = (Node) Naming.lookup("//" + hostname + ":" + port + "/"
-				+ "node00");
+		String hostname = args[1] + ":" + port;
+		Node mainNode = (Node) Naming.lookup("//" + hostname + "/"
+				+ "node00Node");
 
 		// get the node to insert
 		// insert.

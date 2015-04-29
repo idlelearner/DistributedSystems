@@ -12,8 +12,7 @@ import java.rmi.RemoteException;
 public class GetRingDetailsClient {
 	public static void main(String[] args) {
 		if (args.length != 1) {
-			throw new RuntimeException(
-					"Pass the node-0 hostname");
+			throw new RuntimeException("Pass the node-0 hostname");
 		}
 
 		// Get default port.
@@ -22,12 +21,13 @@ public class GetRingDetailsClient {
 		String mainNodeHostName = args[0];
 		try {
 			Node mainNode = (Node) Naming.lookup("//" + mainNodeHostName + ":"
-					+ port + "/" + "node00");
+					+ port + "/" + "node00Node");
 
 			// mainNode should return its nodeDetails
 			// while(Get successor != node00)
 			// print Get nodedetails of successor.
 			// print node details.
+			mainNode.printChordRingInfo();
 
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
 			// TODO Auto-generated catch block

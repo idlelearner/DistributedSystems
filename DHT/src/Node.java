@@ -44,4 +44,6 @@ public interface Node extends Remote{
 	public WordEntry lookup(String word) throws RemoteException;
 	public void insert(String word, String meaning) throws RemoteException;
 	public void addNewWordEntriesAtParticularNodeKey(NodeKey idKey, Set<WordEntry> entries);
+	public void printChordRingInfo() throws RemoteException;
+	
 }

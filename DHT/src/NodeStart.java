@@ -16,7 +16,7 @@ public class NodeStart {
 
 	public static void main(String[] args) throws IOException,
 			InterruptedException {
-		if (args.length != 2) {
+		if (args.length != 1) {
 			// throw error message that there should be atleast 2 arguments
 			// the argument that the user needs to pass is the node number -
 			// node00, node01, etc
@@ -25,7 +25,7 @@ public class NodeStart {
 			// even on the same host
 		}
 		String hostName;
-		String nodeNum = args[1];
+		String nodeNum = args[0];
 
 		int defaultPort = 1099;
 		// get the host ip address
@@ -39,9 +39,12 @@ public class NodeStart {
 		String startingNodeURL = currentNode.getNodeID().getHost() + ":"
 				+ defaultPort + "/node00Node";
 		try {
+			System.out.println("Looking up for MainNode..");
 			startingNode = (Node) Naming.lookup("//" + startingNodeURL);
 		} catch (RemoteException ex) {
+			ex.printStackTrace();
 		} catch (NotBoundException ex) {
+			System.out.println("Unable to find main node..Not bound Exception");
 		} catch (Exception genE) {
 		}
 
@@ -49,35 +52,39 @@ public class NodeStart {
 		{
 			try {
 				// bind the starting node
+				System.out.println("Creating the chord ring");
+				System.out.println("Binding node-0");
+				currentNode.create();
 				Naming.bind(nodeNum + "Node", currentNode);
+				// curNode = (Node) Naming.lookup("//" + startingNodeURL);
 			} catch (RemoteException ex) {
+				ex.printStackTrace();
 			} catch (AlreadyBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NodeAlreadyPresentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NodeNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			try {
-				// we will create the ring with this start node
-				currentNode.create();
-			} catch (NodeAlreadyPresentException ex) {
-				System.out.println("AlreadyConnectedException");
-			} catch (NodeNotFoundException ex) {
-				System.out.println("IDNotFoundException");
-			}
+			// we will create the ring with this start node
 
 		} else // node-0 is present, we need to send a join request
 		{
 			try {
 				// Binding node0?Node
+				startingNode.join(currentNode);
 				Naming.bind(nodeNum + "Node", currentNode);
 			} catch (RemoteException ex) {
 			} catch (AlreadyBoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 			try {
-				startingNode.join(currentNode);
+
 			} catch (NullPointerException e) {
 			}
 		}
