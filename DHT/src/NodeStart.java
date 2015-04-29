@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -11,46 +13,89 @@ import java.rmi.RemoteException;
  *
  */
 public class NodeStart {
-	public static void main(String[] args) throws MalformedURLException,
-			RemoteException, NotBoundException {
-		// bind
-		// pass the nodeID.
-
-		if (args.length != 3) {
-			throw new RuntimeException(
-					"Pass nodeID, hostURL and port number as arguments");
+	static NodeImpl currentNode;
+	
+	public static void main(String[] args) throws IOException, InterruptedException{
+		if(args.length != 2) {
+			//throw error message that there should be atleast 2 arguments
+			//the argument that the user needs to pass is the node number - node00, node01, etc
+			//we will not need the port anymore, the node number will distinguish between 2 nodes
+			//even on the same host
 		}
+		InetAddress ip;
+		String nodeNum = args[1];
 
-		int nodeID = Integer.parseInt(args[0]);
-		String url = args[1];
-		int port = Integer.parseInt(args[2]);
-		System.setSecurityManager(new RMISecurityManager());
-		String hostname = url + ":" + port;
 
-		// check if its main node
-		MainNodeManager mainNodeManager = (MainNodeManager) Naming.lookup("//"
-				+ hostname + "/MainNodeManager");
+		//get the host ip address
+		ip = Util.getIP();
 
-		// else
-		// call main node lookup to add itself
-		// For other nodes
-		Node node = null;
-		while (node == null) {
-			node = mainNodeManager.join(url);
-			try {
-				// if the main node is busy receive the wait message and call
-				// node - 0
-				// after sometime.
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		currentNode = new NodeImpl( new NodeKey(ip.getHostName(), nodeNum));
+
+		//Get node 0 from the registry
+		Node startingNode = null;
+		try
+		{
+			startingNode = (Node) Naming.lookup();
+		}
+		catch (RemoteException ex)
+		{
+		}
+		catch (NotBoundException ex)
+		{
+		}
+		catch (Exception genE)
+		{
+		}
+		
+		if (startingNode == null) /*This is the first node*/
+		{
+			try
+			{
+				//bind the starting node
+				Naming.bind();
 			}
+			catch (RemoteException ex)
+			{
+			}
+			catch (NodeAlreadyPresentException ex)
+			{
+			}
+
+			try
+			{
+				//we will create the ring with this start node
+				currentNode.create();
+			}
+			catch (NodeAlreadyPresentException ex)
+			{
+				System.out.println("AlreadyConnectedException");
+			}
+			catch (NodeNotFoundException ex)
+			{
+				System.out.println("IDNotFoundException");
+			}
+
 		}
+		else //node-0 is present, we need to send a join request
+		{
 
-		NodeManager nodeManager = new NodeManagerImpl(node);
+			try
+			{
+				Naming.bind();
 
-		// then call the job done.
-		mainNodeManager.joinDone(node.getNodeURL());
+			}
+			catch (RemoteException ex)
+			{
+			}
+			catch (NodeAlreadyPresentException ex)
+			{
+			}
+
+			try
+			{
+				currentNode.join(startingNode);
+			}
+			catch (NullPointerException e) {}
+		}
 	}
 }
