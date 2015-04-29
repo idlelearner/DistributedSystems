@@ -1,7 +1,12 @@
+import java.net.ConnectException;
 import java.net.MalformedURLException;
+import java.rmi.AccessException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Class to describe the Chord Ring and its functions
@@ -21,12 +26,12 @@ public class Ring implements Remote {
 		try {
 			if(node.getConnectionStatus()) {
 				throw new NodeAlreadyPresentException("Node is already in the ring,check!");
-			}else if (node.getNodeID() == -1) {
+			}else if (node.getNodeID() == null) {
 				throw new NodeNotFoundException("Node creation was unsuccessful!");
 			}
 			node.toggleConnectionStatus();
 			//make itself the successor
-			node.setSuccessor(node);
+			node.setSuccessor(node.getNodeID());
 			//set the predecessor to NULL for this node
 			node.setPredecessor(null);
 			
@@ -51,16 +56,16 @@ public class Ring implements Remote {
 		Node succNode = null; //currently we do not have it, will query
 		
 		try {
-			succNode = n2.findSuccessor(n1.getNodeID());
+			succNode = n2.findSuccessorNode(n1.getNodeID());
 		} catch (Exception e) {
 			//Log this exception
 		}
 		
 		//set this successor node 
-		n1.setSuccessor(succNode);
+		n1.setSuccessor(succNode.getNodeID());
 		
 		//set the successor we just got as the first in the fingerTable
-		n1.setFinger(succNode, 0);
+		n1.setFinger(succNode.getNodeID(), 0);
 	}
 	
 	//Ask node to find the successor of the node with given key
@@ -70,7 +75,7 @@ public class Ring implements Remote {
 		Node tmpNode = findPredecessorOfNode(node, id);
 		
 		//get the first successor of this predecessor node
-		Node tmpSucc = tmpNode.getSuccessor();
+		NodeKey tmpSucc = tmpNode.getSuccessor();
 		
 		//TODO : how do I do this?
 		java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("rmi:/" + );
@@ -91,15 +96,18 @@ public class Ring implements Remote {
 		Node startNode = n;
 		//TODO : how do I do this?
 		java.rmi.registry.Registry remote = java.rmi.registry.LocateRegistry.getRegistry("rmi:/" + );
-		
-		succ = n.getSuccessor();
+		try {
+			NodeKey succId = n.getSuccessor();
+		}catch (Exception e) {
+			//log
+		}
 		
 		Node tempNode = null;
 		
 		int jumps = 0;
 		
 		//TODO: change this condition to check until id is between tempNode and tempNode.successor
-		while(true) {
+		while() {
 			if(tempNode != null)
 				if(tempNode.getNodeID() == n.getNodeID()) break;
 			
@@ -109,7 +117,7 @@ public class Ring implements Remote {
 			n = (Node) findNearestPreceedingFinger(n, id);
 			
 			try {
-				int refreshedId = n.getSuccessor().getNodeID();
+				NodeKey refreshedId = n.getSuccessor();
 				//TODO : How to do this RMI lookup
 				succ = lookup;
 			}catch (RemoteException e) {
@@ -132,5 +140,83 @@ public class Ring implements Remote {
 		}
 		
 		return n;
+	}
+	
+	public static void redistributeKeys(Node node) throws RemoteException{
+		Node thisNode = (Node) node;
+		NodeKey predecessor = thisNode.getPredecessor();
+		NodeKey successor = thisNode.getSuccessor();
+
+		byte[] step = toByteArray(1);
+		
+		Node predecessorNode = null, successorNode = null;
+		
+		try //set predecessorNode
+		{
+			try
+			{
+				predecessorNode = (Node) Naming.lookup("/" + predecessor.getIP() + ":1099/" + String.valueOf(predecessor.getPID()));
+			}
+			catch (MalformedURLException ex)
+			{
+				//log
+			}
+		}
+		catch (ConnectException ce)
+		{
+			//log
+		}
+		catch (NotBoundException ex)
+		{
+			//log
+		}
+		catch (AccessException ex)
+		{
+			//log
+		}
+		
+		try //set successorNode
+		{
+			try
+			{
+				successorNode = (Node) Naming.lookup("/" + successor.getIP() + ":1099/" +String.valueOf(successor.getPID()));
+			}
+			catch (MalformedURLException ex)
+			{
+			}
+		}
+		catch (ConnectException ce)
+		{
+		}
+		catch (NotBoundException ex)
+		{
+		}
+		catch (AccessException ex)
+		{
+		}
+		
+		/*
+		 * for every IdKey in the successor, pass them to successor
+		 */
+		Map<NodeKey, Set<WordEntry>> entries = node.getWordEntryMap();
+
+		for (NodeKey counter : entries.keySet())
+		{
+			//add this to the map
+		}
+
+		successorNode.setPredecessor(predecessor);//successor's predecessor = node's predecessor
+		predecessorNode.setSuccessor(successor);// set the successor
+	}
+	
+	/**
+	 * converts number's value to byteArray
+	 */
+	public static byte[] toByteArray(int number)
+	{
+		Integer num = (Integer) number;
+		byte[] tempArray = new byte[1];
+		tempArray[0] = num.byteValue();
+		return tempArray;
 	}
 }
