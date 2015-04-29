@@ -268,11 +268,6 @@ public class NodeImpl implements Node {
 		return retNode;
 	}
 
-	// public java.rmi.registry.Registry getRMIHandle()
-	// {
-	// //get this from the client
-	// }
-
 	public WordEntry getWordEntryGivenNodeKey(NodeKey nKey, WordKey wKey)
 			throws RemoteException {
 		Set<WordEntry> relevantSet = this.wordEntryMap.get(nKey);
