@@ -10,16 +10,16 @@ import java.io.Serializable;
 public class NodeKey extends GenericKey implements Serializable {
 	private ByteWrapper hashKey;
 	private String host;
-	private String port;
+	private String nodeNum;
 	private String stringForHashKey;
 	
-	public NodeKey(String host, String port) {
-		this(HashingHelper.hash((host +"|"+port).getBytes()), host, port);
+	public NodeKey(String host, String nodeNum) {
+		this(HashingHelper.hash((host +"|"+nodeNum).getBytes()), host, nodeNum);
 	}
 	
-	public NodeKey(ByteWrapper hashKey, String host, String port) {
+	public NodeKey(ByteWrapper hashKey, String host, String nodeNum) {
 		this.host = host;
-		this.port = port;
+		this.nodeNum = nodeNum;
 		this.hashKey = hashKey;
 		this.stringForHashKey = hashKey.toHexString();
 	}
@@ -28,8 +28,8 @@ public class NodeKey extends GenericKey implements Serializable {
 		return this.host;
 	}
 	
-	public String getPort() {
-		return this.port;
+	public String getNodeNum() {
+		return this.nodeNum;
 	}
 	
 	public String getStringForHashKey() {
@@ -52,6 +52,6 @@ public class NodeKey extends GenericKey implements Serializable {
 	
 	@Override
 	public String toString() {
-		return getHost() + "|" + getPort();
+		return getHost() + "|" + getNodeNum();
 	}
 }
