@@ -94,8 +94,8 @@ public class Ring implements Remote {
 
 		try {
 			// TODO : How do I do this ?
-			return (Node) Naming.lookup(tmpSucc.getHost() + ":" + port + "/"
-					+ tmpSucc.getPort() + "Node");
+			return (Node) Naming.lookup("//" + tmpSucc.getHost() + ":" + port
+					+ "/" + tmpSucc.getNodeNum());
 		} catch (RemoteException e) {
 
 		} catch (NotBoundException e) {
@@ -135,7 +135,8 @@ public class Ring implements Remote {
 			try {
 				NodeKey refreshedId = n.getSuccessor();
 				//TODO : How to do this RMI lookup
-				succ = lookup;
+				succ = (Node) Naming.lookup("//" + refreshedId.getHost()
+						+ ":" + port + "/" + refreshedId.getNodeNum());
 			}catch (RemoteException e) {
 				//Log this
 			}
@@ -171,14 +172,12 @@ public class Ring implements Remote {
 		try // set predecessorNode
 		{
 			try {
-				predecessorNode = (Node) Naming.lookup("/"
-						+ predecessor.getIP() + ":1099/"
-						+ String.valueOf(predecessor.getPID()));
+				predecessorNode = (Node) Naming.lookup("//"
+						+ predecessor.getHost() + ":" + port + "/"
+						+ predecessor.getNodeNum());
 			} catch (MalformedURLException ex) {
 				// log
 			}
-		} catch (ConnectException ce) {
-			// log
 		} catch (NotBoundException ex) {
 			// log
 		} catch (AccessException ex) {
@@ -189,10 +188,9 @@ public class Ring implements Remote {
 		{
 			try {
 				successorNode = (Node) Naming.lookup("//" + successor.getHost()
-						+ ":" + port + "/" + String.valueOf(successor.getPID()));
+						+ ":" + port + "/" + successor.getNodeNum());
 			} catch (MalformedURLException ex) {
 			}
-		} catch (ConnectException ce) {
 		} catch (NotBoundException ex) {
 		} catch (AccessException ex) {
 		}
