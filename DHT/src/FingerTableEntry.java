@@ -1,10 +1,13 @@
+import java.io.Serializable;
+
 /**
  * Contains the finger table entry
  * 
  * @author thirunavukarasu
  *
  */
-public class FingerTableEntry implements Comparable<FingerTableEntry> {
+public class FingerTableEntry implements Serializable,
+		Comparable<FingerTableEntry> {
 
 	private NodeKey nodeId;
 	private int startElement;
