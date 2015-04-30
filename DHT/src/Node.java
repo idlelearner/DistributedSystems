@@ -32,14 +32,6 @@ public interface Node extends Remote {
 
 	public void setFinger(NodeKey node, int index) throws RemoteException;
 
-	public void removeFinger(NodeKey node) throws RemoteException;
-
-	public void removeFingerAtIndex(int i) throws RemoteException;
-
-	public void removeAllFingers() throws RemoteException;
-
-	public List<NodeKey> getFingerNodeIds() throws RemoteException;
-
 	public void addWordEntryAtNodeKey(String node, WordEntry entry)
 			throws RemoteException;
 
@@ -65,16 +57,10 @@ public interface Node extends Remote {
 	public WordEntry getWordEntryGivenJustWordKey(WordKey wKey)
 			throws RemoteException;
 
-	public Map<String, Set<WordEntry>> giveEntries(NodeKey successorId)
-			throws RemoteException;
-
 	public void addNewWordEntriesAtNodeKeys(
 			Map<String, Set<WordEntry>> newEntries) throws RemoteException;
 
 	public void removeWordEntriesGivenKey(String key)
-			throws RemoteException;
-
-	public boolean checkIfWordEntryPresentAtNodeKey(WordEntry fid, NodeKey id)
 			throws RemoteException;
 
 	public int getCountOfWordEntriesInMap() throws RemoteException;

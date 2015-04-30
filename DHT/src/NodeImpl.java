@@ -208,7 +208,6 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 				entrySet.add(entry);
 				this.wordEntryMap.put(hashKey, entrySet);
 				log.write("Adding word to dictionary: " + entry);
-
 			}
 		}
 
@@ -383,7 +382,6 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	public void addNewWordEntriesAtNodeKeys(
 			Map<String, Set<WordEntry>> newEntries) throws RemoteException {
 		log.write("Add new word entries at node keys : ");
-
 		synchronized (this.wordEntryMap) {
 			Iterator<Map.Entry<String, Set<WordEntry>>> it = newEntries
 					.entrySet().iterator();
@@ -418,6 +416,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 
 	public void removeWordEntriesGivenKey(String key) throws RemoteException {
 		log.write("Remove word entries at given node key : " + key);
+
 		synchronized (this.wordEntryMap) {
 			Iterator<Map.Entry<String, Set<WordEntry>>> it = this.wordEntryMap
 					.entrySet().iterator();
