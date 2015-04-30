@@ -1,10 +1,7 @@
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,20 +10,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 /**
  * Implementing the Node interface
  * 
  * @author varun
  *
  */
-public class NodeImpl implements Node, Serializable {
+public class NodeImpl extends UnicastRemoteObject implements Node, Serializable {
 	private NodeKey nodeID;
 	private NodeImpl curNode = null;
 	private ArrayList<FingerTableEntry> fingerTable;
 	private NodeKey predecessor;
 	private NodeKey successor;
+	private ArrayList<String> wordList;
 	// Every node object will maintain a mapping of NodeKey to actual word
 	// entries (as a set)
 	// This mapping is needed when re-distributing, so that entries can be moved
@@ -41,6 +37,8 @@ public class NodeImpl implements Node, Serializable {
 		predecessor = null;
 		successor = null;
 		wordEntryMap = new HashMap<NodeKey, Set<WordEntry>>();
+		wordList = new ArrayList<String>();
+		
 	}
 
 	public NodeKey getNodeID() {
@@ -502,6 +500,11 @@ public class NodeImpl implements Node, Serializable {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+
+		System.out.println("Word map size() : " + wordEntryMap.size());
+		System.out.println("Successor : " + successor);
+		wordList.add(word);
+		System.out.println("WordList size : " + wordList.size());
 	}
 
 	public FingerTableEntry getFingerAtIndex(int index) throws RemoteException {
