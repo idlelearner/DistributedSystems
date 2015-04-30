@@ -8,6 +8,10 @@ import java.io.Serializable;
  *
  */
 public class NodeKey extends GenericKey implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ByteWrapper hashKey;
 	private String host;
 	private String nodeNum;

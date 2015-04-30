@@ -2,6 +2,9 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Command line to print the Chord details
@@ -35,9 +38,19 @@ public class GetRingDetailsClient {
 				}
 				System.out.println("Number of words in this node : "
 						+ curNode.getCountOfWordEntriesInMap());
+				
+				System.out.println("Arrangement of words : ");
+				Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = curNode
+						.getWordEntryMap().entrySet().iterator();
+				Map.Entry<NodeKey, Set<WordEntry>> entry;
+				while (it.hasNext()) {
+					entry = it.next();
+					System.out.println(entry.getKey() + " : " + entry.getValue());
+					System.out.println("------------------------------------------");
+				}
 				NodeKey successor = curNode.getSuccessor();
-				if (successor.getNodeNum().equals(
-						curNode.getNodeID().getNodeNum()))
+				System.out.println("Successor : " + successor);
+				if (successor.getNodeNum().equals("node00"))
 					break;
 				node = (Node) Naming.lookup("//" + successor.getHost() + ":"
 						+ port + "/" + successor.getNodeNum() + "Node");

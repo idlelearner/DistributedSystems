@@ -20,25 +20,24 @@ public class TestCasesClient {
 		// Get the main hostname.
 		String mainNodeHostName = args[0];
 		try {
-		 Node masterNode = (Node) Naming.lookup("//" + mainNodeHostName + ":"
-		 + port + "/" + "node00Node");
-		
-		 System.out.println("TestCase 1:");
-		 System.out.println("Inserting a word and searching");
-		 
-		 
-		 
-//		node = (Node) Naming.lookup("//" + successor.getHost() + ":"
-//					+ port + "/" + successor.getNodeNum() + "Node");
-	
-	} catch (MalformedURLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (RemoteException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (NotBoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+			Node masterNode = (Node) Naming.lookup("//" + mainNodeHostName
+					+ ":" + port + "/" + "node00Node");
+
+			System.out.println("TestCase 1:");
+			System.out.println("Inserting a word and searching");
+
+			// node = (Node) Naming.lookup("//" + successor.getHost() + ":"
+			// + port + "/" + successor.getNodeNum() + "Node");
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

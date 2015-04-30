@@ -61,4 +61,8 @@ public class WordEntry implements Serializable, Comparable<WordEntry> {
 		WordEntry entry = (WordEntry) o;
 		return this.wKey.getHashKey().compareTo(entry.getHashKey());
 	}
+
+	public String toString() {
+		return word;
+	}
 }
