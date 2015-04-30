@@ -17,6 +17,7 @@ import java.util.TreeSet;
  *
  */
 public class NodeImpl extends UnicastRemoteObject implements Node, Serializable {
+	private Boolean busyInJoin;
 	private NodeKey nodeID;
 	private NodeImpl curNode = null;
 	private ArrayList<FingerTableEntry> fingerTable;
@@ -32,12 +33,17 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	private Boolean isConnected = false;
 
 	public NodeImpl(NodeKey id) throws RemoteException {
+		busyInJoin = false;
 		fingerTable = new ArrayList<FingerTableEntry>(32);
 		nodeID = id;
 		predecessor = null;
 		successor = null;
 		wordEntryMap = new HashMap<NodeKey, Set<WordEntry>>();
 		wordList = new ArrayList<String>();
+	}
+	
+	public void toggleBusyInJoin() {
+		busyInJoin = !busyInJoin;
 	}
 
 	public NodeKey getNodeID() {
@@ -235,13 +241,22 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		}
 	}
 
-	public void join(Node freshNode) throws RemoteException {
+	public Boolean join(Node freshNode) throws RemoteException {
+		if(busyInJoin) return false;
+		//set it to busy
+		toggleBusyInJoin();
 		try {
 			Ring.join(this, freshNode);
 		} catch (Exception e) {
 			// log the exception
 			e.printStackTrace();
 		}
+		
+		return true;
+	}
+	
+	public void join_done() {
+		toggleBusyInJoin();
 	}
 
 	public Node findSuccessorNode(GenericKey id) {

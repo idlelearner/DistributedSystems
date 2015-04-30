@@ -600,6 +600,7 @@ localhost:5002  RSP Wed Apr 08 01:26:14 CDT 2015  Transfer Sucessful from source
 localhost:5002  REQ Wed Apr 08 01:26:14 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 10,destAcctID: 3
 localhost:5002  RSP Wed Apr 08 01:26:14 CDT 2015  Transfer Sucessful from source account acctID: 10 to destination acct acctID :3 for amt: 10
 HALT
+<<<<<<< Updated upstream
 Exit encountered!
 =======
 localhost:5000  REQ Wed Apr 08 01:27:08 CDT 2015  transfer  [acctID: 0,firstname: ,lastname: ,address: ,amt: 10,srcAcctID: 5,destAcctID: 8

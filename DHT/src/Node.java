@@ -53,7 +53,7 @@ public interface Node extends Remote {
 
 	public void removeEntriesForKey(NodeKey key) throws RemoteException;
 
-	public void join(Node freshNode) throws RemoteException;
+	public Boolean join(Node freshNode) throws RemoteException;
 
 	public Node findSuccessorNode(GenericKey id) throws RemoteException;
 
