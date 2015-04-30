@@ -72,7 +72,7 @@ public class Ring implements Remote {
 	 * predecessor is closer to the current node than the current predecessor
 	 * and updates(if needed) the predecessor variable
 	 */
-	public static void informNode(Node self, Node possiblePredecessor)
+	public static void informNode(Node self, Node predecessor)
 			throws RemoteException {
 		/*
 		 * checks if current predecessor is not set(null) and if
@@ -80,7 +80,7 @@ public class Ring implements Remote {
 		 * currentNode's ID
 		 */
 		if (self.getPredecessor() == null
-				|| GenericKey.isBetweenNotify(possiblePredecessor.getNodeID(),
+				|| GenericKey.isBetweenNotify(predecessor.getNodeID(),
 						self.getPredecessor(), self.getNodeID())) // updates the
 																	// local
 																	// variable
@@ -88,7 +88,8 @@ public class Ring implements Remote {
 																	// current
 																	// Node
 		{
-			self.setPredecessor(possiblePredecessor.getNodeID());
+			self.setPredecessor(predecessor.getNodeID());
+			predecessor.setSuccessor(self.getNodeID());
 		}
 	}
 
