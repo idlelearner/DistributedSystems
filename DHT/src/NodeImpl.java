@@ -145,25 +145,6 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		// sort the finger table entries
 	}
 
-	public void removeFinger(NodeKey node) throws RemoteException {
-		for (int i = 0; i < fingerTable.size(); i++) {
-			if (fingerTable.get(i).equals(node)) {
-				fingerTable.remove(i);
-				break;
-			}
-		}
-	}
-
-	public void removeFingerAtIndex(int i) throws RemoteException {
-		fingerTable.remove(i);
-	}
-
-	public void removeAllFingers() throws RemoteException {
-		for (int i = 0; i < fingerTable.size(); i++) {
-			fingerTable.remove(i);
-		}
-	}
-
 	public List<NodeKey> getFingerNodeIds() throws RemoteException {
 		List<NodeKey> list = new ArrayList<NodeKey>();
 		for (int i = 0; i < fingerTable.size(); i++)
@@ -310,59 +291,6 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		return null;
 	}
 
-	public Map<String, Set<WordEntry>> giveEntries(NodeKey successorId)
-			throws RemoteException {
-
-		synchronized (this.wordEntryMap) {
-			Map<String, Set<WordEntry>> temporaryMap = new HashMap<String, Set<WordEntry>>();
-			WordEntry entry = null;
-			Map.Entry<String, Set<WordEntry>> itEntry;
-			Iterator<WordEntry> iter;
-			Set<WordEntry> set;
-			Iterator<Map.Entry<String, Set<WordEntry>>> it = this.wordEntryMap
-					.entrySet().iterator();
-
-			// iterate through the entire Map
-			while (it.hasNext()) {
-				// initialize a mpa for every IdKey
-				set = new HashSet<WordEntry>();
-				itEntry = it.next();
-				iter = itEntry.getValue().iterator();
-
-				// iterate through the entire set of the IdKey
-				while (iter.hasNext()) {
-					entry = iter.next();
-
-					// if id is not in (newSuccessor, successor], then it should
-					// be moved to successor
-					// (it belongs to (predecessor, newSuccessor] part of the
-					// entries)
-					if (!GenericKey.isBetweenSuccessor(entry.getWKey(),
-							successorId, this.nodeID))/*
-													 * (itEntry.getKey().getHashKey
-													 * (
-													 * ).compareTo(predecessorID
-													 * .getHashKey()) <= 0)
-													 */
-					{
-						// add to the set the FIDEntry that corresponds to the
-						// above
-						set.add(entry);
-					}
-				}
-
-				// add the set of the entries to the returning map
-				if (!set.isEmpty()) {
-					temporaryMap.put(itEntry.getKey(), set);
-				}
-
-				// delete the entries of the set, from the node's Set
-				itEntry.getValue().removeAll(set);
-			}
-			return temporaryMap;
-		}
-	}
-
 	public void addNewWordEntriesAtNodeKeys(
 			Map<String, Set<WordEntry>> newEntries) throws RemoteException {
 		synchronized (this.wordEntryMap) {
@@ -413,46 +341,6 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 					break;
 				}
 			}
-		}
-	}
-
-	public boolean checkIfWordEntryPresentAtNodeKey(WordEntry fid, NodeKey id)
-			throws RemoteException {
-		synchronized (this.wordEntryMap) {
-			boolean contains = false;
-			Iterator<Map.Entry<String, Set<WordEntry>>> it = this.wordEntryMap
-					.entrySet().iterator();
-			Map.Entry<String, Set<WordEntry>> itEntry = null;
-			WordEntry entry = null;
-
-			// iterate through the entire Map
-			while (it.hasNext()) {
-				itEntry = it.next();
-
-				// check if any of the ids already in the map equal with id
-				if (itEntry.getKey().equals(id)) {
-					contains = true;
-					break;
-				}
-			}
-
-			// if the id existed in the map check if there was also the filename
-			// present
-			if (contains) {
-				Iterator<WordEntry> iter = itEntry.getValue().iterator();
-				while (iter.hasNext()) {
-					entry = iter.next();
-
-					// if it does, return true, else return false
-					if (fid.equals(entry.getWKey())) {
-						return true;
-					}
-				}
-			} else {
-				return false;
-			}
-
-			return false;
 		}
 	}
 
