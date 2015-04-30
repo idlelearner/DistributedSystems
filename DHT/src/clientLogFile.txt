@@ -1,0 +1,596 @@
+Logging started
+Parsing file :sample-data.txt 
+Inserting word : tomboy 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : tomboy : a girl who plays boy's games 
+Inserting word : ebb 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : ebb : decay, flow back 
+Inserting word : disclaim 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : disclaim : disown, give up all claims 
+Inserting word : espirit 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : espirit : shrewdness 
+Inserting word : affront 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : affront : an insult 
+Inserting word : outspoken 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : outspoken : candid, frank 
+Inserting word : erasure 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : erasure : rubber, what has been rubbed out 
+Inserting word : parcel 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : parcel : divide, pack up in to parcels 
+Inserting word : insidious 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : insidious : cunning, doing harm secretly 
+Inserting word : nominee 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : nominee : one nominated 
+Inserting word : imposition 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : imposition : act of imposing, that which is imposed 
+Inserting word : pod 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : pod : seed-case of leguminous plants, cocoons of silkworms 
+Inserting word : talisman 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : talisman : something, considered to bring luck, charm 
+Inserting word : incurious 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : incurious : uninteresting, careless 
+Inserting word : answer 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : answer : a reply, a solution 
+Inserting word : flaunt 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : flaunt : display, flutter 
+Inserting word : brunt 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : brunt : the force of the blow 
+Inserting word : coeducation 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : coeducation : education imparted for both sexes together 
+Inserting word : junction 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : junction : a meeting place(especially) where lines of railway meet 
+Inserting word : bairn 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : bairn : child 
+Inserting word : loaf 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : loaf : mass of bread 
+Inserting word : staunch 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : staunch : loyal, steadfast 
+Inserting word : lassitude 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : lassitude : tiredness 
+Inserting word : flog 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : flog : beat with a whip or rod 
+Inserting word : encamp 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : encamp : live in camp, rest 
+Inserting word : indelicate 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : indelicate : not delicate, immodest 
+Inserting word : myriad 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : myriad : very great number, thousand 
+Inserting word : fallible 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : fallible : imperfect, liable to make mistakes 
+Inserting word : zealous 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : zealous : ardent, enthusiastic 
+Inserting word : untoward 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : untoward : crass, awkward, vexatious 
+Inserting word : gunny 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : gunny : a coarse kind of sacking woven form jute 
+Inserting word : ignorance 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : ignorance : lack of knowledge, not educated 
+Inserting word : affluence 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : affluence : abundance, wealth 
+Inserting word : offal 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : offal : refuse, waste 
+Inserting word : adverb 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : adverb : word that modifies a verb 
+Inserting word : inquiry 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : inquiry : investigation 
+Inserting word : broil 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : broil : cook in fire 
+Inserting word : colloquy 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : colloquy : a conversation 
+Inserting word : inroad 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : inroad : raid, any illegal encroachment 
+Inserting word : deck 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : deck : the upper floor or covering of a ship 
+Inserting word : juvenile 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : juvenile : youthful 
+Inserting word : guise 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : guise : appearance, dress 
+Inserting word : clergy 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : clergy : the ministers of the Christian religion 
+Inserting word : landholder 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : landholder : owner of a land 
+Inserting word : incredulous 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : incredulous : refusing to believe 
+Inserting word : plumage 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : plumage : bird, feathers 
+Inserting word : edible 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : edible : eatable 
+Inserting word : broke 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : broke : past tense of BREAK 
+Inserting word : concoct 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : concoct : fabricate, make up, scheme 
+Inserting word : clamp 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : clamp : a device to hold things together 
+Inserting word : debase 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : debase : make lower in value, degrade 
+Inserting word : wallaby 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : wallaby : a small kangaroo 
+Inserting word : decease 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : decease : death 
+Inserting word : clever 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : clever : skilful 
+Inserting word : condone 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : condone : pardon 
+Inserting word : equine 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : equine : pertaining to a horse, horse-like 
+Inserting word : horseplay 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : horseplay : touch handling 
+Inserting word : spite 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : spite : tease, annoy, show ill-feeling towards 
+Inserting word : student 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : student : a person who studies something 
+Inserting word : clandestine 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : clandestine : concealed, hidden 
+Inserting word : duke 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : duke : a sovereign, prince, a noble 
+Inserting word : card 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : card : comb wool etc 
+Inserting word : spasmodic 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : spasmodic : occurring irregularly 
+Inserting word : taper 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : taper : make smaller towards and end 
+Inserting word : adze 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : adze : tool for cutting away surface of wood 
+Inserting word : fanfare 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : fanfare : loud blowing of trumpets 
+Inserting word : disaffection 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : disaffection : dislike, hostility, disgust 
+Inserting word : benight 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : benight : overtake by night 
+Inserting word : fascinate 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : fascinate : attract, enchant 
+Inserting word : bestead 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : bestead : help, relive, avail 
+Inserting word : concomitant 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : concomitant : accompanying, resulting 
+Inserting word : hound 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : hound : hunting dog 
+Inserting word : recite 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : recite : narrate, to repeat from memory 
+Inserting word : aerate 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : aerate : combine with air 
+Inserting word : myopia 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : myopia : short sight 
+Inserting word : invulnerable 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : invulnerable : not able to be wounded or hurt 
+Inserting word : benevolent 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : benevolent : generous, kindly, charitable 
+Inserting word : slush 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : slush : partly melted snow, soft mud 
+Inserting word : jurisprudence 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : jurisprudence : the science of law 
+Inserting word : proclivity 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : proclivity : a tendency, leaning towards something, inclination 
+Inserting word : ecstasy 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : ecstasy : great joy, mad delight, rapture 
+Inserting word : elaborate 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : elaborate : to explain fully 
+Inserting word : lascar 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : lascar : an Indian sailor 
+Inserting word : disable 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : disable : make unfit, cripple 
+Inserting word : mail 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : mail : armour post 
+Inserting word : flimsy 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : flimsy : thin, weak, easily, weak 
+Inserting word : enclave 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : enclave : region surrounded by foreign country 
+Inserting word : impinge 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : impinge : to impel, collide 
+Inserting word : tuck 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : tuck : gather up or roll 
+Inserting word : duly 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : duly : properly, at the right time 
+Inserting word : destiny 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : destiny : fate, decree 
+Inserting word : collude 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : collude : work together secretly 
+Inserting word : aegis 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : aegis : shield, protection 
+Inserting word : myth 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : myth : traditional story, religious legend 
+Inserting word : trowel 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : trowel : a flat-bladed implement 
+Inserting word : outing 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : outing : a pleasure trip 
+Inserting word : zymotic 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : zymotic : relating to or produced by fermentation 
+Inserting word : flash 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : flash : give light, come suddenly 
+Inserting word : litre 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : litre : a liquid measure equivalent to 1000 CC. 
+Inserting word : lancet 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : lancet : double-edged surgical knife 
+Inserting word : lobby 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : lobby : talk to win favour 
+Inserting word : torchbearer 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : torchbearer : one who carries a torch, a leader 
+Inserting word : imperial 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : imperial : pertaining to an empire or its ruler 
+Inserting word : collar 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : collar : neck band 
+Inserting word : herbivorous 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : herbivorous : herb-eating 
+Inserting word : slovenly 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : slovenly : negligent, untidy, disorderly 
+Inserting word : horde 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : horde : a wandering tribe, a multitude 
+Inserting word : involve 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : involve : include, entangle 
+Inserting word : pluck 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : pluck : spirit, courage 
+Inserting word : cohesion 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : cohesion : sticking together 
+Inserting word : hem 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : hem : border, margin, edge 
+Inserting word : jurist 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : jurist : one learned in law 
+Inserting word : career 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : career : a profession 
+Inserting word : lambent 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : lambent : flickering 
+Inserting word : bewail 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : bewail : lament 
+Inserting word : upright 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : upright : honest, erect 
+Inserting word : bail 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : bail : one who gives security 
+Inserting word : buff 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : buff : thick strong velvety leather, a light yellow colour 
+Inserting word : indemnify 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : indemnify : to compensate of loss or damage, free responsibility 
+Inserting word : ebony 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : ebony : a kind of hard black wood 
+Inserting word : debacle 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : debacle : sudden collapse 
+Inserting word : concession 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : concession : rebate, favour, act of conceding 
+Inserting word : desultory 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : desultory : inconstant, hasty, unsettled 
+Inserting word : familiarize 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : familiarize : accustom, make well known 
+Inserting word : icicle 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : icicle : hanging piece of ice 
+Inserting word : wane 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : wane : decline, decrease 
+Inserting word : anonymous 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : anonymous : without a name 
+Inserting word : henpecked 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : henpecked : meekly, submissive to wife 
+Inserting word : winsome 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : winsome : agreeable, attractive, engaging 
+Inserting word : conch 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : conch : a spiral shell 
+Inserting word : bale 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : bale : a package, misery 
+Inserting word : nonage 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : nonage : minority 
+Inserting word : endear 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : endear : to make dear 
+Inserting word : bald 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : bald : without hair, bare 
+Inserting word : gynarchy 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : gynarchy : rule by a female 
+Inserting word : accoutre 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : accoutre : to furnish with dress and trappings (esp. a warrior) 
+Inserting word : ductile 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : ductile : yielding, flexible, malleable 
+Inserting word : glutton 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : glutton : one who eats to excess, a great lover of reading books 
+Inserting word : goblin 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : goblin : demon, an evil spirit 
+Inserting word : jute 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : jute : the coarse fibre of an Indian plant 
+Inserting word : heretic 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : heretic : sectary, dissenter 
+Inserting word : wilful 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : wilful : obstinate, fond of having one's own way 
+Inserting word : affable 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : affable : pleasant, easy to speak to 
+Inserting word : goose 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : goose : a web-footed swimming bird like the duck 
+Inserting word : discomfort 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : discomfort : inconvenience 
+Inserting word : malign 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : malign : slander, abuse 
+Inserting word : iconoclast 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : iconoclast : a breaker of idols 
+Inserting word : carpet 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : carpet : a thick woven covering for the floor, rug 
+Inserting word : codify 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : codify : edit, arrange systematically 
+Inserting word : misconstrue 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : misconstrue : misjudge, give a wrong meaning 
+Inserting word : wager 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : wager : that which is waged or pledged, a bet 
+Inserting word : reck 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : reck : to care for 
+Inserting word : papyrus 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : papyrus : a seed once used to make paper 
+Inserting word : lambative 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : lambative : a medicine to be licked 
+Inserting word : eclectic 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : eclectic : selecting the best 
+Inserting word : parish 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : parish : a district under the care of a parson 
+Inserting word : litigation 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : litigation : a law suit, contention 
+Inserting word : acquit 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : acquit : set free, conduct well 
+Inserting word : flay 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : flay : strip, skin, peel 
+Inserting word : hern 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : hern : a long-legged 
+Inserting word : expatiate 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : expatiate : speak or write in detail 
+Inserting word : detach 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : detach : separate, unfasten 
+Inserting word : suavity 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : suavity : agreeableness, pleasantness 
+Inserting word : coerce 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : coerce : compel 
+Inserting word : carriage 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : carriage : conveyance, a vehicle for carrying 
+Inserting word : escort 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : escort : body-guard on a journey 
+Inserting word : landgravine 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : landgravine : a German Countess 
+Inserting word : outhouse 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : outhouse : a small building near the residence 
+Inserting word : dryad 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : dryad : wood-nymph 
+Inserting word : empower 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : empower : give power to 
+Inserting word : jump 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : jump : a sudden movement 
+Inserting word : beverage 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : beverage : a drink 
+Inserting word : bet 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : bet : lay a wager 
+Inserting word : declamation 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : declamation : set speech in fine language 
+Inserting word : expunge 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : expunge : remove 
+Inserting word : debar 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : debar : exclude, prevent 
+Inserting word : decay 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : decay : decomposition, declination 
+Inserting word : decide 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : decide : settle, determine, give, judgement 
+Inserting word : insight 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : insight : knowledge, intuition 
+Inserting word : eject 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : eject : expel, emit 
+Inserting word : another 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : another : one more, different 
+Inserting word : larynx 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : larynx : the organ of voice 
+Inserting word : erode 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : erode : eat away gradually 
+Inserting word : ideology 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : ideology : system of ideas manner of thinking 
+Inserting word : maiden 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : maiden : pure, unused, first 
+Inserting word : gullible 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : gullible : capable of being deceived 
+Inserting word : insoluble 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : insoluble : that cannot be dissolved 
+Inserting word : destitute 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : destitute : needy, helpless 
+Inserting word : backgammon 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : backgammon : a game 
+Inserting word : eschew 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : eschew : to avoid, to shun 
+Inserting word : offence 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : offence : illegal act, insult, crime 
+Inserting word : inquisitive 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : inquisitive : curious to know 
+Inserting word : adversary 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : adversary : an enemy 
+Inserting word : clan 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : clan : a tribe 
+Inserting word : coil 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : coil : a rope which has been wound or gathered in rings 
+Inserting word : lodestone 
+Node to insert : jupiter.cs.umn.edu|node00 
+Inserted : lodestone : a magnetic ore of iron 
+Searching word : clan 
+Node to search : jupiter.cs.umn.edu|node00 
+Word : clan is not in dictionary 
+Exiting client 
+final exit
+Exit encountered!

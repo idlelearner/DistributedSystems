@@ -1,5 +1,3 @@
-
-
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -45,7 +43,7 @@ public class FileWriter extends Thread {
 			String s;
 			try {
 				s = queue.take();
-				if (s.contains("final client exit")) {
+				if (s.contains("final exit")) {
 					System.out.println("Exiting!! from logger");
 					writer.write(s);
 					writer.write("\nExit encountered!");
@@ -54,6 +52,7 @@ public class FileWriter extends Thread {
 					break;
 				}
 				writer.write(s + "\n");
+				writer.flush();
 				// System.out.println("Logged : " + s);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

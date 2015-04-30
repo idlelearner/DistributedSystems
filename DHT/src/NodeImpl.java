@@ -24,6 +24,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	private NodeKey predecessor;
 	private NodeKey successor;
 	private ArrayList<String> wordList;
+	private ServerLogger log;
 	// Every node object will maintain a mapping of NodeKey to actual word
 	// entries (as a set)
 	// This mapping is needed when re-distributing, so that entries can be moved
@@ -40,8 +41,9 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		successor = null;
 		wordEntryMap = new HashMap<String, Set<WordEntry>>();
 		wordList = new ArrayList<String>();
+		log = ServerLogger.getInstance();
 	}
-	
+
 	public void toggleBusyInJoin() {
 		busyInJoin = !busyInJoin;
 	}
@@ -91,6 +93,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	}
 
 	public void setFinger(NodeKey node, int index) throws RemoteException {
+
 		// the max length is 160, from 0-159
 		if (index > 159) {
 			return;
@@ -146,6 +149,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	}
 
 	public void removeFinger(NodeKey node) throws RemoteException {
+
 		for (int i = 0; i < fingerTable.size(); i++) {
 			if (fingerTable.get(i).equals(node)) {
 				fingerTable.remove(i);
@@ -196,12 +200,15 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 			// set
 			if (alreadyPresent) {
 				entrySet = itE.getValue();
+				log.write("Adding word to dictionary: " + entry);
 				entrySet.add(entry);
 			} else {
 				// create a new set and introduce a new NodeKey/Set to the map
 				entrySet = new TreeSet<WordEntry>();
 				entrySet.add(entry);
 				this.wordEntryMap.put(hashKey, entrySet);
+				log.write("Adding word to dictionary: " + entry);
+
 			}
 		}
 
@@ -211,18 +218,18 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	// get the word entries for a given node key for this node
 	public Set<WordEntry> getWordEntriesForNodeKey(NodeKey key)
 			throws RemoteException {
+		log.write("Gettign word entries for " + key);
 		synchronized (this.wordEntryMap) {
 			if (!this.wordEntryMap.containsKey(key)) {
 				return null;
-			}
-
-			else {
+			} else {
 				return this.wordEntryMap.get(key);
 			}
 		}
 	}
 
 	public void removeNodeKeyFromMap(NodeKey key) throws RemoteException {
+		log.write("Remove node keys : " + key);
 		synchronized (this.wordEntryMap) {
 			this.wordEntryMap.remove(key);
 		}
@@ -236,14 +243,19 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	}
 
 	public void removeEntriesForKey(NodeKey key) throws RemoteException {
+		log.write("Remove word entry keys : " + key);
 		synchronized (this.wordEntryMap) {
 			this.wordEntryMap.remove(key);
 		}
 	}
 
 	public Boolean join(Node freshNode) throws RemoteException {
-		if(busyInJoin) return false;
-		//set it to busy
+		log.write("Join new node : " + freshNode);
+		if (busyInJoin) {
+			log.write("Node-0 busy, cannot join");
+			return false;
+		}
+		// set it to busy
 		toggleBusyInJoin();
 		try {
 			Ring.join(freshNode, this);
@@ -251,42 +263,44 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 			// log the exception
 			e.printStackTrace();
 		}
-		
+
 		return true;
 	}
-	
-	public void join_done() throws RemoteException{
+
+	public void join_done() throws RemoteException {
 		toggleBusyInJoin();
+		log.write("Node-0, join done!");
 	}
 
 	public Node findSuccessorNode(GenericKey id) {
 		Node retNode = null;
-		System.out.println("In find successor node");
+		// System.out.println("In find successor node");
+		log.write("In find successor node " + id);
 		try {
 			retNode = Ring.findSuccessorOfNode(this, id);
 		} catch (Exception e) {
 			// log the exception
+			e.printStackTrace();
 		}
-
 		return retNode;
 	}
 
 	public NodeKey findSuccessorNodeId(GenericKey id) throws RemoteException {
+		log.write("In find successor node ID " + id);
 		NodeKey retNode = null;
-
 		try {
 			retNode = Ring.findSuccessorOfNode(this, id).getNodeID();
 		} catch (Exception e) {
 			// log the exception
+			e.printStackTrace();
 		}
-
 		return retNode;
 	}
 
 	public WordEntry getWordEntryGivenNodeKey(String hashKey, WordKey wKey)
 			throws RemoteException {
 		Set<WordEntry> relevantSet = this.wordEntryMap.get(hashKey);
-
+		log.write("Get node entry for NodeKey" + hashKey + "wordKey : " + wKey);
 		Iterator<WordEntry> it = relevantSet.iterator();
 
 		while (it.hasNext()) {
@@ -300,6 +314,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 
 	public WordEntry getWordEntryGivenJustWordKey(WordKey wKey)
 			throws RemoteException {
+		log.write("Get word entry given WordKey" + wKey);
 		for (Map.Entry<String, Set<WordEntry>> entry : this.wordEntryMap
 				.entrySet()) {
 			WordEntry found = getWordEntryGivenNodeKey(entry.getKey(), wKey);
@@ -312,6 +327,8 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 
 	public Map<String, Set<WordEntry>> giveEntries(NodeKey successorId)
 			throws RemoteException {
+
+		log.write("Get entries for successor ID : " + successorId);
 
 		synchronized (this.wordEntryMap) {
 			Map<String, Set<WordEntry>> temporaryMap = new HashMap<String, Set<WordEntry>>();
@@ -365,6 +382,8 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 
 	public void addNewWordEntriesAtNodeKeys(
 			Map<String, Set<WordEntry>> newEntries) throws RemoteException {
+		log.write("Add new word entries at node keys : ");
+
 		synchronized (this.wordEntryMap) {
 			Iterator<Map.Entry<String, Set<WordEntry>>> it = newEntries
 					.entrySet().iterator();
@@ -389,6 +408,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 
 	public void addNewWordEntriesAtParticularNodeKey(String idKey,
 			Set<WordEntry> entries) {
+		log.write("Add new word entries at node key : " + idKey);
 		Set<WordEntry> nSet;
 		synchronized (this.wordEntryMap) {
 			nSet = entries;
@@ -397,6 +417,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	}
 
 	public void removeWordEntriesGivenKey(String key) throws RemoteException {
+		log.write("Remove word entries at given node key : " + key);
 		synchronized (this.wordEntryMap) {
 			Iterator<Map.Entry<String, Set<WordEntry>>> it = this.wordEntryMap
 					.entrySet().iterator();
@@ -418,6 +439,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 
 	public boolean checkIfWordEntryPresentAtNodeKey(WordEntry fid, NodeKey id)
 			throws RemoteException {
+		log.write("Check if Word Entry : " + fid + "present at NodeKey : " + id);
 		synchronized (this.wordEntryMap) {
 			boolean contains = false;
 			Iterator<Map.Entry<String, Set<WordEntry>>> it = this.wordEntryMap
@@ -466,19 +488,20 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 			entry = it.next();
 			count += entry.getValue().size();
 		}
-
+		log.write("Number of word entries in map : " + count);
 		return count;
 	}
 
 	public void create() throws NodeAlreadyPresentException,
 			NodeNotFoundException, RemoteException {
-
+		log.write("Creating initial chord ring : ");
 		Ring.createRing(this);
 		curNode = this;
 	}
 
 	public NodeKey find_node(String word) throws RemoteException {
-		System.out.println("In find node... ");
+		// System.out.println("In find node... ");
+		log.write("In find node... word : " + word);
 		GenericKey wKey = new WordKey(word);
 		Node responsibleNode = null;
 		try {
@@ -490,6 +513,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	}
 
 	public WordEntry lookup(String word) throws RemoteException {
+		log.write("Lookup word : " + word);
 		WordKey wKey = new WordKey(word);
 		WordEntry wordEntry = null;
 
@@ -508,15 +532,16 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		WordEntry wEntry = new WordEntry(word, this.getNodeID().getHost(), this
 				.getNodeID().getNodeNum(), meaning);
 		try {
-			addWordEntryAtNodeKey(wEntry.getWKey().getStringForHashKey(), wEntry);
+			addWordEntryAtNodeKey(wEntry.getWKey().getStringForHashKey(),
+					wEntry);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("Word map size() : " + wordEntryMap.size());
-		System.out.println("Successor : " + successor);
+		log.write("Insert word : " + word + " meaning : " + meaning);
+		// System.out.println("Word map size() : " + wordEntryMap.size());
+		// System.out.println("Successor : " + successor);
 		wordList.add(word);
-		System.out.println("WordList size : " + wordList.size());
+		// System.out.println("WordList size : " + wordList.size());
 	}
 
 	public FingerTableEntry getFingerAtIndex(int index) throws RemoteException {
@@ -553,6 +578,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	}
 
 	public Node getNodeDetails() throws RemoteException {
+		log.write("Getting node details");
 		return this;
 	}
 }

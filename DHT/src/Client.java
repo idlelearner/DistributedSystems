@@ -16,6 +16,7 @@ import java.util.Scanner;
  *
  */
 public class Client {
+	protected ClientLogger log = ClientLogger.getInstance();
 
 	public static void main(String[] args) throws IOException,
 			NotBoundException {
@@ -25,11 +26,13 @@ public class Client {
 					"Pass the word meaning file and node-0 host as argument!");
 		}
 
+		Client clt = new Client();
 		HashMap<String, String> wordMeaningMap = new HashMap<String, String>();
 		// parse the word dictionary to create a local map
 		// Read the file and populate in a hashmap to insert in the DHT
 		String wordFile = args[0];
 		File file = new File(wordFile);
+		clt.log.write("Parsing file :" + wordFile + " ");
 		BufferedReader buffer = new BufferedReader(new FileReader(file));
 		String line;
 		while ((line = buffer.readLine()) != null) {
@@ -59,7 +62,9 @@ public class Client {
 		// insert.
 		for (String key : wordMeaningMap.keySet()) {
 			// Find the node where to insert.
+			clt.log.write("Inserting word : " + key + " ");
 			NodeKey nodeToBeInserted = mainNode.find_node(key);
+			clt.log.write("Node to insert : " + nodeToBeInserted + " ");
 			Node curNodeToInsert = (Node) Naming.lookup("//"
 					+ nodeToBeInserted.getHost() + ":" + port + "/"
 					+ nodeToBeInserted.getNodeNum() + "Node");
@@ -68,6 +73,8 @@ public class Client {
 			curNodeToInsert.insert(key, wordMeaningMap.get(key));
 			System.out.println("Inserted : " + key + " : "
 					+ wordMeaningMap.get(key));
+			clt.log.write("Inserted : " + key + " : " + wordMeaningMap.get(key)
+					+ " ");
 		}
 
 		// If the word entered quit, else fetch the word
@@ -77,22 +84,28 @@ public class Client {
 			System.out
 					.print("Enter the word to get the meaning , enter exit to quit : ");
 			word = in.next();
-			if (word.equals("exit"))
+			if (word.equals("exit")) {
+				clt.log.write("Exiting client" + " ");
+				clt.log.write("final exit");
 				break;
+			}
+			clt.log.write("Searching word : " + word + " ");
 			// Hash the word to get the key
 			NodeKey nodeToBeSearched = mainNode.find_node(word);
 			Node curNodeToSearch = (Node) Naming.lookup("//"
 					+ nodeToBeSearched.getHost() + ":" + port + "/"
 					+ nodeToBeSearched.getNodeNum() + "Node");
-
+			clt.log.write("Node to search : " + nodeToBeSearched + " ");
 			// Insert in that word.
 			WordEntry entry = curNodeToSearch.lookup(word);
 			if (entry == null) {
 				System.out.println("Word : " + word + " is not in dictionary");
-			} else
+				clt.log.write("Word : " + word + " is not in dictionary" + " ");
+			} else {
 				System.out.println("Searched and found: " + entry.getWord()
 						+ " : " + entry.getMeaning());
-
+				clt.log.write("Word : " + word + " is not in dictionary" + " ");
+			}
 		}
 	}
 

@@ -23,6 +23,7 @@ public class Ring implements Remote {
 	 * @param node
 	 */
 	public static int port = 1099;
+	public static ServerLogger log = ServerLogger.getInstance();
 
 	public static void createRing(Node node)
 			throws NodeAlreadyPresentException, NodeNotFoundException {
@@ -40,7 +41,7 @@ public class Ring implements Remote {
 			node.setSuccessor(node.getNodeID());
 			// set the predecessor to NULL for this node
 			node.setPredecessor(null);
-
+			log.write("Creating ring...");
 		} catch (Exception e) {
 			// server should log this exception
 			e.printStackTrace();
@@ -55,11 +56,11 @@ public class Ring implements Remote {
 			foundNode = (Node) Naming.lookup("/" + nKey.getHost() + ":"
 					+ Ring.port + "/" + nKey.getNodeNum() + "Node");
 		} catch (RemoteException e) {
-
+			e.printStackTrace();
 		} catch (MalformedURLException e) {
-
+			e.printStackTrace();
 		} catch (NotBoundException e) {
-
+			e.printStackTrace();
 		}
 
 		return foundNode;
@@ -78,10 +79,12 @@ public class Ring implements Remote {
 		 * possiblePredecessor's ID lies between (currentPredecessor's ID,
 		 * currentNode's ID
 		 */
+		log.write("In Inform node");
 		if (self.getPredecessor() == null
-				|| predecessor.getNodeID().getStringForHashKey().compareTo(self.getPredecessor().getStringForHashKey()) > 0
-				&& predecessor.getNodeID().getStringForHashKey().compareTo(self.getNodeID().getStringForHashKey()) < 0) 
-		{
+				|| predecessor.getNodeID().getStringForHashKey()
+						.compareTo(self.getPredecessor().getStringForHashKey()) > 0
+				&& predecessor.getNodeID().getStringForHashKey()
+						.compareTo(self.getNodeID().getStringForHashKey()) < 0) {
 			self.setPredecessor(predecessor.getNodeID());
 			predecessor.setSuccessor(self.getNodeID());
 			redistributeKeys(self);
@@ -100,7 +103,7 @@ public class Ring implements Remote {
 	 * @throws MalformedURLException
 	 */
 	public static void join(Node n1, Node n2) throws RemoteException {
-
+		log.write("Join node" + n1 + "to the ring by Node" + n2);
 		// set predecessor to n1 to null
 		n1.setPredecessor(null);
 
@@ -132,7 +135,8 @@ public class Ring implements Remote {
 	public static Node findSuccessorOfNode(Node node, GenericKey id)
 			throws RemoteException, MalformedURLException {
 		// first get the predecessor
-		System.out.println("In find successor of Node");
+		// System.out.println("In find successor of Node");
+		log.write("Find successor of node " + id);
 		Node tmpNode = findPredecessorOfNode(node, id);
 
 		// get the first successor of this predecessor node
@@ -153,6 +157,7 @@ public class Ring implements Remote {
 	}
 
 	public static Node findPredecessorOfNode(Node n, GenericKey id) {
+		log.write("Find predecessor of node " + id);
 		Node succ = null;
 		NodeKey succId;
 		try {
@@ -164,7 +169,10 @@ public class Ring implements Remote {
 
 			// TODO: change this condition to check until id is between tempNode
 			// and tempNode.successor
-			while (id.getStringForHashKey().compareTo(n.getNodeID().getStringForHashKey()) > 0 && id.getStringForHashKey().compareTo(n.getSuccessor().getStringForHashKey()) < 0) {
+			while (id.getStringForHashKey().compareTo(
+					n.getNodeID().getStringForHashKey()) > 0
+					&& id.getStringForHashKey().compareTo(
+							n.getSuccessor().getStringForHashKey()) < 0) {
 				if (tempNode != null)
 					if (tempNode.getNodeID() == n.getNodeID())
 						break;
@@ -192,6 +200,7 @@ public class Ring implements Remote {
 	}
 
 	public static Node findNearestPreceedingFinger(Node n, GenericKey id) {
+		log.write("Find nearest preceding finger of node " + id);
 		NodeKey fingerId;
 		try {
 			if (n.getFingerTable().isEmpty())
@@ -233,13 +242,16 @@ public class Ring implements Remote {
 	}
 
 	/**
-	 * redistribute keys when the new node is introduced into the ring
-	 * it will pick up some keys from its predecessor, which keys ?
-	 * those which were first with the predecessor but now their value is >= that of this new node
+	 * redistribute keys when the new node is introduced into the ring it will
+	 * pick up some keys from its predecessor, which keys ? those which were
+	 * first with the predecessor but now their value is >= that of this new
+	 * node
+	 * 
 	 * @param node
 	 * @throws RemoteException
 	 */
 	public static void redistributeKeys(Node node) throws RemoteException {
+		log.write("Redistribute keys, new node is added" + node);
 		Node thisNode = (Node) node;
 		NodeKey predecessor = thisNode.getPredecessor();
 
@@ -261,15 +273,21 @@ public class Ring implements Remote {
 		}
 
 		/*
-		 * for every key in the predecessor which is >= new nodes key, pass them to this node
+		 * for every key in the predecessor which is >= new nodes key, pass them
+		 * to this node
 		 */
 		Map<String, Set<WordEntry>> entries = predecessorNode.getWordEntryMap();
 		for (String counter : entries.keySet()) {
-			//if this is greater than or equal to that of this node's key, take these word entries in
-			if(counter.compareTo(predecessor.getStringForHashKey()) < 0 && (counter.compareTo(node.getNodeID().getStringForHashKey())) > 0){
-				node.addNewWordEntriesAtParticularNodeKey(counter,entries.get(counter));
+			// if this is greater than or equal to that of this node's key, take
+			// these word entries in
+			if (counter.compareTo(predecessor.getStringForHashKey()) < 0
+					&& (counter.compareTo(node.getNodeID()
+							.getStringForHashKey())) > 0) {
+				node.addNewWordEntriesAtParticularNodeKey(counter,
+						entries.get(counter));
 				predecessorNode.removeWordEntriesGivenKey(counter);
 			}
+
 		}
 	}
 
