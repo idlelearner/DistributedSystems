@@ -28,7 +28,7 @@ public interface Node extends Remote{
 	public void removeNodeKeyFromMap(NodeKey key) throws RemoteException;
 	public void setWordEntriesForNodeKey(NodeKey key, Set<WordEntry> entries) throws RemoteException;
 	public void removeEntriesForKey(NodeKey key) throws RemoteException;
-	public void join(Node freshNode) throws RemoteException;
+	public Boolean join(Node freshNode) throws RemoteException;
 	public Node findSuccessorNode(GenericKey id) throws RemoteException;
 	public NodeKey findSuccessorNodeId(GenericKey id) throws RemoteException;
 	public WordEntry getWordEntryGivenNodeKey(NodeKey nKey, WordKey wKey) throws RemoteException;
