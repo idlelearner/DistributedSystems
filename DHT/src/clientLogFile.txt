@@ -591,6 +591,18 @@ Inserted : lodestone : a magnetic ore of iron
 Searching word : clan 
 Node to search : jupiter.cs.umn.edu|node00 
 Word : clan is not in dictionary 
+Searching word : another 
+Node to search : jupiter.cs.umn.edu|node00 
+Word : another is not in dictionary 
+Searching word : empower 
+Node to search : jupiter.cs.umn.edu|node00 
+Word : empower is not in dictionary 
+Searching word : abc 
+Node to search : jupiter.cs.umn.edu|node00 
+Word : abc is not in dictionary 
+Searching word : super 
+Node to search : jupiter.cs.umn.edu|node00 
+Word : super is not in dictionary 
 Exiting client 
 final exit
 Exit encountered!

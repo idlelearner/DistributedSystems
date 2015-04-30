@@ -43,7 +43,7 @@ public class NodeStart {
 		} catch (RemoteException ex) {
 			ex.printStackTrace();
 		} catch (NotBoundException ex) {
-			System.out.println("Unable to find main node..Not bound Exception");
+			System.out.println("Unable to find main node..so this is the first node");
 		} catch (Exception genE) {
 		}
 
