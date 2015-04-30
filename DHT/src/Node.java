@@ -23,7 +23,7 @@ public interface Node extends Remote {
 	public void setFingerTable(ArrayList<FingerTableEntry> fingerTable)
 			throws RemoteException;
 
-	public Map<NodeKey, Set<WordEntry>> getWordEntryMap()
+	public Map<String, Set<WordEntry>> getWordEntryMap()
 			throws RemoteException;
 
 	public Boolean getConnectionStatus() throws RemoteException;
@@ -40,7 +40,7 @@ public interface Node extends Remote {
 
 	public List<NodeKey> getFingerNodeIds() throws RemoteException;
 
-	public void addWordEntryAtNodeKey(NodeKey node, WordEntry entry)
+	public void addWordEntryAtNodeKey(String node, WordEntry entry)
 			throws RemoteException;
 
 	public Set<WordEntry> getWordEntriesForNodeKey(NodeKey key)
@@ -48,9 +48,9 @@ public interface Node extends Remote {
 
 	public void removeNodeKeyFromMap(NodeKey key) throws RemoteException;
 
-	public void setWordEntriesForNodeKey(NodeKey key, Set<WordEntry> entries)
+	public void setWordEntriesForNodeKey(String key, Set<WordEntry> entries)
 			throws RemoteException;
-
+	
 	public void removeEntriesForKey(NodeKey key) throws RemoteException;
 
 	public Boolean join(Node freshNode) throws RemoteException;
@@ -59,19 +59,19 @@ public interface Node extends Remote {
 
 	public NodeKey findSuccessorNodeId(GenericKey id) throws RemoteException;
 
-	public WordEntry getWordEntryGivenNodeKey(NodeKey nKey, WordKey wKey)
+	public WordEntry getWordEntryGivenNodeKey(String key, WordKey wKey)
 			throws RemoteException;
 
 	public WordEntry getWordEntryGivenJustWordKey(WordKey wKey)
 			throws RemoteException;
 
-	public Map<NodeKey, Set<WordEntry>> giveEntries(NodeKey successorId)
+	public Map<String, Set<WordEntry>> giveEntries(NodeKey successorId)
 			throws RemoteException;
 
 	public void addNewWordEntriesAtNodeKeys(
-			Map<NodeKey, Set<WordEntry>> newEntries) throws RemoteException;
+			Map<String, Set<WordEntry>> newEntries) throws RemoteException;
 
-	public void removeWordEntriesGivenNodeKey(NodeKey id)
+	public void removeWordEntriesGivenKey(String key)
 			throws RemoteException;
 
 	public boolean checkIfWordEntryPresentAtNodeKey(WordEntry fid, NodeKey id)
@@ -90,7 +90,7 @@ public interface Node extends Remote {
 
 	public void insert(String word, String meaning) throws RemoteException;
 
-	public void addNewWordEntriesAtParticularNodeKey(NodeKey idKey,
+	public void addNewWordEntriesAtParticularNodeKey(String idKey,
 			Set<WordEntry> entries) throws RemoteException;
 
 	public void printChordRingInfo() throws RemoteException;

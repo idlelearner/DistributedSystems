@@ -40,9 +40,9 @@ public class GetRingDetailsClient {
 						+ curNode.getCountOfWordEntriesInMap());
 				
 				System.out.println("Arrangement of words : ");
-				Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = curNode
+				Iterator<Map.Entry<String, Set<WordEntry>>> it = curNode
 						.getWordEntryMap().entrySet().iterator();
-				Map.Entry<NodeKey, Set<WordEntry>> entry;
+				Map.Entry<String, Set<WordEntry>> entry;
 				while (it.hasNext()) {
 					entry = it.next();
 					System.out.println(entry.getKey() + " : " + entry.getValue());

@@ -28,7 +28,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	// entries (as a set)
 	// This mapping is needed when re-distributing, so that entries can be moved
 	// as a whole
-	private Map<NodeKey, Set<WordEntry>> wordEntryMap;
+	private Map<String, Set<WordEntry>> wordEntryMap;
 
 	private Boolean isConnected = false;
 
@@ -38,7 +38,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		nodeID = id;
 		predecessor = null;
 		successor = null;
-		wordEntryMap = new HashMap<NodeKey, Set<WordEntry>>();
+		wordEntryMap = new HashMap<String, Set<WordEntry>>();
 		wordList = new ArrayList<String>();
 	}
 	
@@ -82,7 +82,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		return isConnected;
 	}
 
-	public Map<NodeKey, Set<WordEntry>> getWordEntryMap() {
+	public Map<String, Set<WordEntry>> getWordEntryMap() {
 		return this.wordEntryMap;
 	}
 
@@ -172,21 +172,21 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		return list;
 	}
 
-	public void addWordEntryAtNodeKey(NodeKey node, WordEntry entry)
+	public void addWordEntryAtNodeKey(String hashKey, WordEntry entry)
 			throws RemoteException {
 		Set<WordEntry> entrySet;
 		synchronized (this.wordEntryMap) {
 			// if the nodeKey is already present, then we just add to the set,
 			// else create new set
 			boolean alreadyPresent = false;
-			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = wordEntryMap
+			Iterator<Map.Entry<String, Set<WordEntry>>> it = wordEntryMap
 					.entrySet().iterator();
-			Map.Entry<NodeKey, Set<WordEntry>> itE = null;
+			Map.Entry<String, Set<WordEntry>> itE = null;
 
 			// lets traverse through the map
 			while ((it.hasNext())) {
 				itE = it.next();
-				if (itE.getKey().equals(node)) {
+				if (itE.getKey().equals(hashKey)) {
 					alreadyPresent = true;
 					break;
 				}
@@ -201,7 +201,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 				// create a new set and introduce a new NodeKey/Set to the map
 				entrySet = new TreeSet<WordEntry>();
 				entrySet.add(entry);
-				this.wordEntryMap.put(node, entrySet);
+				this.wordEntryMap.put(hashKey, entrySet);
 			}
 		}
 
@@ -228,7 +228,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		}
 	}
 
-	public void setWordEntriesForNodeKey(NodeKey key, Set<WordEntry> entries)
+	public void setWordEntriesForNodeKey(String key, Set<WordEntry> entries)
 			throws RemoteException {
 		synchronized (this.wordEntryMap) {
 			this.wordEntryMap.put(key, entries);
@@ -283,9 +283,9 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		return retNode;
 	}
 
-	public WordEntry getWordEntryGivenNodeKey(NodeKey nKey, WordKey wKey)
+	public WordEntry getWordEntryGivenNodeKey(String hashKey, WordKey wKey)
 			throws RemoteException {
-		Set<WordEntry> relevantSet = this.wordEntryMap.get(nKey);
+		Set<WordEntry> relevantSet = this.wordEntryMap.get(hashKey);
 
 		Iterator<WordEntry> it = relevantSet.iterator();
 
@@ -300,7 +300,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 
 	public WordEntry getWordEntryGivenJustWordKey(WordKey wKey)
 			throws RemoteException {
-		for (Map.Entry<NodeKey, Set<WordEntry>> entry : this.wordEntryMap
+		for (Map.Entry<String, Set<WordEntry>> entry : this.wordEntryMap
 				.entrySet()) {
 			WordEntry found = getWordEntryGivenNodeKey(entry.getKey(), wKey);
 			if (found != null) {
@@ -310,16 +310,16 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		return null;
 	}
 
-	public Map<NodeKey, Set<WordEntry>> giveEntries(NodeKey successorId)
+	public Map<String, Set<WordEntry>> giveEntries(NodeKey successorId)
 			throws RemoteException {
 
 		synchronized (this.wordEntryMap) {
-			Map<NodeKey, Set<WordEntry>> temporaryMap = new HashMap<NodeKey, Set<WordEntry>>();
+			Map<String, Set<WordEntry>> temporaryMap = new HashMap<String, Set<WordEntry>>();
 			WordEntry entry = null;
-			Map.Entry<NodeKey, Set<WordEntry>> itEntry;
+			Map.Entry<String, Set<WordEntry>> itEntry;
 			Iterator<WordEntry> iter;
 			Set<WordEntry> set;
-			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = this.wordEntryMap
+			Iterator<Map.Entry<String, Set<WordEntry>>> it = this.wordEntryMap
 					.entrySet().iterator();
 
 			// iterate through the entire Map
@@ -364,11 +364,11 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 	}
 
 	public void addNewWordEntriesAtNodeKeys(
-			Map<NodeKey, Set<WordEntry>> newEntries) throws RemoteException {
+			Map<String, Set<WordEntry>> newEntries) throws RemoteException {
 		synchronized (this.wordEntryMap) {
-			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = newEntries
+			Iterator<Map.Entry<String, Set<WordEntry>>> it = newEntries
 					.entrySet().iterator();
-			Map.Entry<NodeKey, Set<WordEntry>> itEntry;
+			Map.Entry<String, Set<WordEntry>> itEntry;
 			Iterator<WordEntry> iter;
 			WordEntry entry;
 
@@ -387,7 +387,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		}
 	}
 
-	public void addNewWordEntriesAtParticularNodeKey(NodeKey idKey,
+	public void addNewWordEntriesAtParticularNodeKey(String idKey,
 			Set<WordEntry> entries) {
 		Set<WordEntry> nSet;
 		synchronized (this.wordEntryMap) {
@@ -396,13 +396,11 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		}
 	}
 
-	public void removeWordEntriesGivenNodeKey(NodeKey id)
-			throws RemoteException {
-		Set<WordEntry> nSet;
+	public void removeWordEntriesGivenKey(String key) throws RemoteException {
 		synchronized (this.wordEntryMap) {
-			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = this.wordEntryMap
+			Iterator<Map.Entry<String, Set<WordEntry>>> it = this.wordEntryMap
 					.entrySet().iterator();
-			Map.Entry<NodeKey, Set<WordEntry>> itEntry = null;
+			Map.Entry<String, Set<WordEntry>> itEntry = null;
 
 			// iterate through the entire Map
 			while (it.hasNext()) {
@@ -410,7 +408,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 
 				// check if any of the ids already in the map equal with idKey
 				// if anyone does, then remove it and stop the repetition
-				if (itEntry.getKey().equals(id)) {
+				if (itEntry.getKey().equals(key)) {
 					this.wordEntryMap.remove(itEntry.getKey());
 					break;
 				}
@@ -420,12 +418,11 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 
 	public boolean checkIfWordEntryPresentAtNodeKey(WordEntry fid, NodeKey id)
 			throws RemoteException {
-		Set<WordEntry> nSet;
 		synchronized (this.wordEntryMap) {
 			boolean contains = false;
-			Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = this.wordEntryMap
+			Iterator<Map.Entry<String, Set<WordEntry>>> it = this.wordEntryMap
 					.entrySet().iterator();
-			Map.Entry<NodeKey, Set<WordEntry>> itEntry = null;
+			Map.Entry<String, Set<WordEntry>> itEntry = null;
 			WordEntry entry = null;
 
 			// iterate through the entire Map
@@ -461,9 +458,9 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 
 	public int getCountOfWordEntriesInMap() throws RemoteException {
 		int count = 0;
-		Iterator<Map.Entry<NodeKey, Set<WordEntry>>> it = this.wordEntryMap
+		Iterator<Map.Entry<String, Set<WordEntry>>> it = this.wordEntryMap
 				.entrySet().iterator();
-		Map.Entry<NodeKey, Set<WordEntry>> entry;
+		Map.Entry<String, Set<WordEntry>> entry;
 
 		while (it.hasNext()) {
 			entry = it.next();
@@ -511,7 +508,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		WordEntry wEntry = new WordEntry(word, this.getNodeID().getHost(), this
 				.getNodeID().getNodeNum(), meaning);
 		try {
-			addWordEntryAtNodeKey(this.getNodeID(), wEntry);
+			addWordEntryAtNodeKey(wEntry.getWKey().getStringForHashKey(), wEntry);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

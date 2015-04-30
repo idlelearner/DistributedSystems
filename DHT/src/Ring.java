@@ -1,4 +1,3 @@
-import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.rmi.AccessException;
 import java.rmi.Naming;
@@ -80,13 +79,8 @@ public class Ring implements Remote {
 		 * currentNode's ID
 		 */
 		if (self.getPredecessor() == null
-				|| GenericKey.isBetweenNotify(predecessor.getNodeID(),
-						self.getPredecessor(), self.getNodeID())) // updates the
-																	// local
-																	// variable
-																	// of
-																	// current
-																	// Node
+				|| predecessor.getNodeID().getStringForHashKey().compareTo(self.getPredecessor().getStringForHashKey()) > 0
+				&& predecessor.getNodeID().getStringForHashKey().compareTo(self.getNodeID().getStringForHashKey()) < 0) 
 		{
 			self.setPredecessor(predecessor.getNodeID());
 			predecessor.setSuccessor(self.getNodeID());
@@ -160,7 +154,6 @@ public class Ring implements Remote {
 
 	public static Node findPredecessorOfNode(Node n, GenericKey id) {
 		Node succ = null;
-		Node startNode = n;
 		NodeKey succId;
 		try {
 			succId = n.getSuccessor();
@@ -171,8 +164,7 @@ public class Ring implements Remote {
 
 			// TODO: change this condition to check until id is between tempNode
 			// and tempNode.successor
-			while (!GenericKey.isBetweenSuccessor(id, n.getNodeID(),
-					n.getSuccessor())) {
+			while (id.getStringForHashKey().compareTo(n.getNodeID().getStringForHashKey()) > 0 && id.getStringForHashKey().compareTo(n.getSuccessor().getStringForHashKey()) < 0) {
 				if (tempNode != null)
 					if (tempNode.getNodeID() == n.getNodeID())
 						break;
@@ -251,8 +243,6 @@ public class Ring implements Remote {
 		Node thisNode = (Node) node;
 		NodeKey predecessor = thisNode.getPredecessor();
 
-		byte[] step = toByteArray(1);
-
 		Node predecessorNode = null;
 
 		try // set predecessorNode
@@ -273,12 +263,13 @@ public class Ring implements Remote {
 		/*
 		 * for every key in the predecessor which is >= new nodes key, pass them to this node
 		 */
-		Map<NodeKey, Set<WordEntry>> entries = predecessorNode.getWordEntryMap();
-
-		for (NodeKey counter : entries.keySet()) {
+		Map<String, Set<WordEntry>> entries = predecessorNode.getWordEntryMap();
+		for (String counter : entries.keySet()) {
 			//if this is greater than or equal to that of this node's key, take these word entries in
-			if(!GenericKey.isBetween(counter, predecessor, node.getNodeID()))
+			if(counter.compareTo(predecessor.getStringForHashKey()) < 0 && (counter.compareTo(node.getNodeID().getStringForHashKey())) > 0){
 				node.addNewWordEntriesAtParticularNodeKey(counter,entries.get(counter));
+				predecessorNode.removeWordEntriesGivenKey(counter);
+			}
 		}
 	}
 
