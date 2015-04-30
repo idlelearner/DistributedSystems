@@ -96,4 +96,6 @@ public interface Node extends Remote {
 	public void printChordRingInfo() throws RemoteException;
 
 	public Node getNodeDetails() throws RemoteException;
+
+	public void join_done() throws RemoteException;
 }

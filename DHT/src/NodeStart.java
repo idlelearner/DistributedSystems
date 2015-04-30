@@ -48,6 +48,8 @@ public class NodeStart {
 		} catch (Exception genE) {
 		}
 
+		Boolean joinSuccess = false;
+		
 		if (startingNode == null) /* This is the first node */
 		{
 			try {
@@ -76,8 +78,11 @@ public class NodeStart {
 		{
 			try {
 				// Binding node0?Node
-				startingNode.join(currentNode);
+				while(!joinSuccess)
+				joinSuccess = startingNode.join(currentNode);
 				Naming.bind(nodeNum + "Node", currentNode);
+				//send a join_done call to the starting node
+				startingNode.join_done();
 			} catch (RemoteException ex) {
 			} catch (AlreadyBoundException e) {
 				// TODO Auto-generated catch block
