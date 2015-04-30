@@ -38,7 +38,6 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		successor = null;
 		wordEntryMap = new HashMap<NodeKey, Set<WordEntry>>();
 		wordList = new ArrayList<String>();
-		
 	}
 
 	public NodeKey getNodeID() {
@@ -241,6 +240,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 			Ring.join(this, freshNode);
 		} catch (Exception e) {
 			// log the exception
+			e.printStackTrace();
 		}
 	}
 
@@ -538,5 +538,9 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public Node getNodeDetails() throws RemoteException {
+		return this;
 	}
 }

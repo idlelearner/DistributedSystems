@@ -20,22 +20,37 @@ public class GetRingDetailsClient {
 		// Get the main hostname.
 		String mainNodeHostName = args[0];
 		try {
-			Node mainNode = (Node) Naming.lookup("//" + mainNodeHostName + ":"
+			Node node = (Node) Naming.lookup("//" + mainNodeHostName + ":"
 					+ port + "/" + "node00Node");
-
-			// mainNode should return its nodeDetails
-			// while(Get successor != node00)
-			// print Get nodedetails of successor.
-			// print node details.
-			mainNode.printChordRingInfo();
+			int j = 0;
+			while (true) {
+				Node curNode = node.getNodeDetails();
+				System.out.println("Printing out current node " + j
+						+ " details");
+				System.out.println("Node name : " + curNode.getNodeID());
+				System.out.println("Finger Table Entries : ");
+				for (int i = 0; i < curNode.getFingerTable().size(); i++) {
+					System.out.println("Finger table entry " + i + " "
+							+ curNode.getFingerTable().get(i));
+				}
+				System.out.println("Number of words in this node : "
+						+ curNode.getCountOfWordEntriesInMap());
+				NodeKey successor = curNode.getSuccessor();
+				if (successor.getNodeNum().equals(
+						curNode.getNodeID().getNodeNum()))
+					break;
+				node = (Node) Naming.lookup("//" + successor.getHost() + ":"
+						+ port + "/" + successor.getNodeNum() + "Node");
+				j++;
+			}
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch (RemoteException e) {
+		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch (NotBoundException e) {
+		} catch (NotBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
