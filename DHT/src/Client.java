@@ -70,7 +70,7 @@ public class Client {
 					+ wordMeaningMap.get(key));
 		}
 
-		// If the word entered quit, else fetch the work
+		// If the word entered quit, else fetch the word
 		String word = "";
 		while (true) {
 			Scanner in = new Scanner(System.in);
@@ -91,34 +91,6 @@ public class Client {
 					+ entry.getMeaning());
 
 		}
-
-		// write a loop and which searches and returns.
-		// Then search for the word
-
-		// create RMI registry
-
-		Node bootstrapNode;
-		// locate the booststrapping node, the node-0
-		// if(bootstrapNode == null) {
-		// //this is the first node being added
-		//
-		// //bind the service to the registry
-		// //TODO : How to do this
-		// try {
-		// Naming.bind();
-		// }catch (RemoteException e) {
-		// //log this in the client file
-		// }
-		//
-		// //create the bootstrap node
-		//
-		// //do what now ?
-		// }else {
-		// //existing node, so let us just allow this node to join the chord
-		// ring
-		//
-		// //TODO : complete this
-		// }
 	}
 
 }
