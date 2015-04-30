@@ -247,7 +247,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		//set it to busy
 		toggleBusyInJoin();
 		try {
-			Ring.join(this, freshNode);
+			Ring.join(freshNode, this);
 		} catch (Exception e) {
 			// log the exception
 		}
@@ -255,7 +255,7 @@ public class NodeImpl extends UnicastRemoteObject implements Node, Serializable 
 		return true;
 	}
 	
-	public void join_done() {
+	public void join_done() throws RemoteException{
 		toggleBusyInJoin();
 	}
 
