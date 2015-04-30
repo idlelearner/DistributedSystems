@@ -90,6 +90,7 @@ public class Ring implements Remote {
 		{
 			self.setPredecessor(predecessor.getNodeID());
 			predecessor.setSuccessor(self.getNodeID());
+			redistributeKeys(self);
 		}
 	}
 
@@ -239,14 +240,20 @@ public class Ring implements Remote {
 		return n;
 	}
 
+	/**
+	 * redistribute keys when the new node is introduced into the ring
+	 * it will pick up some keys from its predecessor, which keys ?
+	 * those which were first with the predecessor but now their value is >= that of this new node
+	 * @param node
+	 * @throws RemoteException
+	 */
 	public static void redistributeKeys(Node node) throws RemoteException {
 		Node thisNode = (Node) node;
 		NodeKey predecessor = thisNode.getPredecessor();
-		NodeKey successor = thisNode.getSuccessor();
 
 		byte[] step = toByteArray(1);
 
-		Node predecessorNode = null, successorNode = null;
+		Node predecessorNode = null;
 
 		try // set predecessorNode
 		{
@@ -263,30 +270,16 @@ public class Ring implements Remote {
 			// log
 		}
 
-		try // set successorNode
-		{
-			try {
-				successorNode = (Node) Naming.lookup("//" + successor.getHost()
-						+ ":" + port + "/" + successor.getNodeNum() + "Node");
-			} catch (MalformedURLException ex) {
-			}
-		} catch (NotBoundException ex) {
-		} catch (AccessException ex) {
-		}
-
 		/*
-		 * for every IdKey in the successor, pass them to successor
+		 * for every key in the predecessor which is >= new nodes key, pass them to this node
 		 */
-		Map<NodeKey, Set<WordEntry>> entries = node.getWordEntryMap();
+		Map<NodeKey, Set<WordEntry>> entries = predecessorNode.getWordEntryMap();
 
 		for (NodeKey counter : entries.keySet()) {
-			successorNode.addNewWordEntriesAtParticularNodeKey(counter,
-					entries.get(counter));
+			//if this is greater than or equal to that of this node's key, take these word entries in
+			if(!GenericKey.isBetween(counter, predecessor, node.getNodeID()))
+				node.addNewWordEntriesAtParticularNodeKey(counter,entries.get(counter));
 		}
-
-		successorNode.setPredecessor(predecessor);// successor's predecessor =
-													// node's predecessor
-		predecessorNode.setSuccessor(successor);// set the successor
 	}
 
 	/**
