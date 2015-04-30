@@ -87,8 +87,11 @@ public class Client {
 
 			// Insert in that word.
 			WordEntry entry = curNodeToSearch.lookup(word);
-			System.out.println("Searched : " + entry.getWord() + " : "
-					+ entry.getMeaning());
+			if (entry == null) {
+				System.out.println("Word : " + word + " is not in dictionary");
+			} else
+				System.out.println("Searched and found: " + entry.getWord()
+						+ " : " + entry.getMeaning());
 
 		}
 	}
