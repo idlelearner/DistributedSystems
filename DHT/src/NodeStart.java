@@ -83,6 +83,7 @@ public class NodeStart {
 				Naming.bind(nodeNum + "Node", currentNode);
 				//send a join_done call to the starting node
 				startingNode.join_done();
+				System.out.println("Node joined!!");
 			} catch (RemoteException ex) {
 			} catch (AlreadyBoundException e) {
 				// TODO Auto-generated catch block
